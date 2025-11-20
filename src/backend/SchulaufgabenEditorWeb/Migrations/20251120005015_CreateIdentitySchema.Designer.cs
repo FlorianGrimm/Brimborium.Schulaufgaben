@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Briumborium.Schulaufgaben.Data;
+using Brimborium.Schulaufgaben.Data;
 
 #nullable disable
 
-namespace Briumborium.Schulaufgaben.Migrations
+namespace Brimborium.Schulaufgaben.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20251120005015_CreateIdentitySchema")]

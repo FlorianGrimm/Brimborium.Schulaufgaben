@@ -7,4 +7,5 @@ global using Microsoft.Extensions.Options;
 global using Microsoft.AspNetCore.Routing.Patterns;
 
 global using Brimborium.Schulaufgaben;
+global using Brimborium.Schulaufgaben.Data;
 global using Brimborium.Schulaufgaben.Service;

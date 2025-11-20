@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Briumborium.Schulaufgaben.Migrations
+namespace Brimborium.Schulaufgaben.Migrations
 {
     /// <inheritdoc />
     public partial class CreateIdentitySchema : Migration

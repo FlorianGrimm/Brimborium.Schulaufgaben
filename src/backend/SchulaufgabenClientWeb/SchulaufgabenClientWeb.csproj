@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>SchulaufgabenClient</UserSecretsId>
-    <RootNamespace>Briumborium.Schulaufgaben</RootNamespace>
+    <RootNamespace>Brimborium.Schulaufgaben</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

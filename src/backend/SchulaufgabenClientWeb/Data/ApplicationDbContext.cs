@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-//Briumborium.Schulaufgaben.Data
-//
-namespace Briumborium.Schulaufgaben.Data
+
+namespace Brimborium.Schulaufgaben.Data;
+
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext(options)
 {
-    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext(options)
-    {
-    }
 }

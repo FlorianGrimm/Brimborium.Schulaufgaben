@@ -5,13 +5,13 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build schulaufgaben && ng build editor && ng build client",
-    "watch": "npm run watch:schulaufgaben && npm run watch:editor && npm run watch:client",
+    "watch": "npm-run-all --parallel watch:schulaufgaben watch:editor watch:client",
     "watch:schulaufgaben": "ng build schulaufgaben --watch --configuration development",
     "watch:client": "ng build client --watch --configuration development",
     "watch:editor": "ng build editor --watch --configuration development",
     "serve:client": "ng serve client --configuration development --port 4200",
     "serve:editor": "ng serve editor --configuration development --port 4201",
-    "dev": "npm run watch:schulaufgaben & npm run serve:editor & npm run serve:client",
+    "dev": "npm-run-all --parallel watch:schulaufgaben serve:editor serve:client",
     "test": "ng test"
   },
   "prettier": {
@@ -28,14 +28,17 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/cdk": "^21.0.0",
     "@angular/common": "^21.0.0",
     "@angular/compiler": "^21.0.0",
     "@angular/core": "^21.0.0",
     "@angular/forms": "^21.0.0",
+    "@angular/material": "^21.0.0",
     "@angular/platform-browser": "^21.0.0",
     "@angular/router": "^21.0.0",
     "rxjs": "~7.8.2",
-    "tslib": "^2.8.1"
+    "tslib": "^2.8.1",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@angular/build": "^21.0.0",
@@ -51,8 +54,9 @@
     "ng-packagr": "^21.0.0",
     "typescript": "~5.9.3"
   },
-   "overrides": {
+  "overrides": {
     "rimraf": "^4.0.0",
-    "glob": "^12.0.0"
+    "glob": "^12.0.0",
+    "zod": "^4.1.12"
   }
 }

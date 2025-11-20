@@ -2,45 +2,86 @@
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Briumborium.Schulaufgaben.Data;
+using Brimborium.Schulaufgaben.Data;
+using Brimborium.Schulaufgaben;
+using Brimborium.Schulaufgaben.Service;
+using System.Threading.Tasks;
 
-namespace SchulaufgabenClientWeb {
-    public class Program {
-        public static void Main(string[] args) {
-            var builder = WebApplication.CreateBuilder(args);
+namespace SchulaufgabenClientWeb;
 
-            // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            _ = builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(connectionString));
-            _ = builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-            _ = builder.Services
-                .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            _ = builder.Services.AddRazorPages();
-
-            var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment()) {
-                _ = app.UseMigrationsEndPoint();
-            } else {
-                _ = app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                _ = app.UseHsts();
-            }
-
-            //app.UseHttpsRedirection();
-
-            _ = app.UseRouting();
-
-            _ = app.UseAuthorization();
-
-            _ = app.MapStaticAssets();
-            _ = app.MapRazorPages().WithStaticAssets();
-
-            app.Run();
+public class Program {
+    public static async Task<int> Main(string[] args) {
+        try {
+            await Run(args);
+            return 0;
+        } catch (AggregateException error) {
+            Console.WriteLine(error.ToString());
+            error.Handle((innerError) => {
+                Console.WriteLine(innerError.ToString());
+                return true;
+            });
+            return 1;
+        } catch (Exception error) {
+            Console.WriteLine(error.ToString());
+            return 1;
         }
+    }
+    public static async Task Run(string[] args) {
+        var builder = WebApplication.CreateBuilder(args);
+
+        // Add services to the container.
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+        _ = builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlite(connectionString));
+        _ = builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+        _ = builder.Services
+            .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+        // _ = builder.Services.AddRazorPages();
+        builder.Services.AddAngularFileService()
+            .Configure(options => {
+                options.AngularPathPrefix.Add("editor");
+            });
+        builder.Services.AddOptions<AppEditorOptions>().BindConfiguration("Schulaufgaben");
+        builder.Services
+            .AddTransient<IConfigureOptions<AppEditorOptions>, AppEditorConfigureOptions>()
+            .AddTransient<IValidateOptions<AppEditorOptions>, AppEditorValidateOptions>()
+            .AddSchulaufgabenEditor()
+            .BindConfiguration("Schulaufgaben")
+            .Configure<IOptions<AppEditorOptions>>((editorPersistenceOptions, appEditorOptions) => {
+                var srcOptionsValue = appEditorOptions.Value;
+                editorPersistenceOptions.EditingFolder = srcOptionsValue.EditingFolder;
+                editorPersistenceOptions.PublishFolder = srcOptionsValue.PublishFolder;
+            });
+
+        builder.Services.AddSingleton<EditorAPI>();
+
+        var app = builder.Build();
+
+        // TODO: prefetch
+        // await app.Services.GetRequiredService<EditorPersistenceService>().SAWorkDescriptionListReadFromWorkingAsync(CancellationToken.None);
+
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment()) {
+            _ = app.UseMigrationsEndPoint();
+        } else {
+            _ = app.UseExceptionHandler("/Error");
+            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            _ = app.UseHsts();
+        }
+
+        //app.UseHttpsRedirection();
+
+        _ = app.UseRouting();
+
+        _ = app.UseAuthorization();
+
+        _ = app.UseAngularFileService();
+        _ = app.MapStaticAssets();
+        _ = app.MapRazorPages().WithStaticAssets();
+        app.Services.GetRequiredService<EditorAPI>().Map(app);
+
+        await app.RunAsync();
     }
 }

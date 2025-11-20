@@ -3,11 +3,11 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Briumborium.Schulaufgaben.Data;
+using Brimborium.Schulaufgaben.Data;
 
 #nullable disable
 
-namespace Briumborium.Schulaufgaben.Migrations
+namespace Brimborium.Schulaufgaben.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
