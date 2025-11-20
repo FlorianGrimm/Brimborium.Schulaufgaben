@@ -1,3 +1,5 @@
+// MIT - Florian Grimm
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Briumborium.Schulaufgaben.Data;
@@ -9,9 +11,8 @@ namespace SchulaufgabenClientWeb {
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            _ = builder.Services
-                .AddDbContext<ApplicationDbContext>(
-                    options => options.UseSqlite(connectionString));
+            _ = builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlite(connectionString));
             _ = builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             _ = builder.Services
@@ -30,7 +31,7 @@ namespace SchulaufgabenClientWeb {
                 _ = app.UseHsts();
             }
 
-            _ = app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             _ = app.UseRouting();
 
