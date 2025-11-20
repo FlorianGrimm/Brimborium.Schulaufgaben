@@ -37,6 +37,7 @@ namespace SchulaufgabenClientWeb {
             _ = app.UseAuthorization();
 
             _ = app.MapStaticAssets();
+            _ = app.UseAngularFileService();
             _ = app.MapRazorPages().WithStaticAssets();
 
             app.Run();
