@@ -6,13 +6,13 @@ public class FilePersistenceUtilityTests {
     [Test]
     public async Task WriteAndReadWorkFileAsync() {
         var fileFQN = System.IO.Path.GetTempFileName();
-        SAWork given = new SAWork() {
+        SADocument given = new SADocument() {
             Id = Guid.NewGuid(),
             Name = fileFQN,
             Description = fileFQN
         };
-        await FilePersistenceUtility.WriteWorkFileAsync(fileFQN, given, CancellationToken.None).ConfigureAwait(false);
-        var actual = await FilePersistenceUtility.ReadWorkFileAsync(fileFQN, CancellationToken.None).ConfigureAwait(false);
+        await FilePersistenceUtility.WriteDocumentAsync(fileFQN, given, CancellationToken.None).ConfigureAwait(false);
+        var actual = await FilePersistenceUtility.ReadDocumentAsync(fileFQN, CancellationToken.None).ConfigureAwait(false);
         await Assert.That(actual).IsNotNull().And.IsEquatableTo(given);
     }
 

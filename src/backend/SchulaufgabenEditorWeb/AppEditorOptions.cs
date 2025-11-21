@@ -5,6 +5,11 @@ namespace Brimborium.Schulaufgaben;
 public sealed class AppEditorOptions {
     public string? EditingFolder { get; set; }
     public string? PublishFolder { get; set; }
+    public List<MediaGallery> ListMediaGallery { get; set; } = [];
+}
+
+public sealed class MediaGallery {
+    public string? FolderPath { get; set; }
 }
 
 internal sealed class AppEditorConfigureOptions : IConfigureOptions<AppEditorOptions> {

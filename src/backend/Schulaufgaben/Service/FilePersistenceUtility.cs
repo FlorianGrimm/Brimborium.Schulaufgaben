@@ -15,14 +15,14 @@ public static class FilePersistenceUtility {
         return JsonSerializerOptions;
     }
 
-    public static async Task<List<SAWorkDescription>> ReadListWorkDescriptionFileAsync(
+    public static async Task<List<SADocumentDescription>> ReadListDocumentDescriptionAsync(
         string fileFQN,
         CancellationToken cancellationToken
         ) {
-        List<SAWorkDescription>? result;
+        List<SADocumentDescription>? result;
         if (System.IO.File.Exists(fileFQN)) {
             using (System.IO.FileStream fileStream = new(fileFQN, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                result = await System.Text.Json.JsonSerializer.DeserializeAsync<List<SAWorkDescription>>(
+                result = await System.Text.Json.JsonSerializer.DeserializeAsync<List<SADocumentDescription>>(
                     fileStream,
                     GetJsonSerializerOptions(),
                     cancellationToken);
@@ -33,14 +33,14 @@ public static class FilePersistenceUtility {
         return result ?? [];
     }
 
-    public static async Task WriteListWorkDescriptionFileAsync(
+    public static async Task WriteListDocumentDescriptionAsync(
         string fileFQN,
-        List<SAWorkDescription> value,
+        List<SADocumentDescription> value,
         CancellationToken cancellationToken
         ) {
 
         using (System.IO.FileStream fileStream = new(fileFQN, FileMode.Create, FileAccess.ReadWrite, FileShare.None)) {
-            await System.Text.Json.JsonSerializer.SerializeAsync<List<SAWorkDescription>>(
+            await System.Text.Json.JsonSerializer.SerializeAsync<List<SADocumentDescription>>(
                 fileStream,
                 value,
                 GetJsonSerializerOptions(),
@@ -50,15 +50,15 @@ public static class FilePersistenceUtility {
     }
 
 
-    public static async Task<SAWork> ReadWorkFileAsync(
+    public static async Task<SADocument> ReadDocumentAsync(
         string fileFQN,
         CancellationToken cancellationToken
         ) {
-        SAWork? result;
+        SADocument? result;
 
         if (System.IO.File.Exists(fileFQN)) {
             using (System.IO.FileStream fileStream = new(fileFQN, FileMode.Open, FileAccess.Read, FileShare.Read)) {
-                result = await System.Text.Json.JsonSerializer.DeserializeAsync<SAWork>(
+                result = await System.Text.Json.JsonSerializer.DeserializeAsync<SADocument>(
                     fileStream,
                     GetJsonSerializerOptions(),
                     cancellationToken);
@@ -67,16 +67,16 @@ public static class FilePersistenceUtility {
             result = null;
         }
 
-        return result ?? new SAWork();
+        return result ?? new SADocument();
     }
 
-    public static async Task WriteWorkFileAsync(
+    public static async Task WriteDocumentAsync(
         string fileFQN,
-        SAWork value,
+        SADocument value,
         CancellationToken cancellationToken
         ) {
         using (System.IO.FileStream fileStream = new(fileFQN, FileMode.Create, FileAccess.ReadWrite, FileShare.None)) {
-            await System.Text.Json.JsonSerializer.SerializeAsync<SAWork>(
+            await System.Text.Json.JsonSerializer.SerializeAsync<SADocument>(
                 fileStream,
                 value,
                 GetJsonSerializerOptions(),

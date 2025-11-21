@@ -2,8 +2,8 @@
 
 namespace Brimborium.Schulaufgaben.Model;
 
-[JsonDerivedType(typeof(SAWork), typeDiscriminator: "SAWork")]
-public class SAWork : IEquatable<SAWork> {
+[JsonDerivedType(typeof(SADocument), typeDiscriminator: "SAWork")]
+public class SADocument : IEquatable<SADocument> {
     public Guid Id { get; set; }
 
     public string Name { get; set; } = string.Empty;
@@ -18,7 +18,7 @@ public class SAWork : IEquatable<SAWork> {
 
     public SANode? Interaction { get; set; }
 
-    public bool Equals(SAWork? other) {
+    public bool Equals(SADocument? other) {
         if (ReferenceEquals(other, null)) { return false; }
         if (ReferenceEquals(other, this)) { return true; }
         if (this.Id != other.Id) return false;

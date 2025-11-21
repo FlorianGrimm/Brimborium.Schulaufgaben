@@ -6,6 +6,7 @@ using Brimborium.Schulaufgaben.Data;
 using Brimborium.Schulaufgaben;
 using Brimborium.Schulaufgaben.Service;
 using System.Threading.Tasks;
+using Scalar.AspNetCore;
 
 namespace SchulaufgabenClientWeb;
 
@@ -29,25 +30,34 @@ public class Program {
     public static async Task Run(string[] args) {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddOpenApi(options => {
+        });
         // Add services to the container.
-        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-        _ = builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite(connectionString));
-        _ = builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        //?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+        if (connectionString is { Length: > 0 }) {
 
-        _ = builder.Services
-            .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<ApplicationDbContext>();
-        // _ = builder.Services.AddRazorPages();
+            _ = builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlite(connectionString));
+            _ = builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+            _ = builder.Services
+                .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+        } else {
+            builder.Services.AddAuthorization();
+        }
+        _ = builder.Services.AddRazorPages();
         builder.Services.AddAngularFileService()
             .Configure(options => {
                 options.AngularPathPrefix.Add("editor");
             });
         builder.Services.AddOptions<AppEditorOptions>().BindConfiguration("Schulaufgaben");
-        builder.Services
+        var schulaufgabenEditorBuilder = builder.Services
             .AddTransient<IConfigureOptions<AppEditorOptions>, AppEditorConfigureOptions>()
             .AddTransient<IValidateOptions<AppEditorOptions>, AppEditorValidateOptions>()
-            .AddSchulaufgabenEditor()
+            .AddSchulaufgabenEditor();
+        schulaufgabenEditorBuilder.EditorPersistenceOptionsBuilder
             .BindConfiguration("Schulaufgaben")
             .Configure<IOptions<AppEditorOptions>>((editorPersistenceOptions, appEditorOptions) => {
                 var srcOptionsValue = appEditorOptions.Value;
@@ -55,9 +65,24 @@ public class Program {
                 editorPersistenceOptions.PublishFolder = srcOptionsValue.PublishFolder;
             });
 
+        schulaufgabenEditorBuilder.EditingMediaGalleryOptionsBuilder
+            .Configure<IOptions<AppEditorOptions>>((editorPersistenceOptions, appEditorOptions) => {
+                var srcOptionsValue = appEditorOptions.Value;
+                foreach (var item in srcOptionsValue.ListMediaGallery) {
+                    if (item.FolderPath is { } folderPath) {
+                        editorPersistenceOptions.ListMediaGallery.Add(
+                            new EditingMediaGallery(folderPath));
+                    }
+                }
+
+            });
+
         builder.Services.AddSingleton<EditorAPI>();
 
         var app = builder.Build();
+
+        _ = app.MapOpenApi().AllowAnonymous();
+        _ = app.MapScalarApiReference();
 
         // TODO: prefetch
         // await app.Services.GetRequiredService<EditorPersistenceService>().SAWorkDescriptionListReadFromWorkingAsync(CancellationToken.None);

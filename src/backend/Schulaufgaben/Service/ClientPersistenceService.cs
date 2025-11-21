@@ -51,11 +51,11 @@ public class ClientPersistenceService {
         }
     }
 
-    public async Task<List<SAWorkDescription>> SAWorkDescriptionListReadAsync(CancellationToken cancellationToken) {
+    public async Task<List<SADocumentDescription>> ReadListDocumentDescriptionAsync(CancellationToken cancellationToken) {
         var fileFQN = System.IO.Path.Combine(
             this._Folder,
-            SAConstants.WorkDescriptionJson
+            SAConstants.ListDocumentDescriptionJson
             );
-        return await FilePersistenceUtility.ReadListWorkDescriptionFileAsync(this._Folder, cancellationToken);
+        return await FilePersistenceUtility.ReadListDocumentDescriptionAsync(this._Folder, cancellationToken);
     }
 }

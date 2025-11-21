@@ -6,41 +6,41 @@ using Microsoft.AspNetCore.Mvc;
 namespace Brimborium.Schulaufgaben.API;
 
 public sealed class EditorAPI {
-    private readonly EditorPersistenceService _EditorPersistenceService;
+    private readonly EditingDocumentDescriptionLogic _Logic;
 
     public EditorAPI(
-        EditorPersistenceService editorPersistenceService
+        EditingDocumentDescriptionLogic logic
         ) {
-        this._EditorPersistenceService = editorPersistenceService;
+        this._Logic = logic;
     }
 
     public void Map(WebApplication app) {
         var groupAPI = app.MapGroup("/API");
-        var groupAPIWorkDescription = groupAPI.MapGroup("/WorkDescription");
+        var groupAPIWorkDescription = groupAPI.MapGroup("/DocumentDescription");
         //
         groupAPIWorkDescription.MapGet("/", async (HttpContext httpContext) => {
-            List<SAWorkDescription> result = await this._EditorPersistenceService
-                .GetWorkDescriptionListFromWorkingAsync(httpContext.RequestAborted).ConfigureAwait(false);
+            List<SADocumentDescription> result = await this._Logic
+                .GetListAsync(httpContext.RequestAborted).ConfigureAwait(false);
             return TypedResults.Ok(result);
         });
         groupAPIWorkDescription.MapGet("/{id}", async (HttpContext httpContext, [FromRoute] Guid id) => {
-            SAWorkDescription? result = await this._EditorPersistenceService
-                .GetWorkDescriptionByIdFromWorkingAsync(id, httpContext.RequestAborted).ConfigureAwait(false);
+            SADocumentDescription? result = await this._Logic
+                .GetByIdAsync(id, httpContext.RequestAborted).ConfigureAwait(false);
             return TypedResults.Ok(result);
         });
-        groupAPIWorkDescription.MapPut("/", async (HttpContext httpContext, [FromBody] SAWorkDescription value) => {
-            SAWorkDescription? result = await this._EditorPersistenceService
-                .CreateWorkDescriptionFromWorkingAsync(value, httpContext.RequestAborted).ConfigureAwait(false);
+        groupAPIWorkDescription.MapPut("/", async (HttpContext httpContext, [FromBody] SADocumentDescription value) => {
+            SADocumentDescription? result = await this._Logic
+                .CreateAsync(value, httpContext.RequestAborted).ConfigureAwait(false);
             return TypedResults.Ok(result);
         });
-        groupAPIWorkDescription.MapPost("/{id}", async (HttpContext httpContext, [FromRoute] Guid id, [FromBody] SAWorkDescription value) => {
-            SAWorkDescription? result = await this._EditorPersistenceService
-                .UpdateWorkDescriptionFromWorkingAsync(id, value, httpContext.RequestAborted).ConfigureAwait(false);
+        groupAPIWorkDescription.MapPost("/{id}", async (HttpContext httpContext, [FromRoute] Guid id, [FromBody] SADocumentDescription value) => {
+            SADocumentDescription? result = await this._Logic
+                .UpdateAsync(id, value, httpContext.RequestAborted).ConfigureAwait(false);
             return TypedResults.Ok(result);
         });
         groupAPIWorkDescription.MapDelete("/{id}", async (HttpContext httpContext, [FromRoute] Guid id) => {
-            await this._EditorPersistenceService
-                .DeleteWorkDescriptionFromWorkingAsync(id, httpContext.RequestAborted).ConfigureAwait(false);
+            await this._Logic
+                .DeleteAsync(id, httpContext.RequestAborted).ConfigureAwait(false);
             return TypedResults.Ok();
         });
     }

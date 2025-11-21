@@ -16,6 +16,7 @@ public sealed class AngularFileService : EndpointDataSource {
         this._ChangeToken = new CancellationChangeToken(this._CancellationTokenSource.Token);
         this._WebHostEnvironment = webHostEnvironment;
         foreach (var angularPath in angularFileServiceOptions.Value.AngularPathPrefix) {
+            if (angularPath is null) { continue; }
             var prefix = GetPatternFromAngularPath(angularPath, true);
             this._AngularPathPrefix.Add(prefix);
         }

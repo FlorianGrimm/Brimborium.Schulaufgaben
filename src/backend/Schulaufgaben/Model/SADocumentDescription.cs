@@ -2,8 +2,8 @@
 
 namespace Brimborium.Schulaufgaben.Model;
 
-[JsonDerivedType(typeof(SAWorkDescription), typeDiscriminator: "SAWorkDescription")]
-public class SAWorkDescription {
+[JsonDerivedType(typeof(SADocumentDescription), typeDiscriminator: "DocumentDescription")]
+public class SADocumentDescription {
     public Guid Id { get; set; }
 
     public string Folder { get; set; } = string.Empty;
