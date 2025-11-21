@@ -2,6 +2,9 @@
   <button matIconButton (click)="drawer.toggle()" aria-label="Menu">
     <mat-icon>menu</mat-icon>
   </button>
+
+   <ng-template [cdkPortalOutlet]="toolbarContent$ | async"></ng-template>
+   <ng-template [cdkPortalOutlet]="toolbarSelected$ | async"></ng-template>
 </mat-toolbar>
 <mat-drawer-container class="main-container" autosize>
     <mat-drawer #drawer class="main-sidenav" mode="side">

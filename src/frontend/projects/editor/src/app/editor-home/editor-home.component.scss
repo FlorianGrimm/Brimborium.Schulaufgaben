@@ -1,0 +1,25 @@
+@use '@angular/material' as mat;
+
+table{
+    width: 100%;
+}
+tr{
+    td{
+        border-top: solid 2px transparent;
+        border-bottom: solid 2px transparent;
+    }
+}
+th,
+tr:nth-child(even){
+    background-color:silver;
+}
+        
+tr:nth-child(odd){
+    background-color: lightgray;
+}
+tr:hover{
+    td{
+        border-top: solid 2px  var(--mat-sys-primary);
+        border-bottom: solid 2px  var(--mat-sys-primary);
+    }
+}

@@ -1,0 +1,26 @@
+<form [formGroup]="documentDescriptionForm" (ngSubmit)="onSubmit()">
+    <h3>
+        Neues Dokument
+    </h3>
+    <div style="display: flex; flex-direction: column;">
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" 
+                (blur)="updateErrorMessage()"
+                required
+                />
+                 @if (documentDescriptionForm.controls.name.invalid) {
+                <mat-error>{{errorMessageName()}}</mat-error>
+                }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Beschreibung</mat-label>
+            <input matInput formControlName="description" />
+        </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="!documentDescriptionForm.valid">
+        <mat-icon fontIcon="save"></mat-icon>
+        Speichern
+    </button>
+</form>

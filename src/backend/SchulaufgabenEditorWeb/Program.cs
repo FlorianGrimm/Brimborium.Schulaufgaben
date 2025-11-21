@@ -78,6 +78,7 @@ public class Program {
             });
 
         builder.Services.AddSingleton<EditorAPI>();
+        
 
         var app = builder.Build();
 

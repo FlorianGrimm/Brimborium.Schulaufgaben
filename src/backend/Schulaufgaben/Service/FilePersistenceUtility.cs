@@ -1,6 +1,8 @@
 ﻿// MIT - Florian Grimm
 
 
+using System.Runtime.CompilerServices;
+
 namespace Brimborium.Schulaufgaben.Service;
 
 public static class FilePersistenceUtility {
@@ -75,6 +77,10 @@ public static class FilePersistenceUtility {
         SADocument value,
         CancellationToken cancellationToken
         ) {
+        var directoryFQN = System.IO.Path.GetDirectoryName(fileFQN);
+        if (directoryFQN is null) { throw new ArgumentException(nameof(fileFQN)); }
+
+        System.IO.Directory.CreateDirectory(directoryFQN);
         using (System.IO.FileStream fileStream = new(fileFQN, FileMode.Create, FileAccess.ReadWrite, FileShare.None)) {
             await System.Text.Json.JsonSerializer.SerializeAsync<SADocument>(
                 fileStream,
@@ -92,14 +98,14 @@ public static class FilePersistenceUtility {
             || name.AsSpan().ContainsAny(invalidFileNameChars.AsSpan())) {
             var t = name.AsSpan().Trim();
             var sb = new StringBuilder().Append(t);
-            foreach (var c in invalidFileNameChars) { 
+            foreach (var c in invalidFileNameChars) {
                 sb.Replace(c, '_');
             }
             sb.Replace("____", "_");
             sb.Replace("___", "_");
             sb.Replace("__", "_");
             return sb.ToString();
-        } else { 
+        } else {
             return name;
         }
     }

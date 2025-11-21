@@ -7,7 +7,7 @@ namespace SchulaufgabenClientWeb.Pages
     {
         public void OnGet()
         {
-
+            this.Redirect("/client");
         }
     }
 }
