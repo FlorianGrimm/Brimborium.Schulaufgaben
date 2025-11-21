@@ -1,5 +1,6 @@
 ﻿// MIT - Florian Grimm
 
+
 namespace Brimborium.Schulaufgaben.Service;
 
 public class RepositoryEditingDocumentDescription {
@@ -34,5 +35,9 @@ public class RepositoryEditingDocumentDescription {
         CancellationToken cancellationToken) {
         this._State = new(value);
         await this._EditorPersistenceService.WriteEditingDocumentDescriptionListAsync(value, cancellationToken).ConfigureAwait(false);
+    }
+
+    public void DeleteEditingDocument(SADocumentDescription found) {
+        this._EditorPersistenceService.DeleteEditingDocument(found);
     }
 }

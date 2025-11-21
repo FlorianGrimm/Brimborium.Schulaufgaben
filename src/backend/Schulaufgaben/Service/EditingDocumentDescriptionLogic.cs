@@ -103,6 +103,7 @@ public class EditingDocumentDescriptionLogic {
         }
         if (found is { }) {
             await this._Repo.SetListAsync(nextState, requestAborted).ConfigureAwait(false);
+            this._Repo.DeleteEditingDocument(found);
         }
     }
 }

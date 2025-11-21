@@ -11,7 +11,7 @@ public class RepositoryEditingDocument {
         this._EditorPersistenceService = editorPersistenceService;
     }
 
-    public async Task<SADocument?> GetWorkAsync(
+    public async Task<SADocument?> GetDocumentAsync(
         SADocumentDescription documentDescription
         ) { 
         var folderFQN = this._EditorPersistenceService.GetEditingDocumentDescriptionFolder( documentDescription );
@@ -19,7 +19,7 @@ public class RepositoryEditingDocument {
         return null;
     }
 
-    public async Task<SADocument> SetWorkAsync(
+    public async Task<SADocument> SetDocumentAsync(
         SADocumentDescription workDescription,
         SADocument value
         ) {

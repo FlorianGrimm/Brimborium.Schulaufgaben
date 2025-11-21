@@ -1,6 +1,8 @@
 ﻿// MIT - Florian Grimm
 
 
+
+
 namespace Brimborium.Schulaufgaben.Service;
 
 public class EditorPersistenceOptions {
@@ -46,7 +48,7 @@ public class EditorPersistenceService {
 
     [Microsoft.Extensions.DependencyInjection.ActivatorUtilitiesConstructor]
     public EditorPersistenceService(
-        IOptionsMonitor<EditorPersistenceOptions> options
+            IOptionsMonitor<EditorPersistenceOptions> options
         ) {
         this._EditingFolder = string.Empty;
         this._PublishFolder = string.Empty;
@@ -63,7 +65,9 @@ public class EditorPersistenceService {
         }
     }
 
-    public async Task<List<SADocumentDescription>> ReadEditingListDocumentDescriptionListAsync(CancellationToken cancellationToken) {
+    public async Task<List<SADocumentDescription>> ReadEditingListDocumentDescriptionListAsync(
+            CancellationToken cancellationToken
+        ) {
         var fileFQN = System.IO.Path.Combine(
             this._EditingFolder,
             SAConstants.ListDocumentDescriptionJson
@@ -71,8 +75,9 @@ public class EditorPersistenceService {
         return await FilePersistenceUtility.ReadListDocumentDescriptionAsync(fileFQN, cancellationToken);
     }
     public async Task WriteEditingDocumentDescriptionListAsync(
-        List<SADocumentDescription> value,
-        CancellationToken cancellationToken) {
+            List<SADocumentDescription> value,
+            CancellationToken cancellationToken
+        ) {
         var fileFQN = System.IO.Path.Combine(
             this._EditingFolder,
             SAConstants.ListDocumentDescriptionJson
@@ -80,7 +85,9 @@ public class EditorPersistenceService {
         await FilePersistenceUtility.WriteListDocumentDescriptionAsync(fileFQN, value, cancellationToken);
     }
 
-    public string GetEditingDocumentDescriptionFolder(SADocumentDescription value) {
+    public string GetEditingDocumentDescriptionFolder(
+            SADocumentDescription value
+        ) {
         var folderFQN = System.IO.Path.Combine(
             this._EditingFolder,
             value.Folder
@@ -88,7 +95,9 @@ public class EditorPersistenceService {
         return folderFQN;
     }
 
-    public async Task<List<SADocumentDescription>> ReadPublishListWorkDescriptionListAsync(CancellationToken cancellationToken) {
+    public async Task<List<SADocumentDescription>> ReadPublishListWorkDescriptionListAsync(
+            CancellationToken cancellationToken
+        ) {
         var fileFQN = System.IO.Path.Combine(
             this._PublishFolder,
             SAConstants.ListDocumentDescriptionJson
@@ -97,8 +106,9 @@ public class EditorPersistenceService {
     }
 
     public async Task WritePublishListDocumentDescriptionListAsync(
-        List<SADocumentDescription> value,
-        CancellationToken cancellationToken) {
+            List<SADocumentDescription> value,
+            CancellationToken cancellationToken
+        ) {
         var fileFQN = System.IO.Path.Combine(
             this._PublishFolder,
             SAConstants.ListDocumentDescriptionJson
@@ -106,12 +116,34 @@ public class EditorPersistenceService {
         await FilePersistenceUtility.WriteListDocumentDescriptionAsync(fileFQN, value, cancellationToken);
     }
 
-    public async Task WriteEditingDocumentAsync(
-        SADocumentDescription documentDescription,
-        SADocument work,
-        CancellationToken cancellationToken) {
+    public async Task<SADocument?> ReadEditingDocumentAsync(
+            SADocumentDescription documentDescription,
+            CancellationToken requestAborted) {
         var folderFQN = this.GetEditingDocumentDescriptionFolder(documentDescription);
         var fileFQN = System.IO.Path.Combine(folderFQN, SAConstants.DocumentJson);
-        await FilePersistenceUtility.WriteDocumentAsync(fileFQN, work, cancellationToken);
+        return await FilePersistenceUtility.ReadDocumentAsync(fileFQN, requestAborted);
+    }
+
+    public async Task WriteEditingDocumentAsync(
+            SADocumentDescription documentDescription,
+            SADocument document,
+            CancellationToken cancellationToken
+        ) {
+        var folderFQN = this.GetEditingDocumentDescriptionFolder(documentDescription);
+        var fileFQN = System.IO.Path.Combine(folderFQN, SAConstants.DocumentJson);
+        await FilePersistenceUtility.WriteDocumentAsync(fileFQN, document, cancellationToken);
+    }
+
+    public void DeleteEditingDocument(SADocumentDescription documentDescription) {
+        var folderFQN = this.GetEditingDocumentDescriptionFolder(documentDescription);
+        if (OperatingSystem.IsWindows()) {
+            Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(
+                folderFQN, 
+                Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs,
+                Microsoft.VisualBasic.FileIO.RecycleOption.SendToRecycleBin,
+                Microsoft.VisualBasic.FileIO.UICancelOption.DoNothing );
+        } else {
+            System.IO.Directory.Delete(folderFQN, true);
+        }
     }
 }

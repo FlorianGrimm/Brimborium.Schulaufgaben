@@ -2,7 +2,7 @@
 
 namespace Brimborium.Schulaufgaben.Model;
 
-[JsonDerivedType(typeof(SADocument), typeDiscriminator: "SAWork")]
+[JsonDerivedType(typeof(SADocument), typeDiscriminator: "Document")]
 public class SADocument : IEquatable<SADocument> {
     public Guid Id { get; set; }
 
@@ -28,11 +28,4 @@ public class SADocument : IEquatable<SADocument> {
         // TODO ListMedia, Decoration, Interaction
         return true;
     }
-}
-
-[JsonDerivedType(typeof(SAMedia), typeDiscriminator: "SAMedia")]
-public class SAMedia {
-    public required Guid Id { get; set; }
-    public required string Path { get; set; }
-    public required string Kind { get; set; }
 }

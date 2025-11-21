@@ -2,6 +2,32 @@
 
 Brimborium.Schulaufgaben 
 
+# Architecture
+
+## Editor (Author)
+
+Runs on the author's machine.
+Edits the documents.
+Publishes the documents to another folder.
+Manually transfered to the client(student) server.
+
+## Client (student)
+
+Runs on a server for the students.
+
+# Features 
+
+- Manage the documents.
+
+# Meanings
+
+- Document = Schulaufgabe 
+    a folder with a document.json and media files.
+
+- Media = Image, Video, Audio
+
+- MediaGallery = Folder with media files.
+    if used in a document will be copied to the document folder.
 
 ## EfCore Migrations Commands
 
