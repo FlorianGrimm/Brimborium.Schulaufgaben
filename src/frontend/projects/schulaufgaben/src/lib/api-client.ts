@@ -25,7 +25,9 @@ import {
 } from 'rxjs';
 
 import type {
-  SADocumentDescription
+  SADocument,
+  SADocumentDescription,
+  SAMediaInfo
 } from './model';
 
 interface HttpClientOptions {
@@ -109,6 +111,73 @@ export class SchulaufgabenEditorWebV1Service {
     );
   }
 
+ getAPIDocumentId<TData = SADocument>(id: string, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ getAPIDocumentId<TData = SADocument>(id: string, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ getAPIDocumentId<TData = SADocument>(id: string, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  getAPIDocumentId<TData = SADocument>(
+    id: string, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.get<TData>(
+      `/API/Document/${id}`,options
+    );
+  }
+
+ postAPIDocumentId<TData = SADocument>(id: string,
+    sADocument: SADocument, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ postAPIDocumentId<TData = SADocument>(id: string,
+    sADocument: SADocument, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ postAPIDocumentId<TData = SADocument>(id: string,
+    sADocument: SADocument, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  postAPIDocumentId<TData = SADocument>(
+    id: string,
+    sADocument: SADocument, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.post<TData>(
+      `/API/Document/${id}`,
+      sADocument,options
+    );
+  }
+
+ deleteAPIDocumentId<TData = void>(id: string, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ deleteAPIDocumentId<TData = void>(id: string, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ deleteAPIDocumentId<TData = void>(id: string, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  deleteAPIDocumentId<TData = void>(
+    id: string, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.delete<TData>(
+      `/API/Document/${id}`,options
+    );
+  }
+
+ putAPIDocument<TData = SADocument>(sADocument: SADocument, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ putAPIDocument<TData = SADocument>(sADocument: SADocument, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ putAPIDocument<TData = SADocument>(sADocument: SADocument, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  putAPIDocument<TData = SADocument>(
+    sADocument: SADocument, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.put<TData>(
+      `/API/Document`,
+      sADocument,options
+    );
+  }
+
+ getAPIMediaName<TData = void>(name: string, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ getAPIMediaName<TData = void>(name: string, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ getAPIMediaName<TData = void>(name: string, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  getAPIMediaName<TData = void>(
+    name: string, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.get<TData>(
+      `/API/Media/${name}`,options
+    );
+  }
+
+ postAPIMediaSearch<TData = SAMediaInfo[]>(postAPIMediaSearchBody: string, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ postAPIMediaSearch<TData = SAMediaInfo[]>(postAPIMediaSearchBody: string, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ postAPIMediaSearch<TData = SAMediaInfo[]>(postAPIMediaSearchBody: string, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+  postAPIMediaSearch<TData = SAMediaInfo[]>(
+    postAPIMediaSearchBody: string, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    return this.http.post<TData>(
+      `/API/Media/Search`,
+      postAPIMediaSearchBody,options
+    );
+  }
+
 };
 
 export type GetAPIDocumentDescriptionClientResult = NonNullable<SADocumentDescription[]>
@@ -116,3 +185,9 @@ export type PutAPIDocumentDescriptionClientResult = NonNullable<SADocumentDescri
 export type GetAPIDocumentDescriptionIdClientResult = NonNullable<SADocumentDescription>
 export type PostAPIDocumentDescriptionIdClientResult = NonNullable<SADocumentDescription>
 export type DeleteAPIDocumentDescriptionIdClientResult = NonNullable<void>
+export type GetAPIDocumentIdClientResult = NonNullable<SADocument>
+export type PostAPIDocumentIdClientResult = NonNullable<SADocument>
+export type DeleteAPIDocumentIdClientResult = NonNullable<void>
+export type PutAPIDocumentClientResult = NonNullable<SADocument>
+export type GetAPIMediaNameClientResult = NonNullable<void>
+export type PostAPIMediaSearchClientResult = NonNullable<SAMediaInfo[]>

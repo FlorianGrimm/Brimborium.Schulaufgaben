@@ -1,0 +1,829 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "SchulaufgabenEditorWeb | v1",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/API/DocumentDescription": {
+      "get": {
+        "tags": [
+          "EditorAPI"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SADocumentDescription"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "EditorAPI"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SADocumentDescription"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SADocumentDescription"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/API/DocumentDescription/{id}": {
+      "get": {
+        "tags": [
+          "EditorAPI"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SADocumentDescription"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "EditorAPI"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SADocumentDescription"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SADocumentDescription"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "EditorAPI"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/API/Document/{id}": {
+      "get": {
+        "tags": [
+          "EditorAPI"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SADocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "EditorAPI"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SADocument"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SADocument"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "EditorAPI"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/API/Document": {
+      "put": {
+        "tags": [
+          "EditorAPI"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SADocument"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SADocument"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/API/Media/{name}": {
+      "get": {
+        "tags": [
+          "EditorAPI"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/API/Media/Search": {
+      "post": {
+        "tags": [
+          "EditorAPI"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SAMediaInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SADocument": {
+        "required": [
+          "$type"
+        ],
+        "type": "object",
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/SADocumentSADocument"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "$type",
+          "mapping": {
+            "Document": "#/components/schemas/SADocumentSADocument"
+          }
+        }
+      },
+      "SADocumentDescription": {
+        "required": [
+          "$type"
+        ],
+        "type": "object",
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/SADocumentDescriptionSADocumentDescription"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "$type",
+          "mapping": {
+            "DocumentDescription": "#/components/schemas/SADocumentDescriptionSADocumentDescription"
+          }
+        }
+      },
+      "SADocumentDescriptionSADocumentDescription": {
+        "properties": {
+          "$type": {
+            "enum": [
+              "DocumentDescription"
+            ],
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "folder": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "contentHash": {
+            "type": "string"
+          }
+        }
+      },
+      "SADocumentSADocument": {
+        "properties": {
+          "$type": {
+            "enum": [
+              "Document"
+            ],
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "kindInteraction": {
+            "type": "string"
+          },
+          "listMedia": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SAMedia"
+            }
+          },
+          "decoration": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SANode"
+              }
+            ]
+          },
+          "interaction": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SANode"
+              }
+            ]
+          }
+        }
+      },
+      "SAMedia": {
+        "required": [
+          "$type"
+        ],
+        "type": "object",
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/SAMediaSAMedia"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "$type",
+          "mapping": {
+            "Media": "#/components/schemas/SAMediaSAMedia"
+          }
+        }
+      },
+      "SAMediaInfo": {
+        "required": [
+          "$type"
+        ],
+        "type": "object",
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/SAMediaInfoSAMediaInfo"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "$type",
+          "mapping": {
+            "MediaInfo": "#/components/schemas/SAMediaInfoSAMediaInfo"
+          }
+        }
+      },
+      "SAMediaInfoSAMediaInfo": {
+        "properties": {
+          "$type": {
+            "enum": [
+              "MediaInfo"
+            ],
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "size": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          }
+        }
+      },
+      "SAMediaSAMedia": {
+        "required": [
+          "id",
+          "path",
+          "kind"
+        ],
+        "properties": {
+          "$type": {
+            "enum": [
+              "Media"
+            ],
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "path": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          }
+        }
+      },
+      "SANode": {
+        "required": [
+          "$type"
+        ],
+        "type": "object",
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/SANodeSANode"
+          },
+          {
+            "$ref": "#/components/schemas/SANodeSAGroup"
+          },
+          {
+            "$ref": "#/components/schemas/SANodeSAList"
+          },
+          {
+            "$ref": "#/components/schemas/SANodeSAImage"
+          },
+          {
+            "$ref": "#/components/schemas/SANodeSAAudio"
+          },
+          {
+            "$ref": "#/components/schemas/SANodeSAVideo"
+          },
+          {
+            "$ref": "#/components/schemas/SANodeSAText"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "$type",
+          "mapping": {
+            "SANode": "#/components/schemas/SANodeSANode",
+            "SAGroup": "#/components/schemas/SANodeSAGroup",
+            "SAList": "#/components/schemas/SANodeSAList",
+            "SAImage": "#/components/schemas/SANodeSAImage",
+            "SAAudio": "#/components/schemas/SANodeSAAudio",
+            "SAVideo": "#/components/schemas/SANodeSAVideo",
+            "SAText": "#/components/schemas/SANodeSAText"
+          }
+        }
+      },
+      "SANodeSAAudio": {
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "$type": {
+            "enum": [
+              "SAAudio"
+            ],
+            "type": "string"
+          },
+          "media": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "kind": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "SANodeSAGroup": {
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "$type": {
+            "enum": [
+              "SAGroup"
+            ],
+            "type": "string"
+          },
+          "listItem": {
+            "anyof": [
+          {
+            "$ref": "#/components/schemas/SANodeSANode"
+          },
+          {
+            "$ref": "#/components/schemas/SANodeSAGroup"
+          },
+          {
+            "$ref": "#/components/schemas/SANodeSAList"
+          },
+          {
+            "$ref": "#/components/schemas/SANodeSAImage"
+          },
+          {
+            "$ref": "#/components/schemas/SANodeSAAudio"
+          },
+          {
+            "$ref": "#/components/schemas/SANodeSAVideo"
+          },
+          {
+            "$ref": "#/components/schemas/SANodeSAText"
+          }
+        ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "kind": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "SANodeSAImage": {
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "$type": {
+            "enum": [
+              "SAImage"
+            ],
+            "type": "string"
+          },
+          "media": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "kind": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "SANodeSAList": {
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "$type": {
+            "enum": [
+              "SAList"
+            ],
+            "type": "string"
+          },
+          "listItem": {
+              "anyof": [
+                {
+                    "$ref": "#/components/schemas/SANodeSANode"
+                },
+                {
+                    "$ref": "#/components/schemas/SANodeSAGroup"
+                },
+                {
+                    "$ref": "#/components/schemas/SANodeSAList"
+                },
+                {
+                    "$ref": "#/components/schemas/SANodeSAImage"
+                },
+                {
+                    "$ref": "#/components/schemas/SANodeSAAudio"
+                },
+                {
+                    "$ref": "#/components/schemas/SANodeSAVideo"
+                },
+                {
+                    "$ref": "#/components/schemas/SANodeSAText"
+                }
+            ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "kind": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "SANodeSANode": {
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "$type": {
+            "enum": [
+              "SANode"
+            ],
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "kind": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "SANodeSAText": {
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "$type": {
+            "enum": [
+              "SAText"
+            ],
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "style": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "kind": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "SANodeSAVideo": {
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "$type": {
+            "enum": [
+              "SAVideo"
+            ],
+            "type": "string"
+          },
+          "media": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "kind": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "EditorAPI"
+    }
+  ]
+}

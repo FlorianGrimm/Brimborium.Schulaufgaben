@@ -6,6 +6,8 @@ namespace Brimborium.Schulaufgaben.Model;
 [JsonDerivedType(typeof(SAGroup), typeDiscriminator: "SAGroup")]
 [JsonDerivedType(typeof(SAList), typeDiscriminator: "SAList")]
 [JsonDerivedType(typeof(SAImage), typeDiscriminator: "SAImage")]
+[JsonDerivedType(typeof(SAAudio), typeDiscriminator: "SAAudio")]
+[JsonDerivedType(typeof(SAVideo), typeDiscriminator: "SAVideo")]
 [JsonDerivedType(typeof(SAText), typeDiscriminator: "SAText")]
 public class SANode {
     public required Guid Id { get; set; }
@@ -25,6 +27,10 @@ public class SAList : SANode {
 public class SAImage : SANode {
     public Guid Media { get; set; }
 }
+public class SAVideo : SANode {
+    public Guid Media { get; set; }
+}
+
 public class SAAudio : SANode {
     public Guid Media { get; set; }
 }

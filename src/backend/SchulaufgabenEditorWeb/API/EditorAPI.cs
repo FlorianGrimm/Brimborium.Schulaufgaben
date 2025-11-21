@@ -86,21 +86,32 @@ public sealed class EditorAPI {
 
         {
             var groupAPIDocument = groupAPI.MapGroup("/Media");
-            
-            // returns the media as a stream.
-            groupAPIDocument.MapGet("/{name}", async (HttpContext httpContext, [FromRoute] string name) => {
-                var result = await this._EditingMediaGalleryLogic.GetAsync(name, httpContext.RequestAborted).ConfigureAwait(false);
-                if (result is null) { return TypedResults.NotFound(); }
-                //httpContext.Response.ContentType = result.ContentType;
-                //await result.Stream.CopyToAsync(httpContext.Response.Body, httpContext.RequestAborted);
-                return TypedResults.PhysicalFile(result.Stream, result.ContentType);
-            });
 
-            //
-            groupAPIDocument.MapPost("/Search", async (HttpContext httpContext, [FromBody] string value) => {
-                List<SAMediaInfo> result = await this._EditingMediaGalleryLogic.SearchAsync(value, httpContext.RequestAborted).ConfigureAwait(false);
-                return TypedResults.Ok(result);
+            // returns the media as a stream.
+            /*
+            groupAPIDocument.MapGet("/{name}",
+                async (HttpContext httpContext, [FromRoute] string name) => {
+
+                    var result = await this._EditingMediaGalleryLogic.GetAsync(name, httpContext.RequestAborted).ConfigureAwait(false);
+                    if (result is null) { return TypedResults.NotFound(); }
+                    //httpContext.Response.ContentType = result.ContentType;
+                    //await result.Stream.CopyToAsync(httpContext.Response.Body, httpContext.RequestAborted);
+                    return TypedResults.PhysicalFile(result.Stream, result.ContentType);
+                });
+            */
+            groupAPIDocument.MapGet("/{name}", async (HttpContext httpContext, [FromRoute] string name) => {
+                await Task.CompletedTask;
+                var result = await this._EditingMediaGalleryLogic.GetAsync(name, httpContext.RequestAborted).ConfigureAwait(false);
+                return (IResult)(result is null
+                    ? TypedResults.NotFound()
+                    : TypedResults.Stream(result.Stream, result.ContentType));
             });
-        }    
+            //
+            groupAPIDocument.MapPost("/Search", 
+                async (HttpContext httpContext, [FromBody] string value) => {
+                    List<SAMediaInfo> result = await this._EditingMediaGalleryLogic.SearchAsync(value, httpContext.RequestAborted).ConfigureAwait(false);
+                    return TypedResults.Ok(result);
+                });
+            }    
     }
 }
