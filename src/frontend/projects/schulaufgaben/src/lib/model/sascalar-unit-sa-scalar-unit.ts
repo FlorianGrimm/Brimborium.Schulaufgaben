@@ -13,6 +13,7 @@ export interface SAScalarUnitSAScalarUnit {
   $type: SAScalarUnitSAScalarUnitType;
   /** @pattern ^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?$ */
   value: SAScalarUnitSAScalarUnitValue;
+  /** 0=Percent, 1=Pixel */
   unit: SAUnit;
   name?: SAScalarUnitSAScalarUnitName;
 }

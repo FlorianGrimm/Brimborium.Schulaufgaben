@@ -14,15 +14,23 @@ public class SANode {
     public SAContent? Selected { get; set; }
 }
 
+[JsonDerivedType(typeof(SAContent), typeDiscriminator: "SAContent")]
 public class SAContent {
     public string? MatchingValue { get; set; }
+    public SAColor? Background { get; set; }
+    public SABorder? Border { get; set; }
     public SAText? Text { get; set; }
     public SAImage? Image { get; set; }
     public SAAudio? Audio { get; set; }
     public SAVideo? Video { get; set; }
 }
 
-public enum SAUnit { Percent, Pixel }
+public enum SAUnit {
+    [JsonStringEnumMemberName("Percent")]
+    Percent,
+    [JsonStringEnumMemberName("Pixel")]
+    Pixel 
+}
 
 [JsonDerivedType(typeof(SAScalarUnit), typeDiscriminator: "SAScalarUnit")]
 public class SAScalarUnit {
@@ -47,7 +55,7 @@ public class SAImage {
 }
 
 [JsonDerivedType(typeof(SAVideo), typeDiscriminator: "SAVideo")]
-public class SAVideo : SANode {
+public class SAVideo {
     public Guid Media { get; set; }
 }
 

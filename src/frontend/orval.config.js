@@ -4,7 +4,8 @@ export default defineConfig({
   petstore: {
     output: {
       //mode: 'tags-split',
-      mode: 'single',
+      //mode: 'single',
+      mode: 'split',
       namingConvention: 'kebab-case',
       target: 'projects/schulaufgaben/src/lib/api-client.ts',
       schemas: 'projects/schulaufgaben/src/lib/model',

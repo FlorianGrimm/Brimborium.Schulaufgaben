@@ -1,10 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseComponent, SADocument, SADocumentDescription, SADocumentSADocumentDecoration, SANode, SchulaufgabenEditorWebV1Service, SelectionService } from 'schulaufgaben';
+import { EditorSADocumentComponent } from '../editor-sa-document/editor-sa-document.component';
 
 @Component({
   selector: 'app-editor-edit',
-  imports: [],
+  imports: [EditorSADocumentComponent],
   templateUrl: './editor-edit.component.html',
   styleUrl: './editor-edit.component.scss',
 })
@@ -28,7 +29,18 @@ export class EditorEditComponent extends BaseComponent implements OnInit {
     //this.client.getAPIDocumentDescription
 
     //interaction?: SADocumentSADocumentInteraction;
-    this.decoration = {
+    const decoration :SANode= {
+      $type: "SANode",
+      id: "00000000-0000-0000-0000-000000000001",
+      name: "decoration",
+      kind: "decoration",
+      listItem: [],
+      position: undefined,
+      normal: undefined,
+      flipped: undefined,
+      selected: undefined
+    };
+    const interaction :SANode= {
       $type: "SANode",
       id: "00000000-0000-0000-0000-000000000001",
       name: "decoration",
@@ -41,13 +53,13 @@ export class EditorEditComponent extends BaseComponent implements OnInit {
     };
     this.document = {
       $type: "Document",
-      id?: "00000000-0000-0000-0000-000000000000",
-      name?: "test",
-      description?: "test",
-      kindInteraction?: "",
+      id: "00000000-0000-0000-0000-000000000000",
+      name: "test",
+      description: "test",
+      kindInteraction: "",
       listMedia: [],
-      decoration: this.decoration,
-      interaction: undefined,
+      decoration: decoration,
+      interaction: interaction,
       width: { $type: "SAScalarUnit", value: 100, unit: 0, name: "width" },
       height: { $type: "SAScalarUnit", value: 100, unit: 0, name: "height" },
       rulerHorizontal: [],

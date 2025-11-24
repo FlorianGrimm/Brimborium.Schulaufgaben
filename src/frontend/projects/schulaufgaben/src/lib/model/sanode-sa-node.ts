@@ -7,6 +7,7 @@
 import type { SANodeSANodeType } from './sanode-sa-node-type';
 import type { SANodeSANodeName } from './sanode-sa-node-name';
 import type { SANodeSANodeKind } from './sanode-sa-node-kind';
+import type { SANode } from './sanode';
 import type { SANodeSANodePosition } from './sanode-sa-node-position';
 import type { SANodeSANodeNormal } from './sanode-sa-node-normal';
 import type { SANodeSANodeFlipped } from './sanode-sa-node-flipped';

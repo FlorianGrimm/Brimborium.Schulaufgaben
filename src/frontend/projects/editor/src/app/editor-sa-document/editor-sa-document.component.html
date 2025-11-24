@@ -1,0 +1,10 @@
+<div style="position: absolute; z-index: 100;">
+    @if(document && document.decoration; as decoration){
+        <app-editor-sa-node [node]="decoration"></app-editor-sa-node>
+    }
+</div>
+<div style="position: absolute; z-index: 200;">
+    @if(document && document.interaction; as interaction){
+        <app-editor-sa-node [node]="interaction"></app-editor-sa-node>
+    }
+</div>
