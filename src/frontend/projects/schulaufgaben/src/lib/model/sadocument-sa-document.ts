@@ -10,6 +10,9 @@ import type { SADocumentSADocumentDecoration } from './sadocument-sa-document-de
 import type { SADocumentSADocumentInteraction } from './sadocument-sa-document-interaction';
 import type { SADocumentSADocumentWidth } from './sadocument-sa-document-width';
 import type { SADocumentSADocumentHeight } from './sadocument-sa-document-height';
+import type { SADocumentSADocumentDefinedHorizontal } from './sadocument-sa-document-defined-horizontal';
+import type { SADocumentSADocumentDefinedVertical } from './sadocument-sa-document-defined-vertical';
+import type { SADocumentSADocumentDefinedColor } from './sadocument-sa-document-defined-color';
 import type { SADocumentSADocumentRulerHorizontal } from './sadocument-sa-document-ruler-horizontal';
 import type { SADocumentSADocumentRulerVertical } from './sadocument-sa-document-ruler-vertical';
 
@@ -24,6 +27,9 @@ export interface SADocumentSADocument {
   interaction?: SADocumentSADocumentInteraction;
   width?: SADocumentSADocumentWidth;
   height?: SADocumentSADocumentHeight;
+  definedHorizontal?: SADocumentSADocumentDefinedHorizontal;
+  definedVertical?: SADocumentSADocumentDefinedVertical;
+  definedColor?: SADocumentSADocumentDefinedColor;
   rulerHorizontal?: SADocumentSADocumentRulerHorizontal;
   rulerVertical?: SADocumentSADocumentRulerVertical;
 }

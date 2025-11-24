@@ -4,18 +4,6 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SABoxLeft } from './sabox-left';
-import type { SABoxTop } from './sabox-top';
-import type { SABoxWidth } from './sabox-width';
-import type { SABoxHeight } from './sabox-height';
-import type { SABoxRight } from './sabox-right';
-import type { SABoxBottom } from './sabox-bottom';
+import type { SABoxSABox } from './sabox-sa-box';
 
-export interface SABox {
-  left?: SABoxLeft;
-  top?: SABoxTop;
-  width?: SABoxWidth;
-  height?: SABoxHeight;
-  right?: SABoxRight;
-  bottom?: SABoxBottom;
-}
+export type SABox = SABoxSABox;

@@ -7,7 +7,7 @@ namespace Brimborium.Schulaufgaben.Model;
 /// The media is stored in the document folder.
 /// </summary>
 [JsonDerivedType(typeof(SAMedia), typeDiscriminator: "Media")]
-public class SAMedia {
+public class SAMedia {    
     public required Guid Id { get; set; }
     public required string Path { get; set; }
     public required string MediaType { get; set; }

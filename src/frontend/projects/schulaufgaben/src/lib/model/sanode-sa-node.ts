@@ -7,7 +7,7 @@
 import type { SANodeSANodeType } from './sanode-sa-node-type';
 import type { SANodeSANodeName } from './sanode-sa-node-name';
 import type { SANodeSANodeKind } from './sanode-sa-node-kind';
-import type { SANode } from './sanode';
+import type { ListItem } from './list-item';
 import type { SANodeSANodePosition } from './sanode-sa-node-position';
 import type { SANodeSANodeNormal } from './sanode-sa-node-normal';
 import type { SANodeSANodeFlipped } from './sanode-sa-node-flipped';
@@ -18,7 +18,7 @@ export interface SANodeSANode {
   id: string;
   name?: SANodeSANodeName;
   kind?: SANodeSANodeKind;
-  listItem?: SANodeSANode[];
+  listItem?: ListItem;
   position?: SANodeSANodePosition;
   normal?: SANodeSANodeNormal;
   flipped?: SANodeSANodeFlipped;

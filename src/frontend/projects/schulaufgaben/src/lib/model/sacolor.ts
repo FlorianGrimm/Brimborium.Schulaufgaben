@@ -4,6 +4,6 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SAContentSAContent } from './sacontent-sa-content';
+import type { SAColorSAColor } from './sacolor-sa-color';
 
-export type SAContent = SAContentSAContent;
+export type SAColor = SAColorSAColor;

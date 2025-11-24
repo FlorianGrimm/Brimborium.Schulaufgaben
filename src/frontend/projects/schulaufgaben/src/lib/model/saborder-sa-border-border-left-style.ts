@@ -4,6 +4,5 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SAContentSAContent } from './sacontent-sa-content';
 
-export type SAContent = SAContentSAContent;
+export type SABorderSABorderBorderLeftStyle = null | string;

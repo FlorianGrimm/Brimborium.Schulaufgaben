@@ -5,9 +5,22 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { SATextSATextType } from './satext-sa-text-type';
+import type { SATextSATextFontFamily } from './satext-sa-text-font-family';
+import type { SATextSATextFontSize } from './satext-sa-text-font-size';
+import type { SATextSATextFontWeight } from './satext-sa-text-font-weight';
+import type { SATextSATextFontStyle } from './satext-sa-text-font-style';
+import type { SATextSATextColor } from './satext-sa-text-color';
+import type { SATextSATextTextAlign } from './satext-sa-text-text-align';
+import type { SATextSATextTextDecoration } from './satext-sa-text-text-decoration';
 
 export interface SATextSAText {
   $type: SATextSATextType;
   value?: string;
-  style?: string;
+  fontFamily?: SATextSATextFontFamily;
+  fontSize?: SATextSATextFontSize;
+  fontWeight?: SATextSATextFontWeight;
+  fontStyle?: SATextSATextFontStyle;
+  color?: SATextSATextColor;
+  textAlign?: SATextSATextTextAlign;
+  textDecoration?: SATextSATextTextDecoration;
 }

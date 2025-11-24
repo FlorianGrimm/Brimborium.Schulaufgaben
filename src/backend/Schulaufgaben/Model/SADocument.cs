@@ -18,8 +18,13 @@ public class SADocument : IEquatable<SADocument> {
 
     public SANode? Interaction { get; set; }
 
+    /* 1200 x 800 as default. */
     public SAScalarUnit? Width { get; set; }
     public SAScalarUnit? Height { get; set; }
+
+    public List<SAScalarUnit>? DefinedHorizontal { get; set; }
+    public List<SAScalarUnit>? DefinedVertical { get; set; }
+    public List<SAColor>? DefinedColor { get; set; }
 
     public List<SAScalarUnit>? RulerHorizontal { get; set; }
     public List<SAScalarUnit>? RulerVertical { get; set; }
