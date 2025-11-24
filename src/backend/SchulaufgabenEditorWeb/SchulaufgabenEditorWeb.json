@@ -261,7 +261,29 @@
         }
       }
     },
-    "/API/Media/{name}": {
+    "/API/Media/Content/{name}": {
+      "get": {
+        "tags": [
+          "EditorAPI"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/API/Media/Thumbnail/{name}": {
       "get": {
         "tags": [
           "EditorAPI"
@@ -292,7 +314,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "string"
+                "$ref": "#/components/schemas/SAMediaSearchRequest"
               }
             }
           },
@@ -318,6 +340,9 @@
   },
   "components": {
     "schemas": {
+      "MediaType": {
+        "type": "integer"
+      },
       "SADocument": {
         "required": [
           "$type"
@@ -472,6 +497,9 @@
           "path": {
             "type": "string"
           },
+          "mediaType": {
+            "type": "string"
+          },
           "size": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
             "type": [
@@ -479,6 +507,14 @@
               "string"
             ],
             "format": "int64"
+          },
+          "lastWriteTimeUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastScan": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -503,6 +539,21 @@
             "type": "string"
           },
           "kind": {
+            "type": "string"
+          }
+        }
+      },
+      "SAMediaSearchRequest": {
+        "required": [
+          "mediaType",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "mediaType": {
+            "$ref": "#/components/schemas/MediaType"
+          },
+          "value": {
             "type": "string"
           }
         }
@@ -594,28 +645,28 @@
           },
           "listItem": {
             "anyof": [
-          {
-            "$ref": "#/components/schemas/SANodeSANode"
-          },
-          {
-            "$ref": "#/components/schemas/SANodeSAGroup"
-          },
-          {
-            "$ref": "#/components/schemas/SANodeSAList"
-          },
-          {
-            "$ref": "#/components/schemas/SANodeSAImage"
-          },
-          {
-            "$ref": "#/components/schemas/SANodeSAAudio"
-          },
-          {
-            "$ref": "#/components/schemas/SANodeSAVideo"
-          },
-          {
-            "$ref": "#/components/schemas/SANodeSAText"
-          }
-        ]
+                {
+                    "$ref": "#/components/schemas/SANodeSANode"
+                },
+                {
+                    "$ref": "#/components/schemas/SANodeSAGroup"
+                },
+                {
+                    "$ref": "#/components/schemas/SANodeSAList"
+                },
+                {
+                    "$ref": "#/components/schemas/SANodeSAImage"
+                },
+                {
+                    "$ref": "#/components/schemas/SANodeSAAudio"
+                },
+                {
+                    "$ref": "#/components/schemas/SANodeSAVideo"
+                },
+                {
+                    "$ref": "#/components/schemas/SANodeSAText"
+                }
+            ]
           },
           "id": {
             "type": "string",
@@ -680,7 +731,7 @@
             "type": "string"
           },
           "listItem": {
-              "anyof": [
+            "anyof": [
                 {
                     "$ref": "#/components/schemas/SANodeSANode"
                 },

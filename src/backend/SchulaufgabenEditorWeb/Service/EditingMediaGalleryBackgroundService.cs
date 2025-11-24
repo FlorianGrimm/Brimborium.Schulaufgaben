@@ -14,7 +14,9 @@ public class EditingMediaGalleryBackgroundService
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken) {
-        await this._EditingMediaGalleryLogic.InitialScanAsync(stoppingToken);
-        throw new NotImplementedException();
+        var task = this._EditingMediaGalleryLogic.StartThumbnailQueueAsync(stoppingToken);
+        await this._EditingMediaGalleryLogic.InitialScanAsync(stoppingToken).ConfigureAwait(false);
+        this._EditingMediaGalleryLogic.WireFolderWatch(stoppingToken);
+        await task;
     }
 }

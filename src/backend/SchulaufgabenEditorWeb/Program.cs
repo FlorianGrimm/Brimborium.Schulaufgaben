@@ -68,6 +68,7 @@ public class Program {
         schulaufgabenEditorBuilder.EditingMediaGalleryOptionsBuilder
             .Configure<IOptions<AppEditorOptions>>((editorPersistenceOptions, appEditorOptions) => {
                 var srcOptionsValue = appEditorOptions.Value;
+                editorPersistenceOptions.ThumbnailFolder = srcOptionsValue.ThumbnailFolder;
                 foreach (var item in srcOptionsValue.ListMediaGallery) {
                     if (item.FolderPath is { } folderPath) {
                         editorPersistenceOptions.ListMediaGallery.Add(
@@ -78,6 +79,7 @@ public class Program {
             });
 
         builder.Services.AddSingleton<EditorAPI>();
+        builder.Services.AddHostedService<EditingMediaGalleryBackgroundService>();
         
 
         var app = builder.Build();

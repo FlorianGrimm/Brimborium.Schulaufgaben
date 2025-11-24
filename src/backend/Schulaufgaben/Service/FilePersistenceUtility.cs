@@ -107,6 +107,15 @@ public static class FilePersistenceUtility {
         }
     }
 
+
+    public static string GetMD5(string value) {
+        return string.Join("",
+            System.Security.Cryptography.MD5.HashData(
+                Encoding.UTF8.GetBytes(value)
+            ).Select(b => b.ToString("X2"))
+            );
+    }
+
     private static Dictionary<string, string>? _DictContentType;
     public static string ConvertExtensionToContentType(string extension) {
         if (_DictContentType is null) {
@@ -125,17 +134,14 @@ public static class FilePersistenceUtility {
                 { ".aiff", "audio/aiff" },
                 { ".art", "image/x-jg" },
                 { ".asf", "video/x-ms-asf" },
-                { ".asm", "text/plain" },
                 { ".au", "audio/basic" },
                 { ".avi", "video/x-msvideo" },
                 { ".avif", "image/avif" },
-                { ".bas", "text/plain" },
                 { ".bmp", "image/bmp" },
                 { ".cmx", "image/x-cmx" },
                 { ".css", "text/css" },
                 { ".csv", "text/csv" },
                 { ".dib", "image/bmp" },
-                { ".disco", "text/xml" },
                 { ".dlm", "text/dlm" },
                 { ".eps", "application/postscript" },
                 { ".etx", "text/x-setext" },
@@ -279,10 +285,191 @@ public static class FilePersistenceUtility {
                 { ".xps", "application/vnd.ms-xpsdocument" }
             };
         }
-        
+
         if (_DictContentType.TryGetValue(extension, out var result)) {
             return result;
         }
         return "";
+    }
+
+    private static Dictionary<string, MediaType>? _DictMediaType;
+    internal static MediaType ConvertExtensionToMediaType(string extension) {
+        if (_DictMediaType is null) {
+            _DictMediaType = new Dictionary<string, MediaType>(StringComparer.OrdinalIgnoreCase) {
+                { ".323", MediaType.Unkown },
+                { ".3g2", MediaType.Video },
+                { ".3gp2", MediaType.Video },
+                { ".3gp", MediaType.Video },
+                { ".3gpp", MediaType.Video},
+                { ".aac", MediaType.Audio },
+                { ".adt", MediaType.Audio },
+                { ".adts", MediaType.Audio },
+                { ".ai", MediaType.Unkown },
+                { ".aif", MediaType.Audio },
+                { ".aifc", MediaType.Audio },
+                { ".aiff", MediaType.Audio },
+                { ".art", MediaType.Image },
+                { ".asf", MediaType.Video },
+                { ".au", MediaType.Audio },
+                { ".avi", MediaType.Video },
+                { ".avif", MediaType.Image },
+                { ".bmp", MediaType.Image },
+                { ".cmx", MediaType.Image },
+                { ".css", MediaType.Unkown },
+                { ".csv", MediaType.Unkown },
+                { ".dib", MediaType.Image },
+                { ".disco", MediaType.Unkown },
+                { ".dlm", MediaType.Unkown },
+                { ".eps", MediaType.Unkown },
+                { ".etx", MediaType.Unkown },
+                { ".fdf", MediaType.Unkown },
+                { ".fif", MediaType.Unkown },
+                { ".flr", MediaType.Unkown },
+                { ".flv", MediaType.Video },
+                { ".gif", MediaType.Image },
+                { ".hdf", MediaType.Unkown },
+                { ".htm", MediaType.Unkown },
+                { ".html", MediaType.Unkown },
+                { ".ico", MediaType.Image },
+                { ".ief", MediaType.Image },
+                { ".ifb", MediaType.Unkown },
+                { ".IVF", MediaType.Video },
+                { ".jfif", MediaType.Image },
+                { ".jpe", MediaType.Image },
+                { ".jpeg", MediaType.Image },
+                { ".jpg", MediaType.Image },
+                { ".lsf", MediaType.Video },
+                { ".lsx", MediaType.Video },
+                { ".lzh", MediaType.Unkown },
+                { ".m13", MediaType.Unkown },
+                { ".m14", MediaType.Unkown },
+                { ".m1v", MediaType.Video },
+                { ".m2ts", MediaType.Video },
+                { ".m3u", MediaType.Audio },
+                { ".m4a", MediaType.Audio },
+                { ".m4v", MediaType.Video },
+                { ".man", MediaType.Unkown },
+                { ".manifest", MediaType.Unkown },
+                { ".map", MediaType.Unkown },
+                { ".markdown", MediaType.Unkown },
+                { ".md", MediaType.Unkown },
+                { ".me", MediaType.Unkown },
+                { ".mid", MediaType.Audio },
+                { ".midi", MediaType.Audio },
+                { ".mmf", MediaType.Unkown },
+                { ".mno", MediaType.Unkown },
+                { ".mny", MediaType.Unkown },
+                { ".mov", MediaType.Video },
+                { ".movie", MediaType.Video },
+                { ".mp2", MediaType.Video },
+                { ".mp3", MediaType.Audio },
+                { ".mp4", MediaType.Video },
+                { ".mp4v", MediaType.Video },
+                { ".mpa", MediaType.Video },
+                { ".mpe", MediaType.Video },
+                { ".mpeg", MediaType.Video },
+                { ".mpg", MediaType.Video },
+                { ".mpp", MediaType.Unkown },
+                { ".mpv2", MediaType.Video },
+                { ".ms", MediaType.Unkown },
+                { ".msi", MediaType.Unkown },
+                { ".mso", MediaType.Unkown },
+                { ".mvb", MediaType.Unkown },
+                { ".mvc", MediaType.Unkown },
+                { ".nc", MediaType.Unkown },
+                { ".nsc", MediaType.Video },
+                { ".nws", MediaType.Unkown },
+                { ".ocx", MediaType.Unkown },
+                { ".oda", MediaType.Unkown },
+                { ".odc", MediaType.Unkown },
+                { ".ods", MediaType.Unkown },
+                { ".oga", MediaType.Audio },
+                { ".ogg", MediaType.Video },
+                { ".ogv", MediaType.Video },
+                { ".ogx", MediaType.Unkown },
+                { ".otf", MediaType.Unkown },
+                { ".pbm", MediaType.Image },
+                { ".pdf", MediaType.Unkown },
+                { ".pfx", MediaType.Unkown },
+                { ".pgm", MediaType.Image },
+                { ".png", MediaType.Image },
+                { ".pnm", MediaType.Image },
+                { ".pnz", MediaType.Image },
+                { ".ppt", MediaType.Unkown },
+                { ".pptx", MediaType.Unkown },
+                { ".ps", MediaType.Unkown },
+                { ".qt", MediaType.Video },
+                { ".ras", MediaType.Image },
+                { ".rf", MediaType.Image },
+                { ".rgb", MediaType.Image },
+                { ".rm", MediaType.Unkown },
+                { ".rmi", MediaType.Audio },
+                { ".roff", MediaType.Unkown },
+                { ".rpm", MediaType.Audio },
+                { ".rtf", MediaType.Unkown },
+                { ".sgml", MediaType.Unkown },
+                { ".smd", MediaType.Audio },
+                { ".smx", MediaType.Audio },
+                { ".smz", MediaType.Audio },
+                { ".snd", MediaType.Audio },
+                { ".spx", MediaType.Audio },
+                { ".ssm", MediaType.Unkown },
+                { ".svg", MediaType.Image },
+                { ".svgz", MediaType.Image },
+                { ".tif", MediaType.Image },
+                { ".tiff", MediaType.Image },
+                { ".ts", MediaType.Video },
+                { ".tsv", MediaType.Unkown },
+                { ".ttc", MediaType.Unkown },
+                { ".ttf", MediaType.Unkown },
+                { ".tts", MediaType.Video },
+                { ".txt", MediaType.Unkown },
+                { ".ustar", MediaType.Unkown },
+                { ".vcs", MediaType.Unkown },
+                { ".vml", MediaType.Unkown },
+                { ".wav", MediaType.Audio },
+                { ".wax", MediaType.Audio },
+                { ".wbmp", MediaType.Image },
+                { ".webm", MediaType.Video },
+                { ".webp", MediaType.Image },
+                { ".wm", MediaType.Video },
+                { ".wma", MediaType.Audio },
+                { ".wml", MediaType.Unkown },
+                { ".wmp", MediaType.Video },
+                { ".wmv", MediaType.Video },
+                { ".wmx", MediaType.Video },
+                { ".wmz", MediaType.Unkown },
+                { ".woff", MediaType.Unkown }, // https://www.w3.org/TR/WOFF/#appendix-b
+                { ".woff2", MediaType.Unkown }, // https://www.w3.org/TR/WOFF2/#IMT
+                { ".wrl", MediaType.Unkown },
+                { ".wrz", MediaType.Unkown },
+                { ".wsdl", MediaType.Unkown },
+                { ".wtv", MediaType.Video },
+                { ".wvx", MediaType.Video },
+                { ".xaf", MediaType.Unkown },
+                { ".xbm", MediaType.Image },
+                { ".xdr", MediaType.Unkown },
+                { ".xht", MediaType.Unkown },
+                { ".xhtml", MediaType.Unkown },
+                { ".xml", MediaType.Unkown },
+                { ".xof", MediaType.Unkown },
+                { ".xpm", MediaType.Image },
+                { ".xps", MediaType.Unkown }
+            };
+        }
+
+        if (_DictMediaType.TryGetValue(extension, out var result)) {
+            return result;
+        }
+        return MediaType.Unkown;
+    }
+
+    internal static string ConvertMediaTypeToString(MediaType mediaType) {
+        return mediaType switch {
+            MediaType.Image => "Image",
+            MediaType.Audio => "Audio",
+            MediaType.Video => "Video",
+            _ => "Unkown",
+        };
     }
 }

@@ -8,7 +8,16 @@
 </mat-toolbar>
 <mat-drawer-container class="main-container" autosize>
     <mat-drawer #drawer class="main-sidenav" mode="side">
-    <p>Auto-resizing sidenav</p>
+    <nav class="sidenav-nav">
+      <a mat-button routerLink="/editor" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </a>
+      <a mat-button routerLink="/editor/media-gallery" routerLinkActive="active">
+        <mat-icon>perm_media</mat-icon>
+        <span>Media Gallery</span>
+      </a>
+    </nav>
   </mat-drawer>
 
   <div class="main-sidenav-content">

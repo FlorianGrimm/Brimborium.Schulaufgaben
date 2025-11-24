@@ -47,5 +47,4 @@ public sealed record SchulaufgabenEditorBuilder(
     IServiceCollection Services,
     OptionsBuilder<EditorPersistenceOptions> EditorPersistenceOptionsBuilder,
     OptionsBuilder<EditingMediaGalleryOptions> EditingMediaGalleryOptionsBuilder
-
     );

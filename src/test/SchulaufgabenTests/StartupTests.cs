@@ -1,6 +1,6 @@
 ﻿// MIT - Florian Grimm
 
-namespace Schulaufgaben;
+namespace Brimborium.Schulaufgaben;
 
 public class StartupTests {
     [Test]

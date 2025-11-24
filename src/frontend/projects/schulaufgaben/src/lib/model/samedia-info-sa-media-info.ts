@@ -10,6 +10,9 @@ import type { SAMediaInfoSAMediaInfoSize } from './samedia-info-sa-media-info-si
 export interface SAMediaInfoSAMediaInfo {
   $type: SAMediaInfoSAMediaInfoType;
   path?: string;
+  mediaType?: string;
   /** @pattern ^-?(?:0|[1-9]\d*)$ */
   size?: SAMediaInfoSAMediaInfoSize;
+  lastWriteTimeUtc?: string;
+  lastScan?: string;
 }

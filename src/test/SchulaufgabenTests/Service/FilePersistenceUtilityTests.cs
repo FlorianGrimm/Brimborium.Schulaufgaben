@@ -30,4 +30,8 @@ public class FilePersistenceUtilityTests {
         await Assert.That(FilePersistenceUtility.NormalizeFolderName("ab<c")).IsEqualTo("ab_c");
         await Assert.That(FilePersistenceUtility.NormalizeFolderName("ab>c")).IsEqualTo("ab_c");
     }
+    [Test]
+    public async Task GetMD5Test() {
+        await Assert.That(FilePersistenceUtility.GetMD5("a")).IsEqualTo("0CC175B9C0F1B6A831C399E269772661");
+    }
 }

@@ -5,6 +5,7 @@
  * OpenAPI spec version: 1.0.0
  */
 
+export * from './media-type';
 export * from './sadocument-description-sa-document-description-type';
 export * from './sadocument-description-sa-document-description';
 export * from './sadocument-description';
@@ -19,6 +20,7 @@ export * from './samedia-info-sa-media-info';
 export * from './samedia-info';
 export * from './samedia-sa-media-type';
 export * from './samedia-sa-media';
+export * from './samedia-search-request';
 export * from './samedia';
 export * from './sanode-sa-audio-kind';
 export * from './sanode-sa-audio-name';
