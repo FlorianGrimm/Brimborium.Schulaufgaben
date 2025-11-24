@@ -4,6 +4,5 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SANodeSANode } from './sanode-sa-node';
 
-export type SANode = SANodeSANode;
+export type SAUnit = number;

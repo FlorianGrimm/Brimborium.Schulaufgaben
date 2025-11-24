@@ -10,5 +10,6 @@ export interface SAMediaSAMedia {
   $type: SAMediaSAMediaType;
   id: string;
   path: string;
-  kind: string;
+  mediaType: string;
+  contentType: string;
 }

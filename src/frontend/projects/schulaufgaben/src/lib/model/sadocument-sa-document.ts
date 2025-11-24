@@ -8,6 +8,10 @@ import type { SADocumentSADocumentType } from './sadocument-sa-document-type';
 import type { SAMedia } from './samedia';
 import type { SADocumentSADocumentDecoration } from './sadocument-sa-document-decoration';
 import type { SADocumentSADocumentInteraction } from './sadocument-sa-document-interaction';
+import type { SADocumentSADocumentWidth } from './sadocument-sa-document-width';
+import type { SADocumentSADocumentHeight } from './sadocument-sa-document-height';
+import type { SADocumentSADocumentRulerHorizontal } from './sadocument-sa-document-ruler-horizontal';
+import type { SADocumentSADocumentRulerVertical } from './sadocument-sa-document-ruler-vertical';
 
 export interface SADocumentSADocument {
   $type: SADocumentSADocumentType;
@@ -18,4 +22,8 @@ export interface SADocumentSADocument {
   listMedia?: SAMedia[];
   decoration?: SADocumentSADocumentDecoration;
   interaction?: SADocumentSADocumentInteraction;
+  width?: SADocumentSADocumentWidth;
+  height?: SADocumentSADocumentHeight;
+  rulerHorizontal?: SADocumentSADocumentRulerHorizontal;
+  rulerVertical?: SADocumentSADocumentRulerVertical;
 }

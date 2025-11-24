@@ -18,6 +18,12 @@ public class SADocument : IEquatable<SADocument> {
 
     public SANode? Interaction { get; set; }
 
+    public SAScalarUnit? Width { get; set; }
+    public SAScalarUnit? Height { get; set; }
+
+    public List<SAScalarUnit>? RulerHorizontal { get; set; }
+    public List<SAScalarUnit>? RulerVertical { get; set; }
+
     public bool Equals(SADocument? other) {
         if (ReferenceEquals(other, null)) { return false; }
         if (ReferenceEquals(other, this)) { return true; }

@@ -10,5 +10,6 @@ namespace Brimborium.Schulaufgaben.Model;
 public class SAMedia {
     public required Guid Id { get; set; }
     public required string Path { get; set; }
-    public required string Kind { get; set; }
+    public required string MediaType { get; set; }
+    public required string ContentType { get; set; }
 }

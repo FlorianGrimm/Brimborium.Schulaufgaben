@@ -4,6 +4,8 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SANodeSANode } from './sanode-sa-node';
 
-export type SANode = SANodeSANode;
+/**
+ * @pattern ^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?$
+ */
+export type SAScalarUnitSAScalarUnitValue = number | string;

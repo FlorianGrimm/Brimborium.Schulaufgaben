@@ -4,6 +4,6 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SANodeSANode } from './sanode-sa-node';
+import type { SAAudioSAAudio } from './saaudio-sa-audio';
 
-export type SANode = SANodeSANode;
+export type SAAudio = SAAudioSAAudio;
