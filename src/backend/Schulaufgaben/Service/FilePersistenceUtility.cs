@@ -472,4 +472,21 @@ public static class FilePersistenceUtility {
             _ => "Unkown",
         };
     }
+
+    private static readonly char[] _ArraySlash = new char[] { '/' };
+
+    public static (bool success, string mediaGalleryId, string relativeName) SplitPathIntoMediaGalleryIdAndPath(string name) {
+        var parts = name.Split(_ArraySlash, 2);
+        if (parts.Length != 2) { return (false, string.Empty, string.Empty); }
+        string mediaGalleryId = parts[0];
+        string relativeName = parts[1];
+        if (string.IsNullOrEmpty(mediaGalleryId)) { return (false, string.Empty, string.Empty); }
+        if (string.IsNullOrEmpty(relativeName)) { return (false, string.Empty, string.Empty); }
+        if (relativeName.Contains("..")) { return (false, string.Empty, string.Empty); }
+        return (true, mediaGalleryId, relativeName);
+    }
+
+    public static string CombineMediaGalleryIdAndPathIntoPath(string mediaGalleryId, string relativeName) {
+        return $"{mediaGalleryId}/{relativeName}";
+    }
 }

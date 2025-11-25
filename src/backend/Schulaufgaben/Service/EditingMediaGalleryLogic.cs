@@ -1,8 +1,10 @@
 ﻿// MIT - Florian Grimm
 
+using Microsoft.IO;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Channels;
 
 namespace Brimborium.Schulaufgaben.Service;
@@ -24,34 +26,36 @@ public sealed record EditingMediaGallery(
 public sealed record MediaGallery(
     string MediaGalleryId,
     string FolderPath
-    //List<SAMediaInfo> ListImage,
-    //List<SAMediaInfo> ListAudio,
-    //List<SAMediaInfo> ListVideo
     );
 
 public enum MediaType { Unkown, Image, Audio, Video }
 
-public sealed record QueueThumbnailItem(
+public sealed record QueueMediaItem(
     MediaGallery MediaGallery,
     MediaType MediaType,
     SAMediaInfo MediaInfo,
-    TaskCompletionSource<DateTime>? Done = default);
+    RecyclableMemoryStream? thumbnail,
+    TaskCompletionSource<DateTime>? Done);
 
 public sealed class EditingMediaGalleryLogic {
+    private readonly IServiceProvider _ServiceProvider;
     private readonly RepositoryEditingMediaGallery _RepositoryEditingMediaGallery;
-    private readonly Channel<QueueThumbnailItem> _ThumbnailQueue;
+    private readonly Channel<QueueMediaItem> _MediaQueue;
     private Dictionary<string, MediaGallery> _DictMediaGallery;
     private string? _ThumbnailFolder;
-    private EditingLucanetCache? _LucanetCache;
+    private EditingMediaCache? _EditingMediaCache;
     private DateTime _LastScan = DateTime.UnixEpoch;
+    private List<FileSystemWatcher> _FileSystemWatchers = new();
 
     public EditingMediaGalleryLogic(
+        IServiceProvider serviceProvider,
         RepositoryEditingMediaGallery repositoryEditingMediaGallery,
         IOptionsMonitor<EditingMediaGalleryOptions> options
         ) {
         this._DictMediaGallery = new();
+        this._ServiceProvider = serviceProvider;
         this._RepositoryEditingMediaGallery = repositoryEditingMediaGallery;
-        this._ThumbnailQueue = Channel.CreateBounded<QueueThumbnailItem>(new BoundedChannelOptions(2000));
+        this._MediaQueue = Channel.CreateBounded<QueueMediaItem>(new BoundedChannelOptions(2000));
         options.OnChange(this.OnOptionsChange);
         this.OnOptionsChange(options.CurrentValue);
     }
@@ -72,17 +76,16 @@ public sealed class EditingMediaGalleryLogic {
         }
         this._DictMediaGallery = nextDictMediaGallery;
         if (this._ThumbnailFolder is { Length: > 0 } thumbnailFolder) {
-            if (this._LucanetCache is null) {
-                this._LucanetCache = new EditingLucanetCache(thumbnailFolder);
+#if false
+            if (this._EditingMediaCache is null) {
+                var fileFQN = System.IO.Path.Combine(thumbnailFolder, "mediaCache.db");
+                this._EditingMediaCache = new EditingMediaCache(fileFQN);
             }
+#endif
         }
     }
 
     public async Task InitialScanAsync(CancellationToken stoppingToken) {
-        if (this._LucanetCache is not { } lucanetCache) {
-            return;
-        }
-
         bool failed = false;
         DateTime lastScan = DateTime.Now;
         this._LastScan = lastScan;
@@ -100,36 +103,112 @@ public sealed class EditingMediaGalleryLogic {
             // skip
         } else {
             var isEmpty = new TaskCompletionSource<DateTime>();
-            await this._ThumbnailQueue.Writer.WriteAsync(
-                new QueueThumbnailItem(new MediaGallery("", ""), MediaType.Unkown, new SAMediaInfo(), isEmpty));
+            await this._MediaQueue.Writer.WriteAsync(
+                new QueueMediaItem(new MediaGallery("", ""), MediaType.Unkown, new SAMediaInfo(), null, isEmpty));
             await isEmpty.Task;
-            lucanetCache.Commit();
-            //lucanetCache.Cleanup(lastScan);
+            if (this._EditingMediaCache is { } editingMediaCache) {
+                editingMediaCache.Cleanup(lastScan);
+            }
         }
     }
 
     public void WireFolderWatch(CancellationToken stoppingToken) {
-        // TODO
+        // Dispose existing watchers
+        foreach (var watcher in this._FileSystemWatchers) {
+            watcher.Dispose();
+        }
+        this._FileSystemWatchers.Clear();
+
+        // Create new watchers for each media gallery
+        foreach (var mediaGallery in this._DictMediaGallery.Values) {
+            if (!Directory.Exists(mediaGallery.FolderPath)) {
+                continue;
+            }
+
+            var watcher = new FileSystemWatcher(mediaGallery.FolderPath) {
+                IncludeSubdirectories = true,
+                NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite | NotifyFilters.Size
+            };
+
+            // Handle file created or changed - queue to _MediaQueue
+            watcher.Created += (sender, e) => OnFileCreatedOrChanged(mediaGallery, e.FullPath);
+            watcher.Changed += (sender, e) => OnFileCreatedOrChanged(mediaGallery, e.FullPath);
+
+            // Handle file deleted - directly remove from database
+            watcher.Deleted += (sender, e) => OnFileDeleted(mediaGallery, e.FullPath);
+
+            // Handle file renamed
+            watcher.Renamed += (sender, e) => {
+                OnFileDeleted(mediaGallery, e.OldFullPath);
+                OnFileCreatedOrChanged(mediaGallery, e.FullPath);
+            };
+
+            watcher.EnableRaisingEvents = true;
+            this._FileSystemWatchers.Add(watcher);
+        }
+    }
+
+    private async void OnFileCreatedOrChanged(MediaGallery mediaGallery, string fullPath) {
+        try {
+            var fileInfo = new FileInfo(fullPath);
+            if (!fileInfo.Exists) { return; }
+            await this.AddListMediaInfo(
+                mediaGallery,
+                this._LastScan,
+                [fileInfo],
+                CancellationToken.None).ConfigureAwait(false);
+        } catch {
+            // Log error but don't crash the watcher
+            //Console.WriteLine($"Error processing file {fullPath}: {ex.Message}");
+        }
+    }
+
+    private void OnFileDeleted(MediaGallery mediaGallery, string fullPath) {
+        try {
+            if (this._EditingMediaCache is not { } editingMediaCache) {
+                return;
+            }
+
+            // Get relative path
+            var relativePath = Path.GetRelativePath(mediaGallery.FolderPath, fullPath)
+                .Replace('\\', '/');
+
+            // Directly delete from database
+            this._EditingMediaCache.Delete(mediaGallery.MediaGalleryId, relativePath);
+        } catch {
+            // Log error but don't crash the watcher
+            //Console.WriteLine($"Error deleting file {fullPath}: {ex.Message}");
+        }
     }
 
     public async Task StartThumbnailQueueAsync(CancellationToken stoppingToken) {
-        var reader = this._ThumbnailQueue.Reader;
+        var reader = this._MediaQueue.Reader;
         while (!stoppingToken.IsCancellationRequested) {
             if (reader.TryRead(out var queueItem)) {
                 if (queueItem.Done is { } done) {
                     done.TrySetResult(DateTime.Now);
                     continue;
                 }
-                if (this._LucanetCache is { } lucanetCache) {
-                    // var thumbnail = await this.GenerateThumbnailAsync(queueItem);
-                    lucanetCache.Write(
+
+                if (this._EditingMediaCache is { } editingMediaCache) {
+                    var l = editingMediaCache.GetLastWriteTimeUtc(
                         queueItem.MediaGallery.MediaGalleryId,
-                        FilePersistenceUtility.ConvertMediaTypeToString(queueItem.MediaType),
-                        queueItem.MediaInfo.Path,
-                        queueItem.MediaInfo.LastWriteTimeUtc,
-                        queueItem.MediaInfo.Size,
-                        queueItem.MediaInfo.LastScan
-                        );
+                        queueItem.MediaInfo.Path);
+                    if (queueItem.MediaInfo.LastWriteTimeUtc == l) {
+                        continue;
+                    }
+
+                    using (var thumbnail = (queueItem.thumbnail) ?? (await this.GenerateThumbnailAsync(queueItem))) {
+                        editingMediaCache.Write(
+                            queueItem.MediaGallery.MediaGalleryId,
+                            FilePersistenceUtility.ConvertMediaTypeToString(queueItem.MediaType),
+                            queueItem.MediaInfo.Path,
+                            queueItem.MediaInfo.LastWriteTimeUtc,
+                            queueItem.MediaInfo.Size,
+                            queueItem.MediaInfo.LastScan,
+                            thumbnail
+                            );
+                    }
                 }
                 continue;
             }
@@ -144,87 +223,136 @@ public sealed class EditingMediaGalleryLogic {
             RecurseSubdirectories = true,
             ReturnSpecialDirectories = false
         });
-        int startIndex = mediaGallery.FolderPath.Length + 1;
-        ChannelWriter<QueueThumbnailItem>? writer = null;
+        await this.AddListMediaInfo(
+            mediaGallery,
+            lastScan,
+            listFiles,
+            stoppingToken);
+    }
 
+    private async Task AddListMediaInfo(MediaGallery mediaGallery, DateTime lastScan, IEnumerable<FileInfo> listFiles, CancellationToken stoppingToken) {
+        int startIndex = mediaGallery.FolderPath.Length + 1;
+        ChannelWriter<QueueMediaItem>? writer = null;
         foreach (var fileInfo in listFiles) {
-            var mediaType = FilePersistenceUtility.ConvertExtensionToMediaType(fileInfo.Extension);
+            var (mediaType, relativePath) = this.GetMediaTypeRelativePath(mediaGallery, fileInfo);
             if (mediaType == MediaType.Unkown) { continue; }
-            var fullName = fileInfo.FullName;
-            var relativePath = fullName.Substring(startIndex);
-            var relativePathNormalized = relativePath.Replace('\\', '/');
             SAMediaInfo mediaInfo = new SAMediaInfo() {
-                Path = relativePathNormalized,
+                Path = relativePath,
                 Size = fileInfo.Length,
                 LastWriteTimeUtc = fileInfo.LastWriteTimeUtc,
                 LastScan = lastScan
             };
-            writer ??= this._ThumbnailQueue.Writer;
-            while (!writer.TryWrite(new QueueThumbnailItem(mediaGallery, mediaType, mediaInfo))) {
+            writer ??= this._MediaQueue.Writer;
+            while (!writer.TryWrite(new QueueMediaItem(mediaGallery, mediaType, mediaInfo, null, null))) {
                 await writer.WaitToWriteAsync(stoppingToken);
             }
         }
     }
 
+    public (MediaType mediaType, string relativePath) GetMediaTypeRelativePath(MediaGallery mediaGallery, FileInfo fileInfo) {
+        var mediaType = FilePersistenceUtility.ConvertExtensionToMediaType(fileInfo.Extension);
+
+        var fullName = fileInfo.FullName;
+        int startIndex = mediaGallery.FolderPath.Length + 1;
+        var relativePath = fullName.Substring(startIndex);
+        var relativePathNormalized = relativePath.Replace('\\', '/');
+
+        return (mediaType, relativePathNormalized);
+    }
+    public string? GetMediaFQN(string mediaGalleryId, string relativeName) {
+        if (string.IsNullOrEmpty(mediaGalleryId)) { return null; }
+        if (string.IsNullOrEmpty(relativeName)) { return null; }
+        if (relativeName.Contains("..")) { return null; }
+        if (!this._DictMediaGallery.TryGetValue(mediaGalleryId, out var mediaGallery)) {
+            return null;
+        }
+        var fileFQN = System.IO.Path.GetFullPath(
+            System.IO.Path.Combine(mediaGallery.FolderPath, relativeName));
+        if (!fileFQN.StartsWith(mediaGallery.FolderPath)) { return null; }
+
+        return fileFQN;
+    }
+
     private static readonly Size _SizeThumbnail = new Size(64, 64);
     private static PngEncoder? _Endoder;
+    private static PngEncoder GetPngEncoder() =>
+        _Endoder ??= new SixLabors.ImageSharp.Formats.Png.PngEncoder() { CompressionLevel = PngCompressionLevel.Level9 };
+
     private static readonly char[] _ArraySlash = new char[] { '/' };
 
-
-#if false
-    private async Task<byte[]?> GenerateThumbnailAsync(QueueThumbnailItem queueItem) {
+    private async Task<RecyclableMemoryStream?> GenerateThumbnailAsync(QueueMediaItem queueItem) {
         if (queueItem.MediaType == MediaType.Image) {
-            var fullFQN = System.IO.Path.Combine(
+            var mediaFQN = System.IO.Path.Combine(
                 queueItem.MediaGallery.FolderPath,
                 queueItem.MediaInfo.Path.TrimStart('/'));
 
-            using (var targetStream = RecyclableMemory.Instance.GetStream()) {
-                using (var sourceStream = RecyclableMemory.Instance.GetStream()) {
-                    using (var sourceFile = System.IO.File.OpenRead(fullFQN)) {
-                        await sourceFile.CopyToAsync(sourceStream).ConfigureAwait(false);
-                        sourceStream.Position = 0;
-
-                        Image? image = null;
-                        try {
-                            image = Image.Load(sourceStream);
-                        } catch {
-                            return null;
-                        }
-                        if (image == null) { return null; }
-
-                        // TODO handle image.Metadata.
-
-                        var size = image.Size;
-                        if (size.Width < _SizeThumbnail.Width && size.Height < _SizeThumbnail.Height) {
-                        } else {
-                            image.Mutate(ctxt => ctxt.Resize(
-                                new ResizeOptions {
-                                    Mode = ResizeMode.Crop,
-                                    Size = new Size(128, 128)
-                                }));
-                        }
-                        {
-                            var encoder = _Endoder ??= new SixLabors.ImageSharp.Formats.Png.PngEncoder();
-                            image.Save(targetStream, encoder);
-                            targetStream.Position = 0;
-                            return targetStream.GetBuffer();
-                        }
-                    }
+            Image? image = null;
+            for (int iRetry = 0; iRetry < 5; iRetry++) {
+                try {
+                    image = await Image.LoadAsync(mediaFQN).ConfigureAwait(false);
+                } catch (System.IO.IOException error) when (error.HResult == -2147024864) {
+                    await Task.Delay(iRetry * 1000).ConfigureAwait(false);
+                    continue;
+                } catch {
+                    return null;
                 }
+            }
+            if (image == null) { return null; }
+
+            // TODO handle image.Metadata.
+
+            var size = image.Size;
+            if (size.Width < _SizeThumbnail.Width && size.Height < _SizeThumbnail.Height) {
+            } else {
+                image.Mutate(ctxt => ctxt.Resize(
+                    new ResizeOptions {
+                        Mode = ResizeMode.Crop,
+                        Size = _SizeThumbnail
+                    }));
+            }
+            {
+                var targetStream = RecyclableMemory.Instance.GetStream();
+                var encoder = GetPngEncoder();
+                image.Save(targetStream, encoder);
+                targetStream.Position = 0;
+                return targetStream;
             }
         }
         return null;
     }
-#endif
 
     public async Task<List<SAMediaInfo>> SearchAsync(
         SAMediaSearchRequest searchRequest,
         CancellationToken requestAborted) {
-#if false
-        if (this._LucanetCache is { } lucanetCache) {
-            return lucanetCache.Search(searchRequest);
+        if (this._EditingMediaCache is { } editingMediaCache) {
+            var result = editingMediaCache
+                .Search(searchRequest,
+                this._CheckIfFileExists ??= this.checkIfFileExists);
+            return result;
+        }
+        return await SearchFallbackAsync(searchRequest, requestAborted);
+    }
+
+    private Func<string, string, bool>? _CheckIfFileExists;
+    private bool checkIfFileExists(string mediaGalleryId, string path) {
+        if (!this._DictMediaGallery.TryGetValue(mediaGalleryId, out var mediaGallery)) {
+            return false;
+        }
+
+        var mediaFQN = System.IO.Path.Combine(
+            mediaGallery.FolderPath,
+            path.TrimStart('/'));
+
+        if (System.IO.File.Exists(mediaFQN)) {
+            return true;
         } else {
-#endif
+            return false;
+        }
+    }
+
+    public async Task<List<SAMediaInfo>> SearchFallbackAsync(
+        SAMediaSearchRequest searchRequest,
+        CancellationToken requestAborted) {
         var searchAll = string.IsNullOrEmpty(searchRequest.Value);
         var listSearchFor = searchRequest.Value.Split('\t', ' ');
         List<SAMediaInfo> result = [];
@@ -237,12 +365,7 @@ public sealed class EditingMediaGalleryLogic {
             });
             int startIndex = mediaGallery.FolderPath.Length + 1;
             foreach (var fileInfo in listFiles) {
-                var mediaType = FilePersistenceUtility.ConvertExtensionToMediaType(fileInfo.Extension);
-                if (mediaType == MediaType.Unkown) { continue; }
-
-                var fullName = fileInfo.FullName;
-                var relativePath = fullName.Substring(startIndex);
-                var relativePathNormalized = relativePath.Replace('\\', '/');
+                var (mediaType, relativePathNormalized) = this.GetMediaTypeRelativePath(mediaGallery, fileInfo);
                 if (searchAll) {
                     // OK
                 } else {
@@ -277,43 +400,33 @@ public sealed class EditingMediaGalleryLogic {
     }
 
     public async Task<SAMediaGetResult?> GetMediaContentAsync(string name, CancellationToken requestAborted) {
-        // The name is the relative path, format {MediaGalleryId}/{relativePath}.
-        // The name must be a file.
-        // The name cannot contain "..".
-        // The name must be in the list of media galleries.
-        var parts = name.Split(_ArraySlash, 2);
-        if (parts.Length != 2) { return null; }
-        string mediaGalleryId = parts[0];
-        string relativeName = parts[1];
+        var (success, mediaGalleryId, relativeName) = FilePersistenceUtility.SplitPathIntoMediaGalleryIdAndPath(name);
+        if (!success) { return null; }
         return await this.GetMediaContentAsync(mediaGalleryId, relativeName, requestAborted);
     }
 
     public async Task<SAMediaGetResult?> GetMediaContentAsync(string mediaGalleryId, string relativeName, CancellationToken requestAborted) {
-        if (string.IsNullOrEmpty(mediaGalleryId)) { return null; }
-        if (string.IsNullOrEmpty(relativeName)) { return null; }
-        if (relativeName.Contains("..")) { return null; }
-        if (!this._DictMediaGallery.TryGetValue(mediaGalleryId, out var mediaGallery)) {
+        if (this.GetMediaFQN(mediaGalleryId, relativeName) is not { } mediaFQN) {
             return null;
         }
-        var fullFQN = System.IO.Path.GetFullPath(
-            System.IO.Path.Combine(mediaGallery.FolderPath, relativeName));
-        if (!fullFQN.StartsWith(mediaGallery.FolderPath)) { return null; }
-        System.IO.FileInfo fi = new(fullFQN);
-        if (!fi.Exists) { return null; }
+        if (new System.IO.FileInfo(mediaFQN) is not { Exists: true } fi) {
+            return null;
+        }
         string contentType = FilePersistenceUtility.ConvertExtensionToContentType(fi.Extension);
         if (string.IsNullOrEmpty(contentType)) { return null; }
         return new SAMediaGetResult(fi.Open(FileMode.Open, FileAccess.Read, FileShare.Read), contentType);
     }
 
+
+
     public async Task<SAMediaGetResult?> GetMediaThumbnailAsync(string name, CancellationToken requestAborted) {
-        var parts = name.Split(_ArraySlash, 3);
-        if (parts.Length != 2) { return null; }
-        string mediaGalleryId = parts[0];
-        string relativeName = parts[1];
+        var (success, mediaGalleryId, relativeName) = FilePersistenceUtility.SplitPathIntoMediaGalleryIdAndPath(name);
+        if (!success) { return null; }
         return await this.GetMediaThumbnailAsync(mediaGalleryId, relativeName, requestAborted);
     }
 
     public async Task<SAMediaGetResult?> GetMediaThumbnailAsync(string mediaGalleryId, string relativeName, CancellationToken requestAborted) {
+
         if (string.IsNullOrEmpty(mediaGalleryId)) { return null; }
         if (string.IsNullOrEmpty(relativeName)) { return null; }
         if (relativeName.Contains("..")) { return null; }
@@ -321,14 +434,27 @@ public sealed class EditingMediaGalleryLogic {
             return null;
         }
 
-        var fullFQN = System.IO.Path.Combine(
+        bool found = false;
+        byte[]? thumbnail = null;
+        if (this._EditingMediaCache is { } editingMediaCache) {
+            (found, thumbnail) = editingMediaCache.GetThumbnail(mediaGalleryId, relativeName);
+            if (found) {
+                if (thumbnail is { }) {
+                    return new(new MemoryStream(thumbnail), "image/png");
+                }
+            }
+        }
+
+        var mediaFQN = System.IO.Path.Combine(
             mediaGallery.FolderPath,
             relativeName.TrimStart('/'));
-
+        if (new System.IO.FileInfo(mediaFQN) is not { Exists: true } fileInfo) {
+            return null;
+        }
 
         Image? image = null;
         try {
-            image = await Image.LoadAsync(fullFQN).ConfigureAwait(false);
+            image = await Image.LoadAsync(mediaFQN).ConfigureAwait(false);
         } catch {
             return null;
         }
@@ -342,14 +468,34 @@ public sealed class EditingMediaGalleryLogic {
             image.Mutate(ctxt => ctxt.Resize(
                 new ResizeOptions {
                     Mode = ResizeMode.Crop,
-                    Size = new Size(128, 128)
+                    Size = _SizeThumbnail
                 }));
         }
         {
             var targetStream = RecyclableMemory.Instance.GetStream();
-            var encoder = _Endoder ??= new SixLabors.ImageSharp.Formats.Png.PngEncoder();
+            var encoder = GetPngEncoder();
             image.Save(targetStream, encoder);
             targetStream.Position = 0;
+            if (found) {
+                var (mediaType, relativePath) = this.GetMediaTypeRelativePath(mediaGallery, fileInfo);
+                if (mediaType == MediaType.Unkown) {
+                } else {
+                    SAMediaInfo mediaInfo = new SAMediaInfo() {
+                        Path = relativePath,
+                        Size = fileInfo.Length,
+                        LastWriteTimeUtc = fileInfo.LastWriteTimeUtc,
+                        LastScan = this._LastScan
+                    };
+                    var updateThumbnailStream = RecyclableMemory.Instance.GetStream();
+                    targetStream.CopyTo(updateThumbnailStream);
+                    targetStream.Position = 0;
+                    updateThumbnailStream.Position = 0;
+                    this._MediaQueue.Writer.TryWrite(
+                        new QueueMediaItem(mediaGallery, mediaType, mediaInfo, updateThumbnailStream, null)
+                    );
+                }
+
+            }
             return new SAMediaGetResult(targetStream, "image/png");
         }
     }
