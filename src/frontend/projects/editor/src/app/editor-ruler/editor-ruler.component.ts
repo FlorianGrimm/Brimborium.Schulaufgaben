@@ -90,8 +90,8 @@ export class EditorRulerComponent extends BaseComponent implements OnInit {
   getGuidePosition(guide: SAScalarUnit, type: 'horizontal' | 'vertical'): number {
     // Assuming guide.Value is a percentage (0-100)
     const padding = this.commonPageSizeService.getPaddingForGuides(type);
-    const value=this.commonPageSizeService.convertToPixelForGuides(guide, type);
-    console.log("getGuidePosition", {guide, type, padding, value});
+    const value = this.commonPageSizeService.convertToPixelForGuides(guide, type);
+    // console.log("getGuidePosition", {guide, type, padding, value});
     return padding + value;;
   }
 
@@ -106,32 +106,30 @@ export class EditorRulerComponent extends BaseComponent implements OnInit {
 
     if (type === 'horizontal') {
       // Click on horizontal ruler (top) - creates horizontal guide line
-      const y = event.clientY - rect.top;
-      const relativeY = y - conversion.topPadding;
+      const y = event.clientY - rect.top - conversion.topPadding - 30;
       const playgroundHeight = conversion.playgroundSize.height;
-      percentage = Math.max(0, Math.min(100, (relativeY / playgroundHeight) * 100));
+      percentage = Math.max(0, Math.min(100, (y / playgroundHeight) * 100));
 
       const newGuide: SAScalarUnit = {
         Value: percentage,
         Unit: 0, // Percent
       };
-      console.log("onRulerClick", {y, relativeY, playgroundHeight, percentage, newGuide}); 
+      // console.log("onRulerClick", { clientY: event.clientY, y, playgroundHeight, percentage, newGuide });
 
       const newList = [...this.listHorizontal, newGuide];
       this.listHorizontal$.next(newList);
       this.onListHorizontalChanged.emit(newList);
     } else {
       // Click on vertical ruler (left) - creates vertical guide line
-      const x = event.clientX - rect.left;
-      const relativeX = x - conversion.leftPadding;
+      const x = event.clientX - rect.left - conversion.leftPadding - 30;
       const playgroundWidth = conversion.playgroundSize.width;
-      percentage = Math.max(0, Math.min(100, (relativeX / playgroundWidth) * 100));
+      percentage = Math.max(0, Math.min(100, (x / playgroundWidth) * 100));
 
       const newGuide: SAScalarUnit = {
         Value: percentage,
         Unit: 0, // Percent
       };
-      console.log("onRulerClick", {x, relativeX, playgroundWidth, percentage, newGuide});
+      // console.log("onRulerClick", { x, playgroundWidth, percentage, newGuide });
 
       const newList = [...this.listVertical, newGuide];
       this.listVertical$.next(newList);
@@ -165,19 +163,17 @@ export class EditorRulerComponent extends BaseComponent implements OnInit {
     const { type, index } = this.draggedGuide;
 
     if (type === 'horizontal') {
-      const y = event.clientY - rect.top;
-      const relativeY = y - conversion.topPadding;
+      const y = event.clientY - rect.top - conversion.topPadding - 30;
       const playgroundHeight = conversion.playgroundSize.height;
-      const percentage = Math.max(0, Math.min(100, (relativeY / playgroundHeight) * 100));
+      const percentage = Math.max(0, Math.min(100, (y / playgroundHeight) * 100));
 
       const newList = [...this.listHorizontal];
       newList[index] = { ...newList[index], Value: percentage };
       this.listHorizontal$.next(newList);
     } else {
-      const x = event.clientX - rect.left;
-      const relativeX = x - conversion.leftPadding;
+      const x = event.clientX - rect.left - conversion.leftPadding - 30;
       const playgroundWidth = conversion.playgroundSize.width;
-      const percentage = Math.max(0, Math.min(100, (relativeX / playgroundWidth) * 100));
+      const percentage = Math.max(0, Math.min(100, (x / playgroundWidth) * 100));
 
       const newList = [...this.listVertical];
       newList[index] = { ...newList[index], Value: percentage };
@@ -189,15 +185,22 @@ export class EditorRulerComponent extends BaseComponent implements OnInit {
    * Handle mouse up to finish dragging
    */
   private onDocumentMouseUp = (event: MouseEvent): void => {
+    const rect = this.hostElement.nativeElement.getBoundingClientRect();
+    const conversion = this.convertionDocumentToPage$.getValue();
     if (!this.draggedGuide) return;
 
     const { type } = this.draggedGuide;
 
     // Check if the guide was dragged outside the ruler area (delete it)
-    const rect = this.hostElement.nativeElement.getBoundingClientRect();
-    const isOutside = type === 'horizontal'
-      ? (event.clientX < rect.left || event.clientX > rect.right)
-      : (event.clientY < rect.top || event.clientY > rect.bottom);
+    const rectHost = this.hostElement.nativeElement.getBoundingClientRect();
+    let isOutside = false;
+    const y = event.clientY - rect.top - conversion.topPadding - 30;
+    const x = event.clientX - rect.left - conversion.leftPadding - 30;
+    if (type === 'horizontal') {
+      isOutside = y < -2 || y > conversion.playgroundSize.height;
+    } else {
+      isOutside = x < -2 || x > conversion.playgroundSize.width;
+    }
 
     if (isOutside) {
       // Delete the guide

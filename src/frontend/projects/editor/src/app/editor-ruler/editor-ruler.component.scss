@@ -13,60 +13,49 @@ $guide-hover-color: #0088cc;
   grid-template-columns: $ruler-size 1fr;
   grid-template-rows: $ruler-size 1fr;
   grid-template-areas:
-    "corner horizontal"
-    "vertical content";
+    "corner VerticalTop"
+    "HorizontalLeft content";
 }
 
-.editor-ruler-vertical {
-  grid-area: vertical;
+.editor-ruler-HorizontalLeft {
+  grid-area: HorizontalLeft;
   background-color: $ruler-bg;
   border-bottom: 1px solid $ruler-border;
-  position: relative;
   cursor: crosshair;
   user-select: none;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 
-  .vertical-mark {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background-color: $ruler-mark-color;
-    transform: translateX(-50%);
+  .ruler-label {
+    font-size: 9px;
+    fill: $ruler-mark-color;
+    dominant-baseline: hanging;
 
-    .ruler-label {
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      font-size: 9px;
-      color: $ruler-mark-color;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
+    &.HorizontalLeft-label {
+      writing-mode: tb;
+      glyph-orientation-vertical: 0;
     }
   }
 }
 
-.editor-ruler-horizontal {
-  grid-area: horizontal;
+.editor-ruler-VerticalTop {
+  grid-area: VerticalTop;
   background-color: $ruler-bg;
   border-right: 1px solid $ruler-border;
-  position: relative;
   cursor: crosshair;
   user-select: none;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 
-  .horizontal-mark {
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background-color: $ruler-mark-color;
-    transform: translateY(-50%);
+  .ruler-label {
+    font-size: 9px;
+    fill: $ruler-mark-color;
+    dominant-baseline: hanging;
 
-    .ruler-label {
-      position: absolute;
-      left: 2px;
-      top: 2px;
-      font-size: 9px;
-      color: $ruler-mark-color;
+    &.VerticalTop-label {
+      text-anchor: start;
     }
   }
 }
@@ -124,8 +113,7 @@ $guide-hover-color: #0088cc;
 }
 
 // Corner area (top-left)
-.editor-ruler::before {
-  content: '';
+.editor-ruler-corner {
   grid-area: corner;
   background-color: $ruler-bg;
   border-right: 1px solid $ruler-border;

@@ -30,7 +30,7 @@ export class EditorEditComponent extends BaseComponent implements OnInit {
     //this.client.getAPIDocumentDescription
 
     //interaction?: SADocumentSADocumentInteraction;
-    const decoration :SANode= {
+    const decoration: SANode = {
       Id: "00000000-0000-0000-0000-000000000001",
       Name: "decoration",
       Kind: "decoration",
@@ -40,7 +40,7 @@ export class EditorEditComponent extends BaseComponent implements OnInit {
       Flipped: undefined,
       Selected: undefined
     };
-    const interaction :SANode= {
+    const interaction: SANode = {
       Id: "00000000-0000-0000-0000-000000000002",
       Name: "decoration",
       Kind: "decoration",
@@ -60,17 +60,21 @@ export class EditorEditComponent extends BaseComponent implements OnInit {
       Interaction: interaction,
       Width: { Value: 1200, Unit: 1, Name: "PageWidth" },
       Height: { Value: 800, Unit: 1, Name: "PageHeight" },
-      RulerHorizontal: [{Value: 1, Unit: 0, Name: "1%"},{Value: 50, Unit: 0, Name: "50%"},{Value: 99, Unit: 0, Name: "99%"}],
+      RulerHorizontal: [{ Value: 1, Unit: 0, Name: "1%" }, { Value: 50, Unit: 0, Name: "50%" }, { Value: 99, Unit: 0, Name: "99%" }],
       RulerVertical: []//[{Value: 33, Unit: 0, Name: "33%"},{Value: 66, Unit: 0, Name: "66%"}]
     };
   }
-handleVerticalChange(value: SAScalarUnit[]) {
-  console.log("handleVerticalChange", value);
-  this.document!.RulerVertical = value;
-}
-handleHorizontalChange(value: SAScalarUnit[]) {
-  console.log("handleHorizontalChange", value);
-  this.document!.RulerHorizontal = value;
-}
+  handleVerticalChange(value: SAScalarUnit[]) {
+    // console.log("handleVerticalChange", value);
+    const document = (this.document ?? {});
+    const nextDocument = { ...document, RulerVertical: value };
+    this.document = nextDocument;
+  }
+  handleHorizontalChange(value: SAScalarUnit[]) {
+    // console.log("handleHorizontalChange", value);
+    const document = (this.document ?? {});
+    const nextDocument = { ...document, RulerHorizontal: value };
+    this.document = nextDocument;
+  }
 
 }

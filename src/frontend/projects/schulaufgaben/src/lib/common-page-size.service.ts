@@ -81,7 +81,7 @@ export class CommonPageSizeService {
       pageSize: pageSize,
       playgroundSize: playgroundSize
     });
-    console.log("calculateFactorSize", { nextValue, documentSize, pageSize });
+    // console.log("calculateFactorSize", { nextValue, documentSize, pageSize });
     this.convertionDocumentToPage$.next(nextValue);
   }
 
