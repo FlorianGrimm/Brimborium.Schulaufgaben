@@ -10,3 +10,5 @@ export * from './lib/createSubjectObservable';
 export * from './lib/schulaufgaben';
 export * from './lib/selection.service';
 export * from './lib/state-document-description.service';
+export * from './lib/common-page-size/common-page-size.component';
+export * from './lib/common-page-size.service';
