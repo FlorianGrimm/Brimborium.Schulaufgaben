@@ -1,0 +1,133 @@
+$ruler-size: 30px;
+$ruler-bg: #f0f0f0;
+$ruler-border: #ccc;
+$ruler-mark-color: #666;
+$guide-color: #00aaff;
+$guide-hover-color: #0088cc;
+
+.editor-ruler {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: $ruler-size 1fr;
+  grid-template-rows: $ruler-size 1fr;
+  grid-template-areas:
+    "corner horizontal"
+    "vertical content";
+}
+
+.editor-ruler-vertical {
+  grid-area: vertical;
+  background-color: $ruler-bg;
+  border-bottom: 1px solid $ruler-border;
+  position: relative;
+  cursor: crosshair;
+  user-select: none;
+
+  .vertical-mark {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: $ruler-mark-color;
+    transform: translateX(-50%);
+
+    .ruler-label {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      font-size: 9px;
+      color: $ruler-mark-color;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+  }
+}
+
+.editor-ruler-horizontal {
+  grid-area: horizontal;
+  background-color: $ruler-bg;
+  border-right: 1px solid $ruler-border;
+  position: relative;
+  cursor: crosshair;
+  user-select: none;
+
+  .horizontal-mark {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: $ruler-mark-color;
+    transform: translateY(-50%);
+
+    .ruler-label {
+      position: absolute;
+      left: 2px;
+      top: 2px;
+      font-size: 9px;
+      color: $ruler-mark-color;
+    }
+  }
+}
+
+.editor-ruler-content {
+  grid-area: content;
+  position: relative;
+  overflow: hidden;
+}
+
+.guide-line {
+  position: absolute;
+  z-index: 1000;
+  pointer-events: all;
+
+  &:hover {
+    background-color: $guide-hover-color !important;
+  }
+}
+
+.horizontal-guide {
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: $guide-color;
+  cursor: ns-resize;
+  transform: translateY(-1px);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+  }
+}
+
+.vertical-guide {
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: $guide-color;
+  cursor: ew-resize;
+  transform: translateX(-1px);
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -3px;
+    right: -3px;
+    top: 0;
+    bottom: 0;
+  }
+}
+
+// Corner area (top-left)
+.editor-ruler::before {
+  content: '';
+  grid-area: corner;
+  background-color: $ruler-bg;
+  border-right: 1px solid $ruler-border;
+  border-bottom: 1px solid $ruler-border;
+}

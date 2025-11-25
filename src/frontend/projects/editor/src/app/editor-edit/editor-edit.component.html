@@ -1,3 +1,9 @@
-<div>
+<app-editor-ruler
+  [listHorizontal]="document?.RulerHorizontal ?? []"
+  [listVertical]="document?.RulerVertical ?? []"
+  (onListHorizontalChanged)="handleHorizontalChange($event)"
+  (onListVerticalChanged)="handleVerticalChange($event)">
+  <lib-common-page-size>
     <app-editor-sa-document [document]="document"></app-editor-sa-document>
-</div>
+  </lib-common-page-size>
+</app-editor-ruler>

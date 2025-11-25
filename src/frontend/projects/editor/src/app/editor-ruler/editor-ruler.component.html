@@ -1,6 +1,46 @@
 <div class="editor-ruler">
-    <div class="editor-ruler-vertical"></div>
-    <div class="editor-ruler-horizontal"></div>
-    <div class="editor-ruler-content">        <ng-content></ng-content>
+    <!-- Vertical Ruler (Left side) -->
+    <div class="editor-ruler-vertical" (click)="onRulerClick($event, 'horizontal')">
+        @for (mark of rulerMarks; track mark) {
+            <div class="ruler-mark vertical-mark" [style.top.px]="getRulerMarkPosition(mark, 'vertical')">
+                <span class="ruler-label">{{ mark }}x</span>
+            </div>
+        }
+    </div>
+
+    <!-- Horizontal Ruler (Top side) -->
+    <div class="editor-ruler-horizontal" (click)="onRulerClick($event, 'vertical')">
+        @for (mark of rulerMarks; track mark) {
+            <div class="ruler-mark horizontal-mark" [style.left.px]="getRulerMarkPosition(mark, 'horizontal')">
+                <span class="ruler-label">{{ mark }}</span>
+            </div>
+        }
+    </div>
+
+    <!-- Content area with guide lines -->
+    <div class="editor-ruler-content">
+        <!-- Horizontal guide lines (run left-right, positioned top-bottom) -->
+        @if (showGuides$ | async) {
+            @for (guide of listHorizontal$ | async; track $index) {
+                <div
+                    class="guide-line horizontal-guide"
+                    [style.top.px]="getGuidePosition(guide, 'horizontal')"
+                    (mousedown)="onGuideMouseDown($event, 'horizontal', $index)"
+                    [title]="guide.Value + '%'">
+                </div>
+            }
+
+            <!-- Vertical guide lines (run top-bottom, positioned left-right) -->
+            @for (guide of listVertical$ | async; track $index) {
+                <div
+                    class="guide-line vertical-guide"
+                    [style.left.px]="getGuidePosition(guide, 'vertical')"
+                    (mousedown)="onGuideMouseDown($event, 'vertical', $index)"
+                    [title]="guide.Value + '%'">
+                </div>
+            }
+        }
+
+        <ng-content></ng-content>
     </div>
 </div>

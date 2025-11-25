@@ -1,3 +1,12 @@
-<div class="common-page-size">
-    <ng-content></ng-content>
+<div class="common-page-size" #commonPageSize>
+    @if (convertionDocumentToPage$ | async; as convertionDocumentToPage) {
+    <div 
+    [style.left.px]="convertionDocumentToPage.leftPadding"
+    [style.top.px]="convertionDocumentToPage.topPadding"
+    [style.width.px]="convertionDocumentToPage.playgroundSize.width"
+    [style.height.px]="convertionDocumentToPage.playgroundSize.height"
+     class="common-page-size-inner">
+        {{convertionDocumentToPage$ | async | json}}
+    </div>
+    }
 </div>

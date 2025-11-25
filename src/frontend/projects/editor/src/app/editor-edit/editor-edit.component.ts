@@ -1,11 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BaseComponent, SADocument, SADocumentDescription, SANode, SchulaufgabenEditorWebV1Service, SelectionService } from 'schulaufgaben';
+import { BaseComponent, SADocument, SADocumentDescription, SANode, SAScalarUnit, SchulaufgabenEditorWebV1Service, SelectionService, CommonPageSizeComponent } from 'schulaufgaben';
 import { EditorSADocumentComponent } from '../editor-sa-document/editor-sa-document.component';
+import { EditorRulerComponent } from '../editor-ruler/editor-ruler.component';
 
 @Component({
   selector: 'app-editor-edit',
-  imports: [EditorSADocumentComponent],
+  imports: [EditorSADocumentComponent, EditorRulerComponent, CommonPageSizeComponent],
   templateUrl: './editor-edit.component.html',
   styleUrl: './editor-edit.component.scss',
 })
@@ -59,9 +60,17 @@ export class EditorEditComponent extends BaseComponent implements OnInit {
       Interaction: interaction,
       Width: { Value: 1200, Unit: 1, Name: "PageWidth" },
       Height: { Value: 800, Unit: 1, Name: "PageHeight" },
-      RulerHorizontal: [],
-      RulerVertical: []
+      RulerHorizontal: [{Value: 1, Unit: 0, Name: "1%"},{Value: 50, Unit: 0, Name: "50%"},{Value: 99, Unit: 0, Name: "99%"}],
+      RulerVertical: []//[{Value: 33, Unit: 0, Name: "33%"},{Value: 66, Unit: 0, Name: "66%"}]
     };
   }
+handleVerticalChange(value: SAScalarUnit[]) {
+  console.log("handleVerticalChange", value);
+  this.document!.RulerVertical = value;
+}
+handleHorizontalChange(value: SAScalarUnit[]) {
+  console.log("handleHorizontalChange", value);
+  this.document!.RulerHorizontal = value;
+}
 
 }

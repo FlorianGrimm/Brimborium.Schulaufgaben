@@ -7,7 +7,11 @@ export function createSubjectObservable<T>(
         subscription: Subscription;
     }
 ): BehaviorSubject<T> {
-    const result = new BehaviorSubject<T>(args.initialValue);
+    let initialValue = args.initialValue;
+    if('function' === typeof (args.observable as any).getValue ) {
+        initialValue = (args.observable as any).getValue();
+    }
+    const result = new BehaviorSubject<T>(initialValue);
     const subscription = new Subscription();
     args.subscription.add(subscription);
     subscription.add(
