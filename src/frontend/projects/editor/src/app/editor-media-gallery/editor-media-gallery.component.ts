@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { AsyncPipe } from '@angular/common';
 import { BehaviorSubject, debounceTime, distinctUntilChanged } from 'rxjs';
-import { BaseComponent, SAMediaInfo, SAMediaInfoSAMediaInfo, SAMediaSearchRequest, SchulaufgabenEditorWebV1Service, SelectionService } from 'schulaufgaben';
+import { BaseComponent, PostAPIMediaSearchBody, SAMediaInfo, SchulaufgabenEditorWebV1Service, SelectionService } from 'schulaufgaben';
 
 @Component({
   selector: 'app-editor-media-gallery',
@@ -55,9 +55,9 @@ export class EditorMediaGalleryComponent extends BaseComponent implements OnInit
 
   search(query: string): void {
     this.isLoading$.next(true);
-    const mediaSearchRequest: SAMediaSearchRequest = {
-      mediaType: 1, //MediaType.Image,
-      value: query
+    const mediaSearchRequest: PostAPIMediaSearchBody = {
+      MediaType: 1, //MediaType.Image,
+      Value: query
     };
     this.client.postAPIMediaSearch(mediaSearchRequest).subscribe({
       next: (results) => {
@@ -77,31 +77,31 @@ export class EditorMediaGalleryComponent extends BaseComponent implements OnInit
   }
 
   getMediaThumbnailUrl(mediaInfo: SAMediaInfo): string {
-    return `/API/Media/Thumbnail/${mediaInfo.path}`;
+    return `/API/Media/Thumbnail/${mediaInfo.Path}`;
   }
   getMediaContentUrl(mediaInfo: SAMediaInfo): string {
-    return `/API/Media/Content/${mediaInfo.path}`;
+    return `/API/Media/Content/${mediaInfo.Path}`;
   }
 
   getMediaFileName(mediaInfo: SAMediaInfo) {
-    const parts = (mediaInfo.path ?? '').split('/');
-    return parts.length === 0 ? mediaInfo.path : parts[parts.length - 1];
+    const parts = (mediaInfo.Path ?? '').split('/');
+    return parts.length === 0 ? mediaInfo.Path : parts[parts.length - 1];
   }
 
   isImage(mediaInfo: SAMediaInfo): boolean {
-    return mediaInfo.mediaType === 'Image';
+    return mediaInfo.MediaType === 'Image';
     // const ext = path.toLowerCase().split('.').pop();
     // return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg'].includes(ext || '');
   }
 
   isVideo(mediaInfo: SAMediaInfo): boolean {
-    return mediaInfo.mediaType === 'Video';
+    return mediaInfo.MediaType === 'Video';
     // const ext = path.toLowerCase().split('.').pop();
     // return ['mp4', 'webm', 'ogg', 'mov', 'avi'].includes(ext || '');
   }
 
   isAudio(mediaInfo: SAMediaInfo): boolean {
-    return mediaInfo.mediaType === 'Audio';
+    return mediaInfo.MediaType === 'Audio';
     // const ext = path.toLowerCase().split('.').pop();
     // return ['mp3', 'wav', 'ogg', 'aac', 'm4a'].includes(ext || '');
   }

@@ -22,7 +22,19 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.OpenApi" />
+    <PackageReference Include="Scalar.AspNetCore" />
     <PackageReference Include="Scalar.AspNetCore.Microsoft" />
+    <PackageReference Include="System.CodeDom" />
+    <PackageReference Include="System.Composition" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" />
+    <PackageReference Include="System.Drawing.Common" />
+    <PackageReference Include="System.Reflection.MetadataLoadContext" />
+    <PackageReference Include="System.Resources.Extensions" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" />
+    <PackageReference Include="System.Security.Permissions" />
+    <PackageReference Include="System.Windows.Extensions" />
   </ItemGroup>
 
   <ItemGroup>

@@ -27,12 +27,12 @@
             <div class="results-section">
                 <h3>Results ({{ results.length }})</h3>
                 <div class="media-grid">
-                    @for (item of results; track item.path) {
+                    @for (item of results; track item.Path) {
                         <mat-card class="media-card">
                             <mat-card-content>
                                 @if (isImage(item)) {
                                     <div class="media-preview">
-                                        <img [src]="getMediaThumbnailUrl(item)" [alt]="item.path" />
+                                        <img [src]="getMediaThumbnailUrl(item)" [alt]="item.Path" />
                                     </div>
                                 } @else if (isVideo(item)) {
                                     <div class="media-preview">
@@ -49,7 +49,7 @@
                                     </div>
                                 }
                                 <div class="media-info">
-                                    <p class="media-path" [title]="item.path">{{ getMediaFileName(item) }}</p>                                    
+                                    <p class="media-path" [title]="item.Path">{{ getMediaFileName(item) }}</p>                                    
                                 </div>
                             </mat-card-content>
                         </mat-card>

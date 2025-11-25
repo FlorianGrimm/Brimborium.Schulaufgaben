@@ -4,6 +4,30 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SADocumentSADocument } from './sadocument-sa-document';
+import type { SAMedia } from './SAMedia';
+import type { SADocumentDecoration } from './SADocumentDecoration';
+import type { SADocumentInteraction } from './SADocumentInteraction';
+import type { SADocumentWidth } from './SADocumentWidth';
+import type { SADocumentHeight } from './SADocumentHeight';
+import type { SADocumentDefinedHorizontal } from './SADocumentDefinedHorizontal';
+import type { SADocumentDefinedVertical } from './SADocumentDefinedVertical';
+import type { SADocumentDefinedColor } from './SADocumentDefinedColor';
+import type { SADocumentRulerHorizontal } from './SADocumentRulerHorizontal';
+import type { SADocumentRulerVertical } from './SADocumentRulerVertical';
 
-export type SADocument = SADocumentSADocument;
+export interface SADocument {
+  Id?: string;
+  Name?: string;
+  Description?: string;
+  KindInteraction?: string;
+  ListMedia?: SAMedia[];
+  Decoration?: SADocumentDecoration;
+  Interaction?: SADocumentInteraction;
+  Width?: SADocumentWidth;
+  Height?: SADocumentHeight;
+  DefinedHorizontal?: SADocumentDefinedHorizontal;
+  DefinedVertical?: SADocumentDefinedVertical;
+  DefinedColor?: SADocumentDefinedColor;
+  RulerHorizontal?: SADocumentRulerHorizontal;
+  RulerVertical?: SADocumentRulerVertical;
+}

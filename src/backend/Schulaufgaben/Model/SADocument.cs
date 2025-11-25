@@ -2,7 +2,6 @@
 
 namespace Brimborium.Schulaufgaben.Model;
 
-[JsonDerivedType(typeof(SADocument), typeDiscriminator: "Document")]
 public class SADocument : IEquatable<SADocument> {
     public Guid Id { get; set; }
 

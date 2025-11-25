@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BaseComponent, SADocument, SADocumentDescription, SADocumentSADocumentDecoration, SANode, SchulaufgabenEditorWebV1Service, SelectionService } from 'schulaufgaben';
+import { BaseComponent, SADocument, SADocumentDescription, SANode, SchulaufgabenEditorWebV1Service, SelectionService } from 'schulaufgaben';
 import { EditorSADocumentComponent } from '../editor-sa-document/editor-sa-document.component';
 
 @Component({
@@ -30,40 +30,37 @@ export class EditorEditComponent extends BaseComponent implements OnInit {
 
     //interaction?: SADocumentSADocumentInteraction;
     const decoration :SANode= {
-      $type: "SANode",
-      id: "00000000-0000-0000-0000-000000000001",
-      name: "decoration",
-      kind: "decoration",
-      listItem: [],
-      position: undefined,
-      normal: undefined,
-      flipped: undefined,
-      selected: undefined
+      Id: "00000000-0000-0000-0000-000000000001",
+      Name: "decoration",
+      Kind: "decoration",
+      ListItem: [],
+      Position: undefined,
+      Normal: undefined,
+      Flipped: undefined,
+      Selected: undefined
     };
     const interaction :SANode= {
-      $type: "SANode",
-      id: "00000000-0000-0000-0000-000000000001",
-      name: "decoration",
-      kind: "decoration",
-      listItem: [],
-      position: undefined,
-      normal: undefined,
-      flipped: undefined,
-      selected: undefined
+      Id: "00000000-0000-0000-0000-000000000002",
+      Name: "decoration",
+      Kind: "decoration",
+      ListItem: [],
+      Position: undefined,
+      Normal: undefined,
+      Flipped: undefined,
+      Selected: undefined
     };
     this.document = {
-      $type: "Document",
-      id: "00000000-0000-0000-0000-000000000000",
-      name: "test",
-      description: "test",
-      kindInteraction: "",
-      listMedia: [],
-      decoration: decoration,
-      interaction: interaction,
-      width: { $type: "SAScalarUnit", value: 100, unit: 0, name: "width" },
-      height: { $type: "SAScalarUnit", value: 100, unit: 0, name: "height" },
-      rulerHorizontal: [],
-      rulerVertical: []
+      Id: "00000000-0000-0000-0000-000000000000",
+      Name: "test",
+      Description: "test",
+      KindInteraction: "",
+      ListMedia: [],
+      Decoration: decoration,
+      Interaction: interaction,
+      Width: { Value: 1200, Unit: 1, Name: "PageWidth" },
+      Height: { Value: 800, Unit: 1, Name: "PageHeight" },
+      RulerHorizontal: [],
+      RulerVertical: []
     };
   }
 

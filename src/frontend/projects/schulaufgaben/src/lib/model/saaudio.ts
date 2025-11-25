@@ -4,6 +4,7 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SAAudioSAAudio } from './saaudio-sa-audio';
 
-export type SAAudio = SAAudioSAAudio;
+export interface SAAudio {
+  Media?: string;
+}

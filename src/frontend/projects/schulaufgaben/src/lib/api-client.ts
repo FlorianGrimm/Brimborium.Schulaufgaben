@@ -4,202 +4,4028 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import {
-  HttpClient
-} from '@angular/common/http';
-import type {
-  HttpContext,
-  HttpEvent,
-  HttpHeaders,
-  HttpParams,
-  HttpResponse as AngularHttpResponse
-} from '@angular/common/http';
-
-import {
-  Injectable,
-  inject
-} from '@angular/core';
-
-import {
-  Observable
-} from 'rxjs';
-
-import type {
-  SADocument,
-  SADocumentDescription,
-  SAMediaInfo,
-  SAMediaSearchRequest
-} from './model';
-
-interface HttpClientOptions {
-  headers?: HttpHeaders | Record<string, string | string[]>;
-  context?: HttpContext;
-  params?:
-        | HttpParams
-        | Record<string, string | number | boolean | ReadonlyArray<string | number | boolean>>;
-  reportProgress?: boolean;
-  withCredentials?: boolean;
-  credentials?: RequestCredentials;
-  keepalive?: boolean;
-  priority?: RequestPriority;
-  cache?: RequestCache;
-  mode?: RequestMode;
-  redirect?: RequestRedirect;
-  referrer?: string;
-  integrity?: string;
-  transferCache?: {includeHeaders?: string[]} | boolean;
-  timeout?: number;
-}
+import * as zod from 'zod';
 
 
+export const getAPIDocumentDescriptionResponseItem = zod.object({
+  "Id": zod.uuid().optional(),
+  "Folder": zod.string().optional(),
+  "Name": zod.string().optional(),
+  "Description": zod.string().optional(),
+  "ContentHash": zod.string().optional()
+})
+export const getAPIDocumentDescriptionResponse = zod.array(getAPIDocumentDescriptionResponseItem)
 
-@Injectable({ providedIn: 'root' })
-export class SchulaufgabenEditorWebV1Service {
-  private readonly http = inject(HttpClient);
- getAPIDocumentDescription<TData = SADocumentDescription[]>( options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- getAPIDocumentDescription<TData = SADocumentDescription[]>( options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- getAPIDocumentDescription<TData = SADocumentDescription[]>( options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
-  getAPIDocumentDescription<TData = SADocumentDescription[]>(
-     options?: HttpClientOptions & { observe?: any }): Observable<any> {
-    return this.http.get<TData>(
-      `/API/DocumentDescription`,options
-    );
-  }
 
- putAPIDocumentDescription<TData = SADocumentDescription>(sADocumentDescription: SADocumentDescription, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- putAPIDocumentDescription<TData = SADocumentDescription>(sADocumentDescription: SADocumentDescription, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- putAPIDocumentDescription<TData = SADocumentDescription>(sADocumentDescription: SADocumentDescription, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
-  putAPIDocumentDescription<TData = SADocumentDescription>(
-    sADocumentDescription: SADocumentDescription, options?: HttpClientOptions & { observe?: any }): Observable<any> {
-    return this.http.put<TData>(
-      `/API/DocumentDescription`,
-      sADocumentDescription,options
-    );
-  }
+export const putAPIDocumentDescriptionBody = zod.object({
+  "Id": zod.uuid().optional(),
+  "Folder": zod.string().optional(),
+  "Name": zod.string().optional(),
+  "Description": zod.string().optional(),
+  "ContentHash": zod.string().optional()
+})
 
- getAPIDocumentDescriptionId<TData = SADocumentDescription>(id: string, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- getAPIDocumentDescriptionId<TData = SADocumentDescription>(id: string, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- getAPIDocumentDescriptionId<TData = SADocumentDescription>(id: string, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
-  getAPIDocumentDescriptionId<TData = SADocumentDescription>(
-    id: string, options?: HttpClientOptions & { observe?: any }): Observable<any> {
-    return this.http.get<TData>(
-      `/API/DocumentDescription/${id}`,options
-    );
-  }
+export const putAPIDocumentDescriptionResponse = zod.object({
+  "Id": zod.uuid().optional(),
+  "Folder": zod.string().optional(),
+  "Name": zod.string().optional(),
+  "Description": zod.string().optional(),
+  "ContentHash": zod.string().optional()
+})
 
- postAPIDocumentDescriptionId<TData = SADocumentDescription>(id: string,
-    sADocumentDescription: SADocumentDescription, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- postAPIDocumentDescriptionId<TData = SADocumentDescription>(id: string,
-    sADocumentDescription: SADocumentDescription, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- postAPIDocumentDescriptionId<TData = SADocumentDescription>(id: string,
-    sADocumentDescription: SADocumentDescription, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
-  postAPIDocumentDescriptionId<TData = SADocumentDescription>(
-    id: string,
-    sADocumentDescription: SADocumentDescription, options?: HttpClientOptions & { observe?: any }): Observable<any> {
-    return this.http.post<TData>(
-      `/API/DocumentDescription/${id}`,
-      sADocumentDescription,options
-    );
-  }
 
- deleteAPIDocumentDescriptionId<TData = void>(id: string, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- deleteAPIDocumentDescriptionId<TData = void>(id: string, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- deleteAPIDocumentDescriptionId<TData = void>(id: string, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
-  deleteAPIDocumentDescriptionId<TData = void>(
-    id: string, options?: HttpClientOptions & { observe?: any }): Observable<any> {
-    return this.http.delete<TData>(
-      `/API/DocumentDescription/${id}`,options
-    );
-  }
+export const getAPIDocumentDescriptionIdParams = zod.object({
+  "id": zod.uuid()
+})
 
- getAPIDocumentId<TData = SADocument>(id: string, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- getAPIDocumentId<TData = SADocument>(id: string, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- getAPIDocumentId<TData = SADocument>(id: string, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
-  getAPIDocumentId<TData = SADocument>(
-    id: string, options?: HttpClientOptions & { observe?: any }): Observable<any> {
-    return this.http.get<TData>(
-      `/API/Document/${id}`,options
-    );
-  }
+export const getAPIDocumentDescriptionIdResponse = zod.object({
+  "Id": zod.uuid().optional(),
+  "Folder": zod.string().optional(),
+  "Name": zod.string().optional(),
+  "Description": zod.string().optional(),
+  "ContentHash": zod.string().optional()
+})
 
- postAPIDocumentId<TData = SADocument>(id: string,
-    sADocument: SADocument, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- postAPIDocumentId<TData = SADocument>(id: string,
-    sADocument: SADocument, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- postAPIDocumentId<TData = SADocument>(id: string,
-    sADocument: SADocument, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
-  postAPIDocumentId<TData = SADocument>(
-    id: string,
-    sADocument: SADocument, options?: HttpClientOptions & { observe?: any }): Observable<any> {
-    return this.http.post<TData>(
-      `/API/Document/${id}`,
-      sADocument,options
-    );
-  }
 
- deleteAPIDocumentId<TData = void>(id: string, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- deleteAPIDocumentId<TData = void>(id: string, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- deleteAPIDocumentId<TData = void>(id: string, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
-  deleteAPIDocumentId<TData = void>(
-    id: string, options?: HttpClientOptions & { observe?: any }): Observable<any> {
-    return this.http.delete<TData>(
-      `/API/Document/${id}`,options
-    );
-  }
+export const postAPIDocumentDescriptionIdParams = zod.object({
+  "id": zod.uuid()
+})
 
- putAPIDocument<TData = SADocument>(sADocument: SADocument, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- putAPIDocument<TData = SADocument>(sADocument: SADocument, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- putAPIDocument<TData = SADocument>(sADocument: SADocument, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
-  putAPIDocument<TData = SADocument>(
-    sADocument: SADocument, options?: HttpClientOptions & { observe?: any }): Observable<any> {
-    return this.http.put<TData>(
-      `/API/Document`,
-      sADocument,options
-    );
-  }
+export const postAPIDocumentDescriptionIdBody = zod.object({
+  "Id": zod.uuid().optional(),
+  "Folder": zod.string().optional(),
+  "Name": zod.string().optional(),
+  "Description": zod.string().optional(),
+  "ContentHash": zod.string().optional()
+})
 
- getAPIMediaContentName<TData = void>(name: string, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- getAPIMediaContentName<TData = void>(name: string, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- getAPIMediaContentName<TData = void>(name: string, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
-  getAPIMediaContentName<TData = void>(
-    name: string, options?: HttpClientOptions & { observe?: any }): Observable<any> {
-    return this.http.get<TData>(
-      `/API/Media/Content/${name}`,options
-    );
-  }
+export const postAPIDocumentDescriptionIdResponse = zod.object({
+  "Id": zod.uuid().optional(),
+  "Folder": zod.string().optional(),
+  "Name": zod.string().optional(),
+  "Description": zod.string().optional(),
+  "ContentHash": zod.string().optional()
+})
 
- getAPIMediaThumbnailName<TData = void>(name: string, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- getAPIMediaThumbnailName<TData = void>(name: string, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- getAPIMediaThumbnailName<TData = void>(name: string, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
-  getAPIMediaThumbnailName<TData = void>(
-    name: string, options?: HttpClientOptions & { observe?: any }): Observable<any> {
-    return this.http.get<TData>(
-      `/API/Media/Thumbnail/${name}`,options
-    );
-  }
 
- postAPIMediaSearch<TData = SAMediaInfo[]>(sAMediaSearchRequest: SAMediaSearchRequest, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- postAPIMediaSearch<TData = SAMediaInfo[]>(sAMediaSearchRequest: SAMediaSearchRequest, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- postAPIMediaSearch<TData = SAMediaInfo[]>(sAMediaSearchRequest: SAMediaSearchRequest, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
-  postAPIMediaSearch<TData = SAMediaInfo[]>(
-    sAMediaSearchRequest: SAMediaSearchRequest, options?: HttpClientOptions & { observe?: any }): Observable<any> {
-    return this.http.post<TData>(
-      `/API/Media/Search`,
-      sAMediaSearchRequest,options
-    );
-  }
+export const deleteAPIDocumentDescriptionIdParams = zod.object({
+  "id": zod.uuid()
+})
 
-};
 
-export type GetAPIDocumentDescriptionClientResult = NonNullable<SADocumentDescription[]>
-export type PutAPIDocumentDescriptionClientResult = NonNullable<SADocumentDescription>
-export type GetAPIDocumentDescriptionIdClientResult = NonNullable<SADocumentDescription>
-export type PostAPIDocumentDescriptionIdClientResult = NonNullable<SADocumentDescription>
-export type DeleteAPIDocumentDescriptionIdClientResult = NonNullable<void>
-export type GetAPIDocumentIdClientResult = NonNullable<SADocument>
-export type PostAPIDocumentIdClientResult = NonNullable<SADocument>
-export type DeleteAPIDocumentIdClientResult = NonNullable<void>
-export type PutAPIDocumentClientResult = NonNullable<SADocument>
-export type GetAPIMediaContentNameClientResult = NonNullable<void>
-export type GetAPIMediaThumbnailNameClientResult = NonNullable<void>
-export type PostAPIMediaSearchClientResult = NonNullable<SAMediaInfo[]>
+export const getAPIDocumentIdParams = zod.object({
+  "id": zod.uuid()
+})
+
+export const getAPIDocumentIdResponse = zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Description": zod.string().optional(),
+  "KindInteraction": zod.string().optional(),
+  "ListMedia": zod.array(zod.object({
+  "Id": zod.uuid(),
+  "Path": zod.string(),
+  "MediaType": zod.string(),
+  "ContentType": zod.string()
+})).optional(),
+  "Decoration": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid(),
+  "Name": zod.string().nullish(),
+  "Kind": zod.string().nullish(),
+  "ListItem": zod.array(zod.unknown()).optional(),
+  "Position": zod.union([zod.null(),zod.object({
+  "Left": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Top": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Right": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Bottom": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Normal": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Flipped": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Selected": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional()
+})]).optional(),
+  "Interaction": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid(),
+  "Name": zod.string().nullish(),
+  "Kind": zod.string().nullish(),
+  "ListItem": zod.array(zod.unknown()).optional(),
+  "Position": zod.union([zod.null(),zod.object({
+  "Left": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Top": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Right": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Bottom": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Normal": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Flipped": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Selected": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "DefinedHorizontal": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "DefinedVertical": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "DefinedColor": zod.array(zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "RulerHorizontal": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "RulerVertical": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})
+
+
+export const postAPIDocumentIdParams = zod.object({
+  "id": zod.uuid()
+})
+
+export const postAPIDocumentIdBody = zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Description": zod.string().optional(),
+  "KindInteraction": zod.string().optional(),
+  "ListMedia": zod.array(zod.object({
+  "Id": zod.uuid(),
+  "Path": zod.string(),
+  "MediaType": zod.string(),
+  "ContentType": zod.string()
+})).optional(),
+  "Decoration": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid(),
+  "Name": zod.string().nullish(),
+  "Kind": zod.string().nullish(),
+  "ListItem": zod.array(zod.unknown()).optional(),
+  "Position": zod.union([zod.null(),zod.object({
+  "Left": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Top": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Right": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Bottom": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Normal": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Flipped": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Selected": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional()
+})]).optional(),
+  "Interaction": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid(),
+  "Name": zod.string().nullish(),
+  "Kind": zod.string().nullish(),
+  "ListItem": zod.array(zod.unknown()).optional(),
+  "Position": zod.union([zod.null(),zod.object({
+  "Left": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Top": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Right": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Bottom": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Normal": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Flipped": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Selected": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "DefinedHorizontal": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "DefinedVertical": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "DefinedColor": zod.array(zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "RulerHorizontal": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "RulerVertical": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})
+
+export const postAPIDocumentIdResponse = zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Description": zod.string().optional(),
+  "KindInteraction": zod.string().optional(),
+  "ListMedia": zod.array(zod.object({
+  "Id": zod.uuid(),
+  "Path": zod.string(),
+  "MediaType": zod.string(),
+  "ContentType": zod.string()
+})).optional(),
+  "Decoration": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid(),
+  "Name": zod.string().nullish(),
+  "Kind": zod.string().nullish(),
+  "ListItem": zod.array(zod.unknown()).optional(),
+  "Position": zod.union([zod.null(),zod.object({
+  "Left": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Top": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Right": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Bottom": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Normal": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Flipped": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Selected": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional()
+})]).optional(),
+  "Interaction": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid(),
+  "Name": zod.string().nullish(),
+  "Kind": zod.string().nullish(),
+  "ListItem": zod.array(zod.unknown()).optional(),
+  "Position": zod.union([zod.null(),zod.object({
+  "Left": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Top": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Right": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Bottom": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Normal": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Flipped": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Selected": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "DefinedHorizontal": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "DefinedVertical": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "DefinedColor": zod.array(zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "RulerHorizontal": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "RulerVertical": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})
+
+
+export const deleteAPIDocumentIdParams = zod.object({
+  "id": zod.uuid()
+})
+
+
+export const putAPIDocumentBody = zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Description": zod.string().optional(),
+  "KindInteraction": zod.string().optional(),
+  "ListMedia": zod.array(zod.object({
+  "Id": zod.uuid(),
+  "Path": zod.string(),
+  "MediaType": zod.string(),
+  "ContentType": zod.string()
+})).optional(),
+  "Decoration": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid(),
+  "Name": zod.string().nullish(),
+  "Kind": zod.string().nullish(),
+  "ListItem": zod.array(zod.unknown()).optional(),
+  "Position": zod.union([zod.null(),zod.object({
+  "Left": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Top": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Right": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Bottom": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Normal": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Flipped": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Selected": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional()
+})]).optional(),
+  "Interaction": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid(),
+  "Name": zod.string().nullish(),
+  "Kind": zod.string().nullish(),
+  "ListItem": zod.array(zod.unknown()).optional(),
+  "Position": zod.union([zod.null(),zod.object({
+  "Left": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Top": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Right": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Bottom": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Normal": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Flipped": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Selected": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "DefinedHorizontal": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "DefinedVertical": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "DefinedColor": zod.array(zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "RulerHorizontal": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "RulerVertical": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})
+
+export const putAPIDocumentResponse = zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Description": zod.string().optional(),
+  "KindInteraction": zod.string().optional(),
+  "ListMedia": zod.array(zod.object({
+  "Id": zod.uuid(),
+  "Path": zod.string(),
+  "MediaType": zod.string(),
+  "ContentType": zod.string()
+})).optional(),
+  "Decoration": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid(),
+  "Name": zod.string().nullish(),
+  "Kind": zod.string().nullish(),
+  "ListItem": zod.array(zod.unknown()).optional(),
+  "Position": zod.union([zod.null(),zod.object({
+  "Left": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Top": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Right": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Bottom": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Normal": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Flipped": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Selected": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional()
+})]).optional(),
+  "Interaction": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid(),
+  "Name": zod.string().nullish(),
+  "Kind": zod.string().nullish(),
+  "ListItem": zod.array(zod.unknown()).optional(),
+  "Position": zod.union([zod.null(),zod.object({
+  "Left": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Top": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Right": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Bottom": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Normal": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Flipped": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional(),
+  "Selected": zod.union([zod.null(),zod.object({
+  "MatchingValue": zod.string().nullish(),
+  "Background": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Border": zod.union([zod.null(),zod.object({
+  "BorderWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftWidth": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderStyle": zod.string().nullish(),
+  "BorderTopStyle": zod.string().nullish(),
+  "BorderRightStyle": zod.string().nullish(),
+  "BorderBottomStyle": zod.string().nullish(),
+  "BorderLeftStyle": zod.string().nullish(),
+  "BorderColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRightColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderLeftColor": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderTopRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional()
+})]).optional(),
+  "Text": zod.union([zod.null(),zod.object({
+  "Value": zod.string().optional(),
+  "FontFamily": zod.string().nullish(),
+  "FontSize": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "FontWeight": zod.string().nullish(),
+  "FontStyle": zod.string().nullish(),
+  "Color": zod.union([zod.null(),zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "TextAlign": zod.string().nullish(),
+  "TextDecoration": zod.string().nullish()
+})]).optional(),
+  "Image": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Audio": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional(),
+  "Video": zod.union([zod.null(),zod.object({
+  "Media": zod.uuid().optional()
+})]).optional()
+})]).optional()
+})]).optional(),
+  "Width": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "Height": zod.union([zod.null(),zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})]).optional(),
+  "DefinedHorizontal": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "DefinedVertical": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "DefinedColor": zod.array(zod.object({
+  "Value": zod.string().nullish(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "RulerHorizontal": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish(),
+  "RulerVertical": zod.array(zod.object({
+  "Value": zod.union([zod.number(),zod.string()]),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})
+
+
+export const getAPIMediaContentNameParams = zod.object({
+  "name": zod.string()
+})
+
+
+export const getAPIMediaThumbnailNameParams = zod.object({
+  "name": zod.string()
+})
+
+
+export const postAPIMediaSearchBody = zod.object({
+  "MediaType": zod.number(),
+  "Value": zod.string()
+})
+
+export const postAPIMediaSearchResponseItem = zod.object({
+  "Path": zod.string().optional(),
+  "MediaType": zod.string().optional(),
+  "Size": zod.number().optional(),
+  "LastWriteTimeUtc": zod.iso.datetime({}).optional(),
+  "LastScan": zod.iso.datetime({}).optional()
+})
+export const postAPIMediaSearchResponse = zod.array(postAPIMediaSearchResponseItem)
+
+

@@ -1,0 +1,124 @@
+﻿export type SADocumentDescription = {
+    Id : string;
+    Folder : string;
+    Name : string;
+    Description : string;
+    ContentHash : string;
+}
+
+export type SADocument = {
+    Id : string;
+    Name : string;
+    Description : string;
+    KindInteraction : string;
+    ListMedia : SAMedia[];
+    Decoration : SANode;
+    Interaction : SANode;
+    Width : SAScalarUnit;
+    Height : SAScalarUnit;
+    DefinedHorizontal : SAScalarUnit[];
+    DefinedVertical : SAScalarUnit[];
+    DefinedColor : SAColor[];
+    RulerHorizontal : SAScalarUnit[];
+    RulerVertical : SAScalarUnit[];
+}
+
+export type SANode = {
+    Id : string;
+    Name : string;
+    Kind : string;
+    ListItem : SANode[];
+    Position : SABox;
+    Normal : SAContent;
+    Flipped : SAContent;
+    Selected : SAContent;
+}
+
+export type SAContent = {
+    MatchingValue : string;
+    Background : SAColor;
+    Border : SABorder;
+    Text : SAText;
+    Image : SAImage;
+    Audio : SAAudio;
+    Video : SAVideo;
+}
+
+export type SAMedia = {
+    Id : string;
+    Path : string;
+    MediaType : string;
+    ContentType : string;
+}
+
+export type SAText = {
+    Value : string;
+    FontFamily : string;
+    FontSize : SAScalarUnit;
+    FontWeight : string;
+    FontStyle : string;
+    Color : SAColor;
+    TextAlign : string;
+    TextDecoration : string;
+}
+
+export type SAImage = {
+    Media : string;
+}
+
+export type SAVideo = {
+    Media : string;
+}
+
+export type SAAudio = {
+    Media : string;
+}
+
+export type SABorder = {
+    BorderWidth : SAScalarUnit;
+    BorderTopWidth : SAScalarUnit;
+    BorderRightWidth : SAScalarUnit;
+    BorderBottomWidth : SAScalarUnit;
+    BorderLeftWidth : SAScalarUnit;
+    BorderStyle : string;
+    BorderTopStyle : string;
+    BorderRightStyle : string;
+    BorderBottomStyle : string;
+    BorderLeftStyle : string;
+    BorderColor : SAColor;
+    BorderTopColor : SAColor;
+    BorderRightColor : SAColor;
+    BorderBottomColor : SAColor;
+    BorderLeftColor : SAColor;
+    BorderRadius : SAScalarUnit;
+    BorderTopLeftRadius : SAScalarUnit;
+    BorderTopRightRadius : SAScalarUnit;
+    BorderBottomRightRadius : SAScalarUnit;
+    BorderBottomLeftRadius : SAScalarUnit;
+}
+
+export type SABox = {
+    Left : SAScalarUnit;
+    Top : SAScalarUnit;
+    Width : SAScalarUnit;
+    Height : SAScalarUnit;
+    Right : SAScalarUnit;
+    Bottom : SAScalarUnit;
+}
+
+export type SAScalarUnit = {
+    Value : number;
+    Unit : SAUnit;
+    Name : string;
+}
+
+export enum SAUnit {
+    Percent = 0,
+    Pixel = 1,
+}
+
+export type SAColor = {
+    Value : string;
+    Name : string;
+}
+

@@ -58,16 +58,15 @@ export class EditorNewComponent extends BaseComponent {
     }
     const documentDescriptionValue = this.documentDescriptionForm.value;
     const documentDescription: SADocumentDescription = {
-      $type: "DocumentDescription",
-      id: "00000000-0000-0000-0000-000000000000",
-      name: documentDescriptionValue.name ?? "",
-      description: documentDescriptionValue.description ?? "",
+      Id: "00000000-0000-0000-0000-000000000000",
+      Name: documentDescriptionValue.name ?? "",
+      Description: documentDescriptionValue.description ?? "",
     };
     this.client.putAPIDocumentDescription(documentDescription).subscribe({
       next: (result) => {
         this.stateDocumentDescription.addDocumentDescription(result);
         this.selectionService.setDocumentDescription(result);
-        this.router.navigate(['/editor', 'edit', result.id]);
+        this.router.navigate(['/editor', 'edit', result.Id]);
       }
     });
   }

@@ -13,7 +13,7 @@ export class StateDocumentDescriptionService {
   public addDocumentDescription(documentDescription: SADocumentDescription) {
     const list = this.listDocumentDescription$.getValue();
     const nextList = list ? [...list,documentDescription] : [documentDescription];
-    nextList.sort((a, b) => (a.name??'').localeCompare((b.name??'')));
+    nextList.sort((a, b) => (a.Name??'').localeCompare((b.Name??'')));
     this.listDocumentDescription$.next(nextList);
   }
 }

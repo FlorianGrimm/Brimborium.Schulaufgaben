@@ -8,7 +8,7 @@ using Brimborium.Schulaufgaben.Service;
 using System.Threading.Tasks;
 using Scalar.AspNetCore;
 
-namespace SchulaufgabenClientWeb;
+namespace SchulaufgabenEditorWeb;
 
 public class Program {
     public static async Task<int> Main(string[] args) {
@@ -28,10 +28,24 @@ public class Program {
         }
     }
     public static async Task Run(string[] args) {
+        WebApplication app = BuildWebApplication(args);
+        await app.RunAsync();
+    }
+
+    public static WebApplication BuildWebApplication(string[] args) {
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddOpenApi(options => {
+            options.CreateSchemaReferenceId =
+                static (type) =>
+                    (type.Type.Namespace == "Brimborium.Schulaufgaben.Model" ? type.Type.Name : null);
+            options.AddDocumentTransformer<TSDocumentTransformer>();
         });
+
+        builder.Services.ConfigureHttpJsonOptions((options) => {
+            options.SerializerOptions.PropertyNamingPolicy = null;
+        });
+
         // Add services to the container.
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
         //?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -80,7 +94,7 @@ public class Program {
 
         builder.Services.AddSingleton<EditorAPI>();
         builder.Services.AddHostedService<EditingMediaGalleryBackgroundService>();
-        
+
 
         var app = builder.Build();
 
@@ -109,7 +123,6 @@ public class Program {
         _ = app.MapStaticAssets();
         _ = app.MapRazorPages().WithStaticAssets();
         app.Services.GetRequiredService<EditorAPI>().Map(app);
-
-        await app.RunAsync();
+        return app;
     }
 }

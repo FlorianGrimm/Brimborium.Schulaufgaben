@@ -2,7 +2,6 @@
 
 namespace Brimborium.Schulaufgaben.Model;
 
-[JsonDerivedType(typeof(SABox), typeDiscriminator: "SABox")]
 public class SABox {
     public SAScalarUnit? Left { get; set; }
     public SAScalarUnit? Top { get; set; }

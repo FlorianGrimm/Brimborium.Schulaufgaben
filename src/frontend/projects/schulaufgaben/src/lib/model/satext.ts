@@ -4,6 +4,21 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SATextSAText } from './satext-sa-text';
+import type { SATextFontFamily } from './SATextFontFamily';
+import type { SATextFontSize } from './SATextFontSize';
+import type { SATextFontWeight } from './SATextFontWeight';
+import type { SATextFontStyle } from './SATextFontStyle';
+import type { SATextColor } from './SATextColor';
+import type { SATextTextAlign } from './SATextTextAlign';
+import type { SATextTextDecoration } from './SATextTextDecoration';
 
-export type SAText = SATextSAText;
+export interface SAText {
+  Value?: string;
+  FontFamily?: SATextFontFamily;
+  FontSize?: SATextFontSize;
+  FontWeight?: SATextFontWeight;
+  FontStyle?: SATextFontStyle;
+  Color?: SATextColor;
+  TextAlign?: SATextTextAlign;
+  TextDecoration?: SATextTextDecoration;
+}

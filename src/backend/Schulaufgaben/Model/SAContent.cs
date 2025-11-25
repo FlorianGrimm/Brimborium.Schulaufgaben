@@ -2,7 +2,6 @@
 
 namespace Brimborium.Schulaufgaben.Model;
 
-[JsonDerivedType(typeof(SAContent), typeDiscriminator: "SAContent")]
 public class SAContent {
     public string? MatchingValue { get; set; }
     public SAColor? Background { get; set; }

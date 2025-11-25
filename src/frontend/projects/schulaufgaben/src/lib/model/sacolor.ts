@@ -4,6 +4,10 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SAColorSAColor } from './sacolor-sa-color';
+import type { SAColorValue } from './SAColorValue';
+import type { SAColorName } from './SAColorName';
 
-export type SAColor = SAColorSAColor;
+export interface SAColor {
+  Value?: SAColorValue;
+  Name?: SAColorName;
+}

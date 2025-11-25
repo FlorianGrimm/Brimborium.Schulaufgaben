@@ -2,7 +2,6 @@
 
 namespace Brimborium.Schulaufgaben.Model;
 
-[JsonDerivedType(typeof(SANode), typeDiscriminator: "SANode")]
 public class SANode {
     public required Guid Id { get; set; }
     public string? Name { get; set; }

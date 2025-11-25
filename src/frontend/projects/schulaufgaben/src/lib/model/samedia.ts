@@ -4,6 +4,10 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SAMediaSAMedia } from './samedia-sa-media';
 
-export type SAMedia = SAMediaSAMedia;
+export interface SAMedia {
+  Id: string;
+  Path: string;
+  MediaType: string;
+  ContentType: string;
+}

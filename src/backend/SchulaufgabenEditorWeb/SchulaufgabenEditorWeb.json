@@ -314,7 +314,19 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SAMediaSearchRequest"
+                "required": [
+                  "MediaType",
+                  "Value"
+                ],
+                "type": "object",
+                "properties": {
+                  "MediaType": {
+                    "type": "integer"
+                  },
+                  "Value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -340,44 +352,204 @@
   },
   "components": {
     "schemas": {
-      "MediaType": {
-        "type": "integer"
-      },
       "SAAudio": {
-        "required": [
-          "$type"
-        ],
         "type": "object",
-        "anyOf": [
-          {
-            "$ref": "#/components/schemas/SAAudioSAAudio"
-          }
-        ],
-        "discriminator": {
-          "propertyName": "$type",
-          "mapping": {
-            "SAAudio": "#/components/schemas/SAAudioSAAudio"
+        "properties": {
+          "Media": {
+            "type": "string",
+            "format": "uuid"
           }
         }
       },
-      "SAAudioSAAudio": {
+      "SABorder": {
+        "type": "object",
         "properties": {
-          "$type": {
-            "enum": [
-              "SAAudio"
-            ],
-            "type": "string"
+          "BorderWidth": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAScalarUnit"
+              }
+            ]
           },
-          "media": {
-            "type": "string",
-            "format": "uuid"
+          "BorderTopWidth": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAScalarUnit"
+              }
+            ]
+          },
+          "BorderRightWidth": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAScalarUnit"
+              }
+            ]
+          },
+          "BorderBottomWidth": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAScalarUnit"
+              }
+            ]
+          },
+          "BorderLeftWidth": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAScalarUnit"
+              }
+            ]
+          },
+          "BorderStyle": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "BorderTopStyle": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "BorderRightStyle": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "BorderBottomStyle": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "BorderLeftStyle": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "BorderColor": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAColor"
+              }
+            ]
+          },
+          "BorderTopColor": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAColor"
+              }
+            ]
+          },
+          "BorderRightColor": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAColor"
+              }
+            ]
+          },
+          "BorderBottomColor": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAColor"
+              }
+            ]
+          },
+          "BorderLeftColor": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAColor"
+              }
+            ]
+          },
+          "BorderRadius": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAScalarUnit"
+              }
+            ]
+          },
+          "BorderTopLeftRadius": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAScalarUnit"
+              }
+            ]
+          },
+          "BorderTopRightRadius": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAScalarUnit"
+              }
+            ]
+          },
+          "BorderBottomRightRadius": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAScalarUnit"
+              }
+            ]
+          },
+          "BorderBottomLeftRadius": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAScalarUnit"
+              }
+            ]
           }
         }
       },
       "SABox": {
         "type": "object",
         "properties": {
-          "left": {
+          "Left": {
             "oneOf": [
               {
                 "type": "null"
@@ -387,7 +559,7 @@
               }
             ]
           },
-          "top": {
+          "Top": {
             "oneOf": [
               {
                 "type": "null"
@@ -397,7 +569,7 @@
               }
             ]
           },
-          "width": {
+          "Width": {
             "oneOf": [
               {
                 "type": "null"
@@ -407,7 +579,7 @@
               }
             ]
           },
-          "height": {
+          "Height": {
             "oneOf": [
               {
                 "type": "null"
@@ -417,7 +589,7 @@
               }
             ]
           },
-          "right": {
+          "Right": {
             "oneOf": [
               {
                 "type": "null"
@@ -427,7 +599,7 @@
               }
             ]
           },
-          "bottom": {
+          "Bottom": {
             "oneOf": [
               {
                 "type": "null"
@@ -435,6 +607,23 @@
               {
                 "$ref": "#/components/schemas/SAScalarUnit"
               }
+            ]
+          }
+        }
+      },
+      "SAColor": {
+        "type": "object",
+        "properties": {
+          "Value": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Name": {
+            "type": [
+              "null",
+              "string"
             ]
           }
         }
@@ -442,13 +631,33 @@
       "SAContent": {
         "type": "object",
         "properties": {
-          "matchingValue": {
+          "MatchingValue": {
             "type": [
               "null",
               "string"
             ]
           },
-          "text": {
+          "Background": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAColor"
+              }
+            ]
+          },
+          "Border": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SABorder"
+              }
+            ]
+          },
+          "Text": {
             "oneOf": [
               {
                 "type": "null"
@@ -458,7 +667,7 @@
               }
             ]
           },
-          "image": {
+          "Image": {
             "oneOf": [
               {
                 "type": "null"
@@ -468,7 +677,7 @@
               }
             ]
           },
-          "audio": {
+          "Audio": {
             "oneOf": [
               {
                 "type": "null"
@@ -478,7 +687,7 @@
               }
             ]
           },
-          "video": {
+          "Video": {
             "oneOf": [
               {
                 "type": "null"
@@ -491,93 +700,28 @@
         }
       },
       "SADocument": {
-        "required": [
-          "$type"
-        ],
         "type": "object",
-        "anyOf": [
-          {
-            "$ref": "#/components/schemas/SADocumentSADocument"
-          }
-        ],
-        "discriminator": {
-          "propertyName": "$type",
-          "mapping": {
-            "Document": "#/components/schemas/SADocumentSADocument"
-          }
-        }
-      },
-      "SADocumentDescription": {
-        "required": [
-          "$type"
-        ],
-        "type": "object",
-        "anyOf": [
-          {
-            "$ref": "#/components/schemas/SADocumentDescriptionSADocumentDescription"
-          }
-        ],
-        "discriminator": {
-          "propertyName": "$type",
-          "mapping": {
-            "DocumentDescription": "#/components/schemas/SADocumentDescriptionSADocumentDescription"
-          }
-        }
-      },
-      "SADocumentDescriptionSADocumentDescription": {
         "properties": {
-          "$type": {
-            "enum": [
-              "DocumentDescription"
-            ],
-            "type": "string"
-          },
-          "id": {
+          "Id": {
             "type": "string",
             "format": "uuid"
           },
-          "folder": {
+          "Name": {
             "type": "string"
           },
-          "name": {
+          "Description": {
             "type": "string"
           },
-          "description": {
+          "KindInteraction": {
             "type": "string"
           },
-          "contentHash": {
-            "type": "string"
-          }
-        }
-      },
-      "SADocumentSADocument": {
-        "properties": {
-          "$type": {
-            "enum": [
-              "Document"
-            ],
-            "type": "string"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "kindInteraction": {
-            "type": "string"
-          },
-          "listMedia": {
+          "ListMedia": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SAMedia"
             }
           },
-          "decoration": {
+          "Decoration": {
             "oneOf": [
               {
                 "type": "null"
@@ -587,7 +731,7 @@
               }
             ]
           },
-          "interaction": {
+          "Interaction": {
             "oneOf": [
               {
                 "type": "null"
@@ -597,7 +741,7 @@
               }
             ]
           },
-          "width": {
+          "Width": {
             "oneOf": [
               {
                 "type": "null"
@@ -607,7 +751,7 @@
               }
             ]
           },
-          "height": {
+          "Height": {
             "oneOf": [
               {
                 "type": "null"
@@ -617,7 +761,7 @@
               }
             ]
           },
-          "rulerHorizontal": {
+          "DefinedHorizontal": {
             "type": [
               "null",
               "array"
@@ -626,7 +770,7 @@
               "$ref": "#/components/schemas/SAScalarUnit"
             }
           },
-          "rulerVertical": {
+          "DefinedVertical": {
             "type": [
               "null",
               "array"
@@ -634,35 +778,61 @@
             "items": {
               "$ref": "#/components/schemas/SAScalarUnit"
             }
+          },
+          "DefinedColor": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/SAColor"
+            }
+          },
+          "RulerHorizontal": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/SAScalarUnit"
+            }
+          },
+          "RulerVertical": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/SAScalarUnit"
+            }
+          }
+        }
+      },
+      "SADocumentDescription": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "Folder": {
+            "type": "string"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "Description": {
+            "type": "string"
+          },
+          "ContentHash": {
+            "type": "string"
           }
         }
       },
       "SAImage": {
-        "required": [
-          "$type"
-        ],
         "type": "object",
-        "anyOf": [
-          {
-            "$ref": "#/components/schemas/SAImageSAImage"
-          }
-        ],
-        "discriminator": {
-          "propertyName": "$type",
-          "mapping": {
-            "SAImage": "#/components/schemas/SAImageSAImage"
-          }
-        }
-      },
-      "SAImageSAImage": {
         "properties": {
-          "$type": {
-            "enum": [
-              "SAImage"
-            ],
-            "type": "string"
-          },
-          "media": {
+          "Media": {
             "type": "string",
             "format": "uuid"
           }
@@ -670,162 +840,82 @@
       },
       "SAMedia": {
         "required": [
-          "$type"
+          "Id",
+          "Path",
+          "MediaType",
+          "ContentType"
         ],
         "type": "object",
-        "anyOf": [
-          {
-            "$ref": "#/components/schemas/SAMediaSAMedia"
-          }
-        ],
-        "discriminator": {
-          "propertyName": "$type",
-          "mapping": {
-            "Media": "#/components/schemas/SAMediaSAMedia"
+        "properties": {
+          "Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "Path": {
+            "type": "string"
+          },
+          "MediaType": {
+            "type": "string"
+          },
+          "ContentType": {
+            "type": "string"
           }
         }
       },
       "SAMediaInfo": {
-        "required": [
-          "$type"
-        ],
         "type": "object",
-        "anyOf": [
-          {
-            "$ref": "#/components/schemas/SAMediaInfoSAMediaInfo"
-          }
-        ],
-        "discriminator": {
-          "propertyName": "$type",
-          "mapping": {
-            "MediaInfo": "#/components/schemas/SAMediaInfoSAMediaInfo"
-          }
-        }
-      },
-      "SAMediaInfoSAMediaInfo": {
         "properties": {
-          "$type": {
-            "enum": [
-              "MediaInfo"
-            ],
+          "Path": {
             "type": "string"
           },
-          "path": {
+          "MediaType": {
             "type": "string"
           },
-          "mediaType": {
-            "type": "string"
-          },
-          "size": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
+          "Size": {
             "type": [
-              "integer",
-              "string"
+              "integer"
             ],
             "format": "int64"
           },
-          "lastWriteTimeUtc": {
+          "LastWriteTimeUtc": {
             "type": "string",
             "format": "date-time"
           },
-          "lastScan": {
+          "LastScan": {
             "type": "string",
             "format": "date-time"
-          }
-        }
-      },
-      "SAMediaSAMedia": {
-        "required": [
-          "id",
-          "path",
-          "mediaType",
-          "contentType"
-        ],
-        "properties": {
-          "$type": {
-            "enum": [
-              "Media"
-            ],
-            "type": "string"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "path": {
-            "type": "string"
-          },
-          "mediaType": {
-            "type": "string"
-          },
-          "contentType": {
-            "type": "string"
-          }
-        }
-      },
-      "SAMediaSearchRequest": {
-        "required": [
-          "mediaType",
-          "value"
-        ],
-        "type": "object",
-        "properties": {
-          "mediaType": {
-            "$ref": "#/components/schemas/MediaType"
-          },
-          "value": {
-            "type": "string"
           }
         }
       },
       "SANode": {
         "required": [
-          "$type"
+          "Id"
         ],
         "type": "object",
-        "anyOf": [
-          {
-            "$ref": "#/components/schemas/SANodeSANode"
-          }
-        ],
-        "discriminator": {
-          "propertyName": "$type",
-          "mapping": {
-            "SANode": "#/components/schemas/SANodeSANode"
-          }
-        }
-      },
-      "SANodeSANode": {
-        "required": [
-          "id"
-        ],
         "properties": {
-          "$type": {
-            "enum": [
-              "SANode"
-            ],
-            "type": "string"
-          },
-          "id": {
+          "Id": {
             "type": "string",
             "format": "uuid"
           },
-          "name": {
+          "Name": {
             "type": [
               "null",
               "string"
             ]
           },
-          "kind": {
+          "Kind": {
             "type": [
               "null",
               "string"
             ]
           },
-          "listItem": {
-            "$ref": "#/components/schemas/SANodeSANode"
+          "ListItem": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SANode"
+            }
           },
-          "position": {
+          "Position": {
             "oneOf": [
               {
                 "type": "null"
@@ -835,7 +925,7 @@
               }
             ]
           },
-          "normal": {
+          "Normal": {
             "oneOf": [
               {
                 "type": "null"
@@ -845,7 +935,7 @@
               }
             ]
           },
-          "flipped": {
+          "Flipped": {
             "oneOf": [
               {
                 "type": "null"
@@ -855,7 +945,7 @@
               }
             ]
           },
-          "selected": {
+          "Selected": {
             "oneOf": [
               {
                 "type": "null"
@@ -869,45 +959,22 @@
       },
       "SAScalarUnit": {
         "required": [
-          "$type"
+          "Value",
+          "Unit"
         ],
         "type": "object",
-        "anyOf": [
-          {
-            "$ref": "#/components/schemas/SAScalarUnitSAScalarUnit"
-          }
-        ],
-        "discriminator": {
-          "propertyName": "$type",
-          "mapping": {
-            "SAScalarUnit": "#/components/schemas/SAScalarUnitSAScalarUnit"
-          }
-        }
-      },
-      "SAScalarUnitSAScalarUnit": {
-        "required": [
-          "value",
-          "unit"
-        ],
         "properties": {
-          "$type": {
-            "enum": [
-              "SAScalarUnit"
-            ],
-            "type": "string"
-          },
-          "value": {
-            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?$",
+          "Value": {
             "type": [
               "number",
               "string"
             ],
-            "format": "float"
+            "format": "double"
           },
-          "unit": {
+          "Unit": {
             "$ref": "#/components/schemas/SAUnit"
           },
-          "name": {
+          "Name": {
             "type": [
               "null",
               "string"
@@ -916,35 +983,60 @@
         }
       },
       "SAText": {
-        "required": [
-          "$type"
-        ],
         "type": "object",
-        "anyOf": [
-          {
-            "$ref": "#/components/schemas/SATextSAText"
-          }
-        ],
-        "discriminator": {
-          "propertyName": "$type",
-          "mapping": {
-            "SAText": "#/components/schemas/SATextSAText"
-          }
-        }
-      },
-      "SATextSAText": {
         "properties": {
-          "$type": {
-            "enum": [
-              "SAText"
-            ],
+          "Value": {
             "type": "string"
           },
-          "value": {
-            "type": "string"
+          "FontFamily": {
+            "type": [
+              "null",
+              "string"
+            ]
           },
-          "style": {
-            "type": "string"
+          "FontSize": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAScalarUnit"
+              }
+            ]
+          },
+          "FontWeight": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "FontStyle": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "Color": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAColor"
+              }
+            ]
+          },
+          "TextAlign": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "TextDecoration": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
         }
       },
@@ -952,98 +1044,11 @@
         "type": "integer"
       },
       "SAVideo": {
-        "required": [
-          "$type"
-        ],
         "type": "object",
-        "anyOf": [
-          {
-            "$ref": "#/components/schemas/SAVideoSAVideo"
-          }
-        ],
-        "discriminator": {
-          "propertyName": "$type",
-          "mapping": {
-            "SAVideo": "#/components/schemas/SAVideoSAVideo"
-          }
-        }
-      },
-      "SAVideoSAVideo": {
-        "required": [
-          "id"
-        ],
         "properties": {
-          "$type": {
-            "enum": [
-              "SAVideo"
-            ],
-            "type": "string"
-          },
-          "media": {
+          "Media": {
             "type": "string",
             "format": "uuid"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "kind": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "listItem": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SANode"
-            }
-          },
-          "position": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/SABox"
-              }
-            ]
-          },
-          "normal": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/SAContent"
-              }
-            ]
-          },
-          "flipped": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/SAContent"
-              }
-            ]
-          },
-          "selected": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/SAContent"
-              }
-            ]
           }
         }
       }

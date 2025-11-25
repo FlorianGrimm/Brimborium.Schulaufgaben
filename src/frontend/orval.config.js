@@ -6,10 +6,10 @@ export default defineConfig({
       //mode: 'tags-split',
       //mode: 'single',
       mode: 'split',
-      namingConvention: 'kebab-case',
+      namingConvention: 'PascalCase',
       target: 'projects/schulaufgaben/src/lib/api-client.ts',
       schemas: 'projects/schulaufgaben/src/lib/model',
-      client: 'angular',
+      client: 'zod',
       mock: false,
     },
     input: {

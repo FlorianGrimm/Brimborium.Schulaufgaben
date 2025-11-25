@@ -4,6 +4,46 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SABorderSABorder } from './saborder-sa-border';
+import type { SABorderBorderWidth } from './SABorderBorderWidth';
+import type { SABorderBorderTopWidth } from './SABorderBorderTopWidth';
+import type { SABorderBorderRightWidth } from './SABorderBorderRightWidth';
+import type { SABorderBorderBottomWidth } from './SABorderBorderBottomWidth';
+import type { SABorderBorderLeftWidth } from './SABorderBorderLeftWidth';
+import type { SABorderBorderStyle } from './SABorderBorderStyle';
+import type { SABorderBorderTopStyle } from './SABorderBorderTopStyle';
+import type { SABorderBorderRightStyle } from './SABorderBorderRightStyle';
+import type { SABorderBorderBottomStyle } from './SABorderBorderBottomStyle';
+import type { SABorderBorderLeftStyle } from './SABorderBorderLeftStyle';
+import type { SABorderBorderColor } from './SABorderBorderColor';
+import type { SABorderBorderTopColor } from './SABorderBorderTopColor';
+import type { SABorderBorderRightColor } from './SABorderBorderRightColor';
+import type { SABorderBorderBottomColor } from './SABorderBorderBottomColor';
+import type { SABorderBorderLeftColor } from './SABorderBorderLeftColor';
+import type { SABorderBorderRadius } from './SABorderBorderRadius';
+import type { SABorderBorderTopLeftRadius } from './SABorderBorderTopLeftRadius';
+import type { SABorderBorderTopRightRadius } from './SABorderBorderTopRightRadius';
+import type { SABorderBorderBottomRightRadius } from './SABorderBorderBottomRightRadius';
+import type { SABorderBorderBottomLeftRadius } from './SABorderBorderBottomLeftRadius';
 
-export type SABorder = SABorderSABorder;
+export interface SABorder {
+  BorderWidth?: SABorderBorderWidth;
+  BorderTopWidth?: SABorderBorderTopWidth;
+  BorderRightWidth?: SABorderBorderRightWidth;
+  BorderBottomWidth?: SABorderBorderBottomWidth;
+  BorderLeftWidth?: SABorderBorderLeftWidth;
+  BorderStyle?: SABorderBorderStyle;
+  BorderTopStyle?: SABorderBorderTopStyle;
+  BorderRightStyle?: SABorderBorderRightStyle;
+  BorderBottomStyle?: SABorderBorderBottomStyle;
+  BorderLeftStyle?: SABorderBorderLeftStyle;
+  BorderColor?: SABorderBorderColor;
+  BorderTopColor?: SABorderBorderTopColor;
+  BorderRightColor?: SABorderBorderRightColor;
+  BorderBottomColor?: SABorderBorderBottomColor;
+  BorderLeftColor?: SABorderBorderLeftColor;
+  BorderRadius?: SABorderBorderRadius;
+  BorderTopLeftRadius?: SABorderBorderTopLeftRadius;
+  BorderTopRightRadius?: SABorderBorderTopRightRadius;
+  BorderBottomRightRadius?: SABorderBorderBottomRightRadius;
+  BorderBottomLeftRadius?: SABorderBorderBottomLeftRadius;
+}

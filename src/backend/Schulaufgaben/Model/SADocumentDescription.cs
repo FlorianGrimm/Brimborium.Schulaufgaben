@@ -2,7 +2,6 @@
 
 namespace Brimborium.Schulaufgaben.Model;
 
-[JsonDerivedType(typeof(SADocumentDescription), typeDiscriminator: "DocumentDescription")]
 public class SADocumentDescription {
     public Guid Id { get; set; }
 

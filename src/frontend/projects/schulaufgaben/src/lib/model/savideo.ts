@@ -4,6 +4,7 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SAVideoSAVideo } from './savideo-sa-video';
 
-export type SAVideo = SAVideoSAVideo;
+export interface SAVideo {
+  Media?: string;
+}

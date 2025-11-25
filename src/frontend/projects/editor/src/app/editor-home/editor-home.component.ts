@@ -2,7 +2,7 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { AsyncPipe } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { BaseComponent, SADocumentDescription, SADocumentDescriptionSADocumentDescription, SchulaufgabenEditorWebV1Service, SelectionService, StateDocumentDescriptionService } from 'schulaufgaben';
+import { BaseComponent, SADocumentDescription, SchulaufgabenEditorWebV1Service, SelectionService, StateDocumentDescriptionService } from 'schulaufgaben';
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
@@ -63,8 +63,8 @@ export class EditorHomeComponent extends BaseComponent implements OnInit, AfterV
     this.router.navigate(['editor', 'new']);
   }
 
-  onSelectDocument(documentDescription: SADocumentDescriptionSADocumentDescription) {
-    this.router.navigate(['editor', 'edit', documentDescription.id]);
+  onSelectDocument(documentDescription: SADocumentDescription) {
+    this.router.navigate(['editor', 'edit', documentDescription.Id]);
   }
 
 }

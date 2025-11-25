@@ -25,10 +25,10 @@ import {
 } from 'rxjs';
 
 import type {
+  PostAPIMediaSearchBody,
   SADocument,
   SADocumentDescription,
-  SAMediaInfo,
-  SAMediaSearchRequest
+  SAMediaInfo
 } from './model';
 
 
@@ -180,14 +180,14 @@ export class SchulaufgabenEditorWebV1Service {
     );
   }
 
- postAPIMediaSearch<TData = SAMediaInfo[]>(sAMediaSearchRequest: SAMediaSearchRequest, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
- postAPIMediaSearch<TData = SAMediaInfo[]>(sAMediaSearchRequest: SAMediaSearchRequest, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
- postAPIMediaSearch<TData = SAMediaInfo[]>(sAMediaSearchRequest: SAMediaSearchRequest, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
+ postAPIMediaSearch<TData = SAMediaInfo[]>(postAPIMediaSearchBody: PostAPIMediaSearchBody, options?: HttpClientOptions & { observe?: 'body' }): Observable<TData>;
+ postAPIMediaSearch<TData = SAMediaInfo[]>(postAPIMediaSearchBody: PostAPIMediaSearchBody, options?: HttpClientOptions & { observe: 'events' }): Observable<HttpEvent<TData>>;
+ postAPIMediaSearch<TData = SAMediaInfo[]>(postAPIMediaSearchBody: PostAPIMediaSearchBody, options?: HttpClientOptions & { observe: 'response' }): Observable<AngularHttpResponse<TData>>;
   postAPIMediaSearch<TData = SAMediaInfo[]>(
-    sAMediaSearchRequest: SAMediaSearchRequest, options?: HttpClientOptions & { observe?: any }): Observable<any> {
+    postAPIMediaSearchBody: PostAPIMediaSearchBody, options?: HttpClientOptions & { observe?: any }): Observable<any> {
     return this.http.post<TData>(
       `/API/Media/Search`,
-      sAMediaSearchRequest,options
+      postAPIMediaSearchBody,options
     );
   }
 

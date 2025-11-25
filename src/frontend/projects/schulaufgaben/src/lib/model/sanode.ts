@@ -4,6 +4,20 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SANodeSANode } from './sanode-sa-node';
+import type { SANodeName } from './SANodeName';
+import type { SANodeKind } from './SANodeKind';
+import type { SANodePosition } from './SANodePosition';
+import type { SANodeNormal } from './SANodeNormal';
+import type { SANodeFlipped } from './SANodeFlipped';
+import type { SANodeSelected } from './SANodeSelected';
 
-export type SANode = SANodeSANode;
+export interface SANode {
+  Id: string;
+  Name?: SANodeName;
+  Kind?: SANodeKind;
+  ListItem?: SANode[];
+  Position?: SANodePosition;
+  Normal?: SANodeNormal;
+  Flipped?: SANodeFlipped;
+  Selected?: SANodeSelected;
+}

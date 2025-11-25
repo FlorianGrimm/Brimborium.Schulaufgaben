@@ -1,8 +1,7 @@
 @if(node$ | async; as node) {
     @if(content$ | async; as content){
         <div [ngStyle]="getStyle()">
-            {{node.position}}
-            {{content.text?.value}}
+            {{content.Text?.Value}}
             y
         </div>>
     }

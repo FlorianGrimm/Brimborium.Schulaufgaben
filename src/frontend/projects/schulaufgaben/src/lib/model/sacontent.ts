@@ -4,6 +4,20 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SAContentSAContent } from './sacontent-sa-content';
+import type { SAContentMatchingValue } from './SAContentMatchingValue';
+import type { SAContentBackground } from './SAContentBackground';
+import type { SAContentBorder } from './SAContentBorder';
+import type { SAContentText } from './SAContentText';
+import type { SAContentImage } from './SAContentImage';
+import type { SAContentAudio } from './SAContentAudio';
+import type { SAContentVideo } from './SAContentVideo';
 
-export type SAContent = SAContentSAContent;
+export interface SAContent {
+  MatchingValue?: SAContentMatchingValue;
+  Background?: SAContentBackground;
+  Border?: SAContentBorder;
+  Text?: SAContentText;
+  Image?: SAContentImage;
+  Audio?: SAContentAudio;
+  Video?: SAContentVideo;
+}

@@ -17,10 +17,10 @@
             </tr>
         </thead>
         <tbody>
-            @for (item of listDocumentDescription; track item.id) {
+            @for (item of listDocumentDescription; track item.Id) {
                 <tr (click)="onSelectDocument(item)">
-                    <td>{{item.name}}</td>
-                    <td>{{item.description}}</td>
+                    <td>{{item.Name}}</td>
+                    <td>{{item.Description}}</td>
                 </tr>
             }
         </tbody>

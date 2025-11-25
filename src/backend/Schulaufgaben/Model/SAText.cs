@@ -2,7 +2,6 @@
 
 namespace Brimborium.Schulaufgaben.Model;
 
-[JsonDerivedType(typeof(SAText), typeDiscriminator: "SAText")]
 public class SAText {
     public string Value { get; set; } = string.Empty;
     //public string Style { get; set; } = string.Empty;

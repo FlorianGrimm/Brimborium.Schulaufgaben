@@ -23,7 +23,14 @@ public sealed class AngularFileService : EndpointDataSource {
     }
 
     public void Initialize() {
-        var webRootPath = this._WebHostEnvironment.WebRootPath;
+        var webRootPath = (this._WebHostEnvironment.WebRootPath is { Length: > 0 } valueWebRootPath)
+            ? valueWebRootPath
+            : CreateIfNeeded(System.IO.Path.GetDirectoryName(this.GetType().Assembly.Location)!);
+        static string CreateIfNeeded(string directoryFQN) {
+            System.IO.Directory.CreateDirectory(
+                System.IO.Path.Combine(directoryFQN, "static/browser"));
+            return directoryFQN;
+        }
         var webRootProvider = this._WebHostEnvironment.WebRootFileProvider;
         var additionalPathProvider = new PhysicalFileProvider(
             System.IO.Path.Combine(webRootPath, "static/browser")

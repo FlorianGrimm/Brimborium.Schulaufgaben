@@ -10,7 +10,7 @@ import { BaseComponent, createSubjectObservable, SAContent, SANode } from 'schul
   styleUrl: './editor-sa-node.component.scss',
 })
 export class EditorSANodeComponent extends BaseComponent {
-  
+
   readonly node$ = new BehaviorSubject<SANode | undefined>(undefined);
   public get node(): SANode | undefined {
     return this.node$.getValue();
@@ -29,36 +29,44 @@ export class EditorSANodeComponent extends BaseComponent {
     this.mode$.next(value);
   }
 
-  readonly content$ = createSubjectObservable<SAContent | undefined>({
-    initialValue: undefined,
-    observable: combineLatest(
-      {node:this.node$, mode:this.mode$}
-    ).pipe(
-      map(({node, mode}) => {
-        if (node) {
-          if (mode === 'normal') {
-            return node.normal as SAContent;
-          } else if (mode === 'flipped') {
-            return node.flipped as SAContent;
-          } else if (mode === 'selected') {
-            return node.selected as SAContent;
+  readonly content$ = createSubjectObservable<SAContent | undefined>(
+    {
+      initialValue: undefined,
+      observable: combineLatest(
+        { node: this.node$, mode: this.mode$ }
+      ).pipe(
+        map(({ node, mode }) => {
+          if (node) {
+            if (mode === 'normal') {
+              if (undefined !== node.Normal) {
+                return node.Normal;
+              }
+            } else if (mode === 'flipped') {
+              if (undefined !== node.Flipped) {
+                return node.Flipped;
+              }
+            } else if (mode === 'selected') {
+              if (undefined !== node.Selected) {
+                return node.Selected;
+              }
+            }
+            return node.Normal;
           }
-          return node.normal as SAContent;
-        }
-        return undefined;
-      })
-    ),
-    subscription: this.subscriptions
-  });
-  
+          return undefined;
+        }),
+        map((content) => (content) ? content : undefined)
+      ),
+      subscription: this.subscriptions
+    });
+
   constructor() {
     super();
   }
-  getStyle():{
-        [klass: string]: any;
-    } | null | undefined  {
+  getStyle(): {
+    [klass: string]: any;
+  } | null | undefined {
     const style: {
-        [klass: string]: any;
+      [klass: string]: any;
     } | null | undefined = {
 
     };

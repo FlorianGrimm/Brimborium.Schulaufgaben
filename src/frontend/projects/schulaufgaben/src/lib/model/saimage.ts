@@ -4,6 +4,7 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SAImageSAImage } from './saimage-sa-image';
 
-export type SAImage = SAImageSAImage;
+export interface SAImage {
+  Media?: string;
+}

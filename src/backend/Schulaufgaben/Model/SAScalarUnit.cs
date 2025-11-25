@@ -2,9 +2,8 @@
 
 namespace Brimborium.Schulaufgaben.Model;
 
-[JsonDerivedType(typeof(SAScalarUnit), typeDiscriminator: "SAScalarUnit")]
 public class SAScalarUnit {
-    public required float Value { get; set; }
+    public required double Value { get; set; }
     public required SAUnit Unit { get; set; }
 
     /// <summary>

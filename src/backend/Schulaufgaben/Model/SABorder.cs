@@ -2,7 +2,6 @@
 
 namespace Brimborium.Schulaufgaben.Model;
 
-[JsonDerivedType(typeof(SABorder), typeDiscriminator: "SABorder")]
 public class SABorder {
     // Border width (can be set individually or all at once)
     public SAScalarUnit? BorderWidth { get; set; }
