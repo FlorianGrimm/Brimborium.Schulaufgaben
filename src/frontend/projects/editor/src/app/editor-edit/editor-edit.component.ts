@@ -1,12 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BaseComponent, SADocument, SADocumentDescription, SANode, SAScalarUnit, SchulaufgabenEditorWebV1Service, SelectionService, CommonPageSizeComponent } from 'schulaufgaben';
+import { BaseComponent, SADocument, SADocumentDescription, SANode, SAScalarUnit, SchulaufgabenEditorWebV1Service, SelectionService, CommonPageSizeComponent, createSubjectObservable, BoundObjectPath } from 'schulaufgaben';
 import { EditorSADocumentComponent } from '../editor-sa-document/editor-sa-document.component';
 import { EditorRulerComponent } from '../editor-ruler/editor-ruler.component';
+import { CommonDocumentManagerService,CommonStateManagerService, boundRoot } from 'schulaufgaben';
+import { AsyncPipe } from '@angular/common';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-editor-edit',
-  imports: [EditorSADocumentComponent, EditorRulerComponent, CommonPageSizeComponent],
+  imports: [
+    AsyncPipe,
+    EditorSADocumentComponent,
+    EditorRulerComponent,
+    CommonPageSizeComponent],
   templateUrl: './editor-edit.component.html',
   styleUrl: './editor-edit.component.scss',
 })
@@ -14,9 +21,18 @@ export class EditorEditComponent extends BaseComponent implements OnInit {
   readonly router = inject(Router);
   readonly client = inject(SchulaufgabenEditorWebV1Service);
   readonly selectionService = inject(SelectionService);
+  readonly stateManagerService = inject(CommonStateManagerService);
+
+  public document$ = createSubjectObservable(
+    {
+      initialValue: null,
+      observable: this.stateManagerService.document$,
+      subscription: this.subscriptions
+    }
+  );
 
   public documentDescription: SADocumentDescription | undefined;
-  public document: SADocument | undefined;
+  //public document: SADocument | undefined;
   public decoration: SANode | undefined;
   constructor() {
     super();
@@ -50,7 +66,7 @@ export class EditorEditComponent extends BaseComponent implements OnInit {
       Flipped: undefined,
       Selected: undefined
     };
-    this.document = {
+    const document :SADocument = {
       Id: "00000000-0000-0000-0000-000000000000",
       Name: "test",
       Description: "test",
@@ -63,18 +79,23 @@ export class EditorEditComponent extends BaseComponent implements OnInit {
       RulerHorizontal: [{ Value: 1, Unit: 0, Name: "1%" }, { Value: 50, Unit: 0, Name: "50%" }, { Value: 99, Unit: 0, Name: "99%" }],
       RulerVertical: []//[{Value: 33, Unit: 0, Name: "33%"},{Value: 66, Unit: 0, Name: "66%"}]
     };
+    this.stateManagerService.documentManagerService.document$.next(document);
   }
+
   handleVerticalChange(value: SAScalarUnit[]) {
     // console.log("handleVerticalChange", value);
-    const document = (this.document ?? {});
-    const nextDocument = { ...document, RulerVertical: value };
-    this.document = nextDocument;
+    const document = this.document$.getValue();
+    if (null == document) { return; }
+    const nextDocument = { ...document, RulerVertical: value };    
+    this.stateManagerService.documentManagerService.pushDocumentState(nextDocument, "RulerHorizontal");
   }
+
   handleHorizontalChange(value: SAScalarUnit[]) {
     // console.log("handleHorizontalChange", value);
-    const document = (this.document ?? {});
+    const document = this.document$.getValue();
+    if (null == document) { return; }
     const nextDocument = { ...document, RulerHorizontal: value };
-    this.document = nextDocument;
+    this.stateManagerService.documentManagerService.pushDocumentState(nextDocument, "RulerHorizontal");
   }
 
 }

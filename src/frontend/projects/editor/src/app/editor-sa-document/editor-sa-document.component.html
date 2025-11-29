@@ -1,10 +1,12 @@
+@if(document && document.value;as documentValue){
 <div style="position: absolute; z-index: 100;">
-    @if(document && document.Decoration; as decoration){
-        <app-editor-sa-node [node]="decoration"></app-editor-sa-node>
+    @if(documentValue.Decoration; as decoration){
+        <app-editor-sa-node [node]="document | BoundProperty 'Decoration'"></app-editor-sa-node>
     }
 </div>
 <div style="position: absolute; z-index: 200;">
-    @if(document && document.Interaction; as interaction){
+    @if(documentValue.Interaction; as interaction){
         <app-editor-sa-node [node]="interaction"></app-editor-sa-node>
     }
 </div>
+}

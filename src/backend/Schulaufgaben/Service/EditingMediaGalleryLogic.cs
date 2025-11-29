@@ -4,7 +4,6 @@ using Microsoft.IO;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Channels;
 
 namespace Brimborium.Schulaufgaben.Service;
@@ -76,7 +75,7 @@ public sealed class EditingMediaGalleryLogic {
         }
         this._DictMediaGallery = nextDictMediaGallery;
         if (this._ThumbnailFolder is { Length: > 0 } thumbnailFolder) {
-#if false
+#if true
             if (this._EditingMediaCache is null) {
                 var fileFQN = System.IO.Path.Combine(thumbnailFolder, "mediaCache.db");
                 this._EditingMediaCache = new EditingMediaCache(fileFQN);
@@ -290,6 +289,7 @@ public sealed class EditingMediaGalleryLogic {
             for (int iRetry = 0; iRetry < 5; iRetry++) {
                 try {
                     image = await Image.LoadAsync(mediaFQN).ConfigureAwait(false);
+                    break; 
                 } catch (System.IO.IOException error) when (error.HResult == -2147024864) {
                     await Task.Delay(iRetry * 1000).ConfigureAwait(false);
                     continue;
@@ -435,12 +435,12 @@ public sealed class EditingMediaGalleryLogic {
         }
 
         bool found = false;
-        byte[]? thumbnail = null;
+        RecyclableMemoryStream? thumbnail = null;
         if (this._EditingMediaCache is { } editingMediaCache) {
             (found, thumbnail) = editingMediaCache.GetThumbnail(mediaGalleryId, relativeName);
             if (found) {
                 if (thumbnail is { }) {
-                    return new(new MemoryStream(thumbnail), "image/png");
+                    return new(thumbnail, "image/png");
                 }
             }
         }
@@ -454,7 +454,7 @@ public sealed class EditingMediaGalleryLogic {
 
         Image? image = null;
         try {
-            image = await Image.LoadAsync(mediaFQN).ConfigureAwait(false);
+            image = await Image.LoadAsync(mediaFQN, requestAborted).ConfigureAwait(false);
         } catch {
             return null;
         }
