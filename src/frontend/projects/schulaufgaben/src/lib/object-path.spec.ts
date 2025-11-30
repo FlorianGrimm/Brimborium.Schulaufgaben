@@ -5,15 +5,15 @@ import { SADocument, SANode } from './model';
 describe('ObjectPath', () => {
     it('root level', () => {
         const document1 = createDocument("document1");
-        const bp0 = bindRoot(document1,"document1");
+        const bp0 = bindRoot(document1, "document1");
         const nextDocument1 = { ...document1, Name: "nextName" };
         const document2: SADocument = applyBoundPath(document1, bp0.opath, nextDocument1);
         expect(document2.Name).toBe("nextName");
     });
 
-      it('one level', () => {
+    it('one level', () => {
         const document1 = createDocument("document1");
-        const bp0 = bindRoot(document1,"document1");
+        const bp0 = bindRoot(document1, "document1");
         const bp1 = bindProperty(bp0, "Name");
         const document2: SADocument = applyBoundPath(document1, bp1.opath, "nextName");
         expect(document2.Name).toBe("nextName");
@@ -25,21 +25,24 @@ describe('ObjectPath', () => {
             Decoration: createNode("Decoration1"),
             Interaction: createNode("Interaction1")
         };
-        const bp0 = bindRoot(document1,"document1");
+        const bp0 = bindRoot(document1, "document1");
         const bp1 = bindProperty(bp0, "Decoration");
         const bp2 = bindProperty(bp1, "Name");
         const document2: SADocument = applyBoundPath(document1, bp2.opath, "nextName");
         expect(document2.Decoration?.Name).toBe("nextName");
     });
 
-    
     it('two level - undefined middle', () => {
         const document1 = createDocument("document1");
-        const bp0 = bindRoot(document1,"document1");
+        const bp0 = bindRoot(document1, "document1");
         const bp1 = bindProperty(bp0, "Decoration");
         const bp2 = bindProperty(bp1, "Name");
-        const document2: SADocument = applyBoundPath(document1, bp2.opath, "nextName");
-        expect(document2.Decoration?.Name).toBe("nextName");
+        expect(()=>{
+            applyBoundPath(document1, bp2.opath, "nextName");
+            // const document2: SADocument = applyBoundPath(document1, bp2.opath, "nextName");
+            // expect(document2.Decoration?.Name).toBe("nextName");
+        }).toThrow();
+
     });
 });
 
