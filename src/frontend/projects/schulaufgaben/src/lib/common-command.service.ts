@@ -2,14 +2,26 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 
 export type GlobalCommand<Args=any> = {
-  name: string;
-  isEnabled: () => boolean;
-  execute: (args: Args) => void;
+  Name: string;
+  IsEnabled$: BehaviorSubject<boolean>;
+  CanExecute: (args: Args) => boolean;
+  Execute: (args: Args) => void;
 };
 export type ContextCommand<Args=any> = {
-  name: string;
-  isEnabled: () => boolean;
-  execute: (args: Args) => void;
+  Name: string;
+  FilterForContext(context: Context<any>): boolean;
+  IsEnabled$: BehaviorSubject<boolean>;
+  Execute: (args: Args) => void;
+};
+
+export type Context<T=any> = {
+  typename: string;
+  value: T;
+  values: undefined;
+}|{
+  typename: string;
+  value: undefined;
+  values: T[];
 };
 
 @Injectable({
@@ -34,18 +46,20 @@ export class CommonCommandService {
   }
   public getGlobalCommand(name: string) {
     const list = this.listGlobalCommand$.getValue();
-    return list.find((v) => v.name === name);
+    return list.find((v) => v.Name === name);
   }
   public getGlobalCommand$(name: string) {
-    return this.listGlobalCommand$.pipe(map((v) => v.find((v) => v.name === name)));
+    return this.listGlobalCommand$.pipe(map((v) => v.find((v) => v.Name === name)));
   }
   public executeGlobalCommand<Args=any>(name: string, args: Args) {
     const list = this.listGlobalCommand$.getValue();
-    const command = list.find((v) => v.name === name);
+    const command = list.find((v) => v.Name === name);
     if (command) {
-      command.execute(args);
+      command.Execute(args);
     }
   }
+
+  public readonly context$ = new BehaviorSubject<Context|null>(null);
   
   public readonly listContextCommand$ = new BehaviorSubject<ContextCommand[]>([]);
   
@@ -59,18 +73,17 @@ export class CommonCommandService {
     const nextList = list.filter((v) => v !== command);
     this.listContextCommand$.next(nextList);
   }
-  public getContextCommand(context: any, name: string) {
-    const list = this.listContextCommand$.getValue();
-    return list.find((v) => v.name === name);
+  
+  public getContextCommandForContext$(context: Context) {
+    return this.listContextCommand$.pipe(
+      map((listCommand) => listCommand.filter((v) => v.FilterForContext(context))));
   }
-  public getContextCommand$(name: string) {
-    return this.listContextCommand$.pipe(map((v) => v.find((v) => v.name === name)));
-  }
+
   public executeContextCommand<Args=any>(name: string, args: Args) {
     const list = this.listContextCommand$.getValue();
-    const command = list.find((v) => v.name === name);
+    const command = list.find((v) => v.Name === name);
     if (command) {
-      command.execute(args);
+      command.Execute(args);
     }
   }
 }

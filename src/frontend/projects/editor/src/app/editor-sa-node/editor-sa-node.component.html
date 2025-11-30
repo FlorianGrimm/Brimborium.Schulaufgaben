@@ -1,9 +1,8 @@
-@if(node$ | async; as node) {
-    @if(content$ | async; as content){
+@if(viewState$ | async; as viewState) {
+    @if(viewState.Content?.value; as content){
         <div [ngStyle]="getStyle()">
             {{content.Text?.Value}}
-            y
+            text
         </div>>
     }
 }
-x

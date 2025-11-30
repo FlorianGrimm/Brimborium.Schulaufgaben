@@ -1,12 +1,12 @@
-@if(document && document.value;as documentValue){
+@if(viewState$ | async; as viewState){
+@if(viewState.Decoration){
 <div style="position: absolute; z-index: 100;">
-    @if(documentValue.Decoration; as decoration){
-        <app-editor-sa-node [node]="document | BoundProperty 'Decoration'"></app-editor-sa-node>
-    }
+    <app-editor-sa-node [node]="viewState.Decoration"></app-editor-sa-node>
 </div>
+}
+@if(viewState.Interaction){
 <div style="position: absolute; z-index: 200;">
-    @if(documentValue.Interaction; as interaction){
-        <app-editor-sa-node [node]="interaction"></app-editor-sa-node>
-    }
+    <app-editor-sa-node [node]="viewState.Interaction"></app-editor-sa-node>
 </div>
+}
 }

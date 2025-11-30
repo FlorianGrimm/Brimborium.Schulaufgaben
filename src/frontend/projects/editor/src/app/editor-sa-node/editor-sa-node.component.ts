@@ -1,8 +1,17 @@
 import { AsyncPipe, NgStyle } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
-import { BaseComponent, createSubjectObservable, SAContent, SANode } from 'schulaufgaben';
+import { BaseComponent, bindProperty, BoundObjectPath, createSubjectObservable, SAContent, SANode } from 'schulaufgaben';
 
+type ViewState = {
+  Content: BoundObjectPath<SAContent | null | undefined> | undefined;
+  
+};
+const initialViewState: ViewState = {
+  Content: undefined,
+};
+
+type PropertyNodeType = BoundObjectPath<SANode | null | undefined> | undefined;
 @Component({
   selector: 'app-editor-sa-node',
   imports: [AsyncPipe, NgStyle],
@@ -10,13 +19,14 @@ import { BaseComponent, createSubjectObservable, SAContent, SANode } from 'schul
   styleUrl: './editor-sa-node.component.scss',
 })
 export class EditorSANodeComponent extends BaseComponent {
+  readonly viewState$ = new BehaviorSubject<ViewState>(initialViewState);
 
-  readonly node$ = new BehaviorSubject<SANode | undefined>(undefined);
-  public get node(): SANode | undefined {
+  readonly node$ = new BehaviorSubject<PropertyNodeType>(undefined);
+  public get node(): PropertyNodeType {
     return this.node$.getValue();
   }
   @Input()
-  public set node(value: SANode | undefined) {
+  public set node(value: PropertyNodeType) {
     this.node$.next(value);
   }
 
@@ -29,32 +39,33 @@ export class EditorSANodeComponent extends BaseComponent {
     this.mode$.next(value);
   }
 
-  readonly content$ = createSubjectObservable<SAContent | undefined>(
+  readonly content$ = createSubjectObservable<BoundObjectPath<SAContent | null | undefined> | undefined>(
     {
       initialValue: undefined,
       observable: combineLatest(
         { node: this.node$, mode: this.mode$ }
       ).pipe(
         map(({ node, mode }) => {
-          if (node) {
+          if (node == null || node.value == null) {
+
+          } else {
             if (mode === 'normal') {
-              if (undefined !== node.Normal) {
-                return node.Normal;
-              }
+              const bp = bindProperty(node, "Normal");
+              if (bp.value != null) { return bp; }
             } else if (mode === 'flipped') {
-              if (undefined !== node.Flipped) {
-                return node.Flipped;
-              }
+              const bp = bindProperty(node, "Flipped");
+              if (bp.value != null) { return bp; }
             } else if (mode === 'selected') {
-              if (undefined !== node.Selected) {
-                return node.Selected;
-              }
+              const bp = bindProperty(node, "Selected");
+              if (bp.value != null) { return bp; }
             }
-            return node.Normal;
+            {
+              return bindProperty(node, "Normal");
+            }
           }
           return undefined;
-        }),
-        map((content) => (content) ? content : undefined)
+        })
+        //map((content) => (content) ? content : undefined)
       ),
       subscription: this.subscriptions
     });

@@ -1,11 +1,23 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BaseComponent, SADocument, SADocumentDescription, SANode, SAScalarUnit, SchulaufgabenEditorWebV1Service, SelectionService, CommonPageSizeComponent, createSubjectObservable, BoundObjectPath } from 'schulaufgaben';
+import { BaseComponent, SADocument, SADocumentDescription, SANode, SAScalarUnit, SchulaufgabenEditorWebV1Service, SelectionService, CommonPageSizeComponent, createSubjectObservable, BoundObjectPath, BoundObjectPathValue, SADocumentRulerHorizontal, SADocumentRulerVertical, bindProperty } from 'schulaufgaben';
 import { EditorSADocumentComponent } from '../editor-sa-document/editor-sa-document.component';
 import { EditorRulerComponent } from '../editor-ruler/editor-ruler.component';
-import { CommonDocumentManagerService,CommonStateManagerService, boundRoot } from 'schulaufgaben';
+import { CommonDocumentManagerService, CommonStateManagerService } from 'schulaufgaben';
 import { AsyncPipe } from '@angular/common';
-import { map } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
+
+type ViewState = {
+  Document: BoundObjectPathValue<SADocument | null>| undefined;
+  RulerHorizontal: SAScalarUnit[];
+  RulerVertical: SAScalarUnit[];
+};
+const initialViewState: ViewState = {
+  Document: undefined,
+  RulerHorizontal: [],
+  RulerVertical: [],
+};
+
 
 @Component({
   selector: 'app-editor-edit',
@@ -18,6 +30,7 @@ import { map } from 'rxjs';
   styleUrl: './editor-edit.component.scss',
 })
 export class EditorEditComponent extends BaseComponent implements OnInit {
+  readonly viewState$ = new BehaviorSubject<ViewState>(initialViewState);
   readonly router = inject(Router);
   readonly client = inject(SchulaufgabenEditorWebV1Service);
   readonly selectionService = inject(SelectionService);
@@ -39,6 +52,24 @@ export class EditorEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.subscriptions.add(
+      this.document$.subscribe({
+        next: (document) => {
+          if (document == null || document.value == null) {
+            this.viewState$.next(initialViewState);
+          } else {
+            const viewState = this.viewState$.getValue();
+            const nextViewState:ViewState = {
+              ...viewState,
+              Document: document,
+              RulerHorizontal: document.value.RulerHorizontal??[],
+              RulerVertical: document.value.RulerVertical??[],
+            };
+            this.viewState$.next(nextViewState);
+          }
+        }
+      })
+    );
     this.load();
   }
 
@@ -66,7 +97,7 @@ export class EditorEditComponent extends BaseComponent implements OnInit {
       Flipped: undefined,
       Selected: undefined
     };
-    const document :SADocument = {
+    const document: SADocument = {
       Id: "00000000-0000-0000-0000-000000000000",
       Name: "test",
       Description: "test",
@@ -86,7 +117,7 @@ export class EditorEditComponent extends BaseComponent implements OnInit {
     // console.log("handleVerticalChange", value);
     const document = this.document$.getValue();
     if (null == document) { return; }
-    const nextDocument = { ...document, RulerVertical: value };    
+    const nextDocument = { ...document, RulerVertical: value };
     this.stateManagerService.documentManagerService.pushDocumentState(nextDocument, "RulerHorizontal");
   }
 

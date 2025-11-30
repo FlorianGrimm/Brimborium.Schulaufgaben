@@ -3,7 +3,7 @@ import { BehaviorSubject, map, Subscription } from 'rxjs';
 import { SADocument } from './model';
 import { CommonDocumentManagerService } from './common-document-manager.service';
 import { createSubjectObservable } from './createSubjectObservable';
-import { bindRoot } from './object-path';
+import { bindRoot, BoundObjectPath, BoundObjectPathValue } from './object-path';
 
 @Injectable({
   providedIn: 'root',

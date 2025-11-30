@@ -1,11 +1,11 @@
-@if(document$ | async; as document){
+@if(viewState$ | async; as viewState){
   <app-editor-ruler
-    [listHorizontal]="document?.RulerHorizontal ?? []"
-    [listVertical]="document?.RulerVertical ?? []"
+    [listHorizontal]="viewState.RulerHorizontal"
+    [listVertical]="viewState.RulerVertical"
     (onListHorizontalChanged)="handleHorizontalChange($event)"
     (onListVerticalChanged)="handleVerticalChange($event)">
     <lib-common-page-size>
-      <app-editor-sa-document [document]="document"></app-editor-sa-document>
+      <app-editor-sa-document [document]="viewState.Document"></app-editor-sa-document>
     </lib-common-page-size>
   </app-editor-ruler>
 }
