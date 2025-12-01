@@ -1,19 +1,25 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { BaseComponent, SADocument, SADocumentDescription, SANode, SAScalarUnit, SchulaufgabenEditorWebV1Service, SelectionService, CommonPageSizeComponent, createSubjectObservable, BoundObjectPath, BoundObjectPathValue, SADocumentRulerHorizontal, SADocumentRulerVertical, bindProperty } from 'schulaufgaben';
+import { BaseComponent, SADocument, SADocumentDescription, SANode, SAScalarUnit, SchulaufgabenEditorWebV1Service, SelectionService, CommonPageSizeComponent, createSubjectObservable, BoundObjectPath, BoundObjectPathValue, SADocumentRulerHorizontal, SADocumentRulerVertical, bindProperty, applyBoundPath, loadDocument } from 'schulaufgaben';
 import { EditorSADocumentComponent } from '../editor-sa-document/editor-sa-document.component';
 import { EditorRulerComponent } from '../editor-ruler/editor-ruler.component';
 import { CommonDocumentManagerService, CommonStateManagerService } from 'schulaufgaben';
 import { AsyncPipe } from '@angular/common';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, combineLatest, map } from 'rxjs';
+import { apply } from '@angular/forms/signals';
+import { MatIcon } from "@angular/material/icon";
+import { TemplatePortal } from '@angular/cdk/portal';
+import { is } from 'zod/locales';
 
 type ViewState = {
-  Document: BoundObjectPathValue<SADocument | null>| undefined;
+  Document: BoundObjectPathValue<SADocument | null> | undefined;
+  isDirty: boolean;
   RulerHorizontal: SAScalarUnit[];
   RulerVertical: SAScalarUnit[];
 };
 const initialViewState: ViewState = {
   Document: undefined,
+  isDirty: false,
   RulerHorizontal: [],
   RulerVertical: [],
 };
@@ -25,11 +31,17 @@ const initialViewState: ViewState = {
     AsyncPipe,
     EditorSADocumentComponent,
     EditorRulerComponent,
-    CommonPageSizeComponent],
+    CommonPageSizeComponent,
+    MatIcon
+],
   templateUrl: './editor-edit.component.html',
   styleUrl: './editor-edit.component.scss',
 })
 export class EditorEditComponent extends BaseComponent implements OnInit {
+  readonly documentId = input.required<string>();
+  
+  private readonly _viewContainerRef = inject(ViewContainerRef);
+
   readonly viewState$ = new BehaviorSubject<ViewState>(initialViewState);
   readonly router = inject(Router);
   readonly client = inject(SchulaufgabenEditorWebV1Service);
@@ -53,80 +65,95 @@ export class EditorEditComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.document$.subscribe({
-        next: (document) => {
+      combineLatest({
+        document:this.document$,
+        isDirty: this.stateManagerService.documentManagerService.isDirty$
+      }).subscribe({
+        next: ({document,isDirty}) => {
           if (document == null || document.value == null) {
             this.viewState$.next(initialViewState);
           } else {
             const viewState = this.viewState$.getValue();
-            const nextViewState:ViewState = {
+            const nextViewState: ViewState = {
               ...viewState,
               Document: document,
-              RulerHorizontal: document.value.RulerHorizontal??[],
-              RulerVertical: document.value.RulerVertical??[],
+              isDirty: isDirty,
+              RulerHorizontal: document.value.RulerHorizontal ?? [],
+              RulerVertical: document.value.RulerVertical ?? [],
             };
             this.viewState$.next(nextViewState);
           }
         }
       })
     );
+
     this.load();
   }
 
-  load() {
-    //this.client.getAPIDocumentDescription
+  @ViewChild('contentPortalContent', { static: false }) contentPortalContent: TemplateRef<unknown> | undefined;
+  templatePortal: TemplatePortal<any> | undefined;
+  ngAfterViewInit(): void {
+    if (undefined === this.contentPortalContent) {
+      console.error('contentPortalContent is undefined');
+    } else {
+      const templatePortal = (this.templatePortal ??= new TemplatePortal(this.contentPortalContent, this._viewContainerRef));
+      this.selectionService.setToolbarContent(templatePortal, this.subscriptions);
+    }
+  }
 
-    //interaction?: SADocumentSADocumentInteraction;
-    const decoration: SANode = {
-      Id: "00000000-0000-0000-0000-000000000001",
-      Name: "decoration",
-      Kind: "decoration",
-      ListItem: [],
-      Position: undefined,
-      Normal: undefined,
-      Flipped: undefined,
-      Selected: undefined
-    };
-    const interaction: SANode = {
-      Id: "00000000-0000-0000-0000-000000000002",
-      Name: "decoration",
-      Kind: "decoration",
-      ListItem: [],
-      Position: undefined,
-      Normal: undefined,
-      Flipped: undefined,
-      Selected: undefined
-    };
-    const document: SADocument = {
-      Id: "00000000-0000-0000-0000-000000000000",
-      Name: "test",
-      Description: "test",
-      KindInteraction: "",
-      ListMedia: [],
-      Decoration: decoration,
-      Interaction: interaction,
-      Width: { Value: 1200, Unit: 1, Name: "PageWidth" },
-      Height: { Value: 800, Unit: 1, Name: "PageHeight" },
-      RulerHorizontal: [{ Value: 1, Unit: 0, Name: "1%" }, { Value: 50, Unit: 0, Name: "50%" }, { Value: 99, Unit: 0, Name: "99%" }],
-      RulerVertical: []//[{Value: 33, Unit: 0, Name: "33%"},{Value: 66, Unit: 0, Name: "66%"}]
-    };
-    this.stateManagerService.documentManagerService.document$.next(document);
+  load() {
+    const id = this.documentId();
+    if (id == null) { return; }
+    if (this.stateManagerService.documentManagerService.document$.getValue()?.Id === id) {
+      // skip
+    } else {
+      this.subscriptions.add(
+        loadDocument(id, this.client).subscribe({
+          next: (document) => {
+            if (document == null) {
+              return;
+            } else {
+              this.stateManagerService.documentManagerService.setDocumentState(document, 'load');
+            }
+          }
+        }));
+    }
   }
 
   handleVerticalChange(value: SAScalarUnit[]) {
-    // console.log("handleVerticalChange", value);
-    const document = this.document$.getValue();
-    if (null == document) { return; }
-    const nextDocument = { ...document, RulerVertical: value };
-    this.stateManagerService.documentManagerService.pushDocumentState(nextDocument, "RulerHorizontal");
+    const documentBP = this.document$.getValue();
+    // console.log("handleVerticalChange", documentBP?.value);
+
+    if (documentBP?.value == null) { return; }
+    const rulerBP = bindProperty(documentBP, "RulerVertical");
+    const nextDocument = applyBoundPath(documentBP.value, rulerBP.opath, value);
+    if (nextDocument == null) { return; }
+
+    // console.log("nextDocument", nextDocument);
+    this.stateManagerService.documentManagerService.pushDocumentState(nextDocument, "RulerVertical");
   }
 
   handleHorizontalChange(value: SAScalarUnit[]) {
-    // console.log("handleHorizontalChange", value);
-    const document = this.document$.getValue();
-    if (null == document) { return; }
-    const nextDocument = { ...document, RulerHorizontal: value };
+    const documentBP = this.document$.getValue();
+    // console.log("handleHorizontalChange", documentBP?.value);
+
+    if (documentBP?.value == null) { return; }
+    const rulerBP = bindProperty(documentBP, "RulerHorizontal");
+    const nextDocument = applyBoundPath(documentBP.value, rulerBP.opath, value);
+    if (nextDocument == null) { return; }
+
+    // console.log("nextDocument", nextDocument);
     this.stateManagerService.documentManagerService.pushDocumentState(nextDocument, "RulerHorizontal");
+  }
+
+  save() {
+    const document = this.document$.getValue()?.value;
+    if (document == null) { return; }
+    this.client.postAPIDocumentId(document.Id!, document).subscribe({
+      next: (result) => {
+        this.stateManagerService.documentManagerService.setDocumentState(result, 'save');
+      }
+    });
   }
 
 }

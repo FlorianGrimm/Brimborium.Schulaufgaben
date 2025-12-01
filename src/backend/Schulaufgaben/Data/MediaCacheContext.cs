@@ -303,7 +303,7 @@ public class MediaCacheContext {
                             }
                             var paramName = $"@SearchTerm{indexParameter}";
                             selectCommand.Parameters.AddWithValue(paramName, listSearchFor[indexParameter]);
-                            sbCondition.AppendLine($"(Name LIKE ('%'+paramName+'%'))");
+                            sbCondition.AppendLine($"(Name LIKE concat('%', {paramName}, '%'))");
                         }
                         sbCondition.AppendLine(")");
                     }

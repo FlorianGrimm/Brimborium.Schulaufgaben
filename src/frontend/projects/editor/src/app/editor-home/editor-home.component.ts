@@ -2,10 +2,11 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { AsyncPipe } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { BaseComponent, SADocumentDescription, SchulaufgabenEditorWebV1Service, SelectionService, StateDocumentDescriptionService } from 'schulaufgaben';
+import { BaseComponent, CommonStateManagerService, loadDocument, SADocumentDescription, SchulaufgabenEditorWebV1Service, SelectionService, StateDocumentDescriptionService } from 'schulaufgaben';
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { EditorCommandService } from '../editor-command.service';
 
 @Component({
   selector: 'app-editor-home',
@@ -16,10 +17,14 @@ import { Router } from '@angular/router';
 })
 export class EditorHomeComponent extends BaseComponent implements OnInit, AfterViewInit {
   private readonly _viewContainerRef = inject(ViewContainerRef);
+
+  readonly editorCommandService = inject(EditorCommandService);
   readonly router = inject(Router);
   readonly client = inject(SchulaufgabenEditorWebV1Service);
   readonly selectionService = inject(SelectionService);
+  readonly stateManagerService = inject(CommonStateManagerService);
   readonly stateDocumentDescription = inject(StateDocumentDescriptionService);
+  
   readonly listDocumentDescription$ = new BehaviorSubject<null | SADocumentDescription[]>(null);
 
   @ViewChild('contentPortalContent', { static: false }) contentPortalContent: TemplateRef<unknown> | undefined;
@@ -28,23 +33,23 @@ export class EditorHomeComponent extends BaseComponent implements OnInit, AfterV
   constructor() {
     super();
   }
+
   ngOnInit(): void {
     // use the chached value if available
     {
       const value = this.stateDocumentDescription.listDocumentDescription$.getValue();
       if (value) { this.listDocumentDescription$.next(value); }
-    }    
+    }
     this.selectionService.title$.next('Schlulaufgaben - Übersicht');
     this.load();
   }
 
   ngAfterViewInit(): void {
-
     if (undefined === this.contentPortalContent) {
       console.error('contentPortalContent is undefined');
     } else {
       const templatePortal = (this.templatePortal ??= new TemplatePortal(this.contentPortalContent, this._viewContainerRef));
-      this.selectionService.setToolbarContent(this.templatePortal, this.subscriptions);
+      this.selectionService.setToolbarContent(templatePortal, this.subscriptions);
     }
   }
 
@@ -59,12 +64,29 @@ export class EditorHomeComponent extends BaseComponent implements OnInit, AfterV
       },
     });
   }
+
   onNewDocument() {
     this.router.navigate(['editor', 'new']);
   }
 
   onSelectDocument(documentDescription: SADocumentDescription) {
-    this.router.navigate(['editor', 'edit', documentDescription.Id]);
+    if (documentDescription.Id == null) { return; }
+    const currentDocumentId = this.stateManagerService.documentManagerService.document$.getValue()?.Id;
+    console.log("currentDocumentId", currentDocumentId);  
+    if (currentDocumentId === documentDescription.Id) {
+      this.router.navigate(['editor', 'edit', documentDescription.Id]);
+    } else {
+      this.subscriptions.add(
+        loadDocument(documentDescription.Id, this.client).subscribe({
+          next: (document) => {
+            if (document == null) {
+              return;
+            } else {
+              this.stateManagerService.documentManagerService.setDocumentState(document, 'load');
+              this.router.navigate(['editor', 'edit', documentDescription.Id]);
+            }
+          }
+        }));
+    }
   }
-
 }

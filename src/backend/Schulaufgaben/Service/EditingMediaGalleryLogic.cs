@@ -275,7 +275,10 @@ public sealed class EditingMediaGalleryLogic {
     private static readonly Size _SizeThumbnail = new Size(64, 64);
     private static PngEncoder? _Endoder;
     private static PngEncoder GetPngEncoder() =>
-        _Endoder ??= new SixLabors.ImageSharp.Formats.Png.PngEncoder() { CompressionLevel = PngCompressionLevel.Level9 };
+        _Endoder ??= new SixLabors.ImageSharp.Formats.Png.PngEncoder() {
+            BitDepth = PngBitDepth.Bit8,
+            CompressionLevel = PngCompressionLevel.Level9
+        };
 
     private static readonly char[] _ArraySlash = new char[] { '/' };
 
@@ -289,7 +292,7 @@ public sealed class EditingMediaGalleryLogic {
             for (int iRetry = 0; iRetry < 5; iRetry++) {
                 try {
                     image = await Image.LoadAsync(mediaFQN).ConfigureAwait(false);
-                    break; 
+                    break;
                 } catch (System.IO.IOException error) when (error.HResult == -2147024864) {
                     await Task.Delay(iRetry * 1000).ConfigureAwait(false);
                     continue;
@@ -300,25 +303,28 @@ public sealed class EditingMediaGalleryLogic {
             if (image == null) { return null; }
 
             // TODO handle image.Metadata.
-
-            var size = image.Size;
-            if (size.Width < _SizeThumbnail.Width && size.Height < _SizeThumbnail.Height) {
-            } else {
-                image.Mutate(ctxt => ctxt.Resize(
-                    new ResizeOptions {
-                        Mode = ResizeMode.Crop,
-                        Size = _SizeThumbnail
-                    }));
-            }
-            {
-                var targetStream = RecyclableMemory.Instance.GetStream();
-                var encoder = GetPngEncoder();
-                image.Save(targetStream, encoder);
-                targetStream.Position = 0;
-                return targetStream;
-            }
+            return GetThumbnailStream(image);
         }
         return null;
+    }
+
+    private static RecyclableMemoryStream GetThumbnailStream(Image image) {
+        var size = image.Size;
+        if (size.Width < _SizeThumbnail.Width && size.Height < _SizeThumbnail.Height) {
+        } else {
+            image.Mutate(ctxt => ctxt.Resize(
+                new ResizeOptions {
+                    Mode = ResizeMode.Crop,
+                    Size = _SizeThumbnail
+                }));
+        }
+        {
+            var targetStream = RecyclableMemory.Instance.GetStream();
+            var encoder = GetPngEncoder();
+            image.Save(targetStream, encoder);
+            targetStream.Position = 0;
+            return targetStream;
+        }
     }
 
     public async Task<List<SAMediaInfo>> SearchAsync(
@@ -462,20 +468,8 @@ public sealed class EditingMediaGalleryLogic {
 
         // TODO handle image.Metadata.
 
-        var size = image.Size;
-        if (size.Width < _SizeThumbnail.Width && size.Height < _SizeThumbnail.Height) {
-        } else {
-            image.Mutate(ctxt => ctxt.Resize(
-                new ResizeOptions {
-                    Mode = ResizeMode.Crop,
-                    Size = _SizeThumbnail
-                }));
-        }
         {
-            var targetStream = RecyclableMemory.Instance.GetStream();
-            var encoder = GetPngEncoder();
-            image.Save(targetStream, encoder);
-            targetStream.Position = 0;
+            var targetStream = GetThumbnailStream(image);
             if (found) {
                 var (mediaType, relativePath) = this.GetMediaTypeRelativePath(mediaGallery, fileInfo);
                 if (mediaType == MediaType.Unkown) {
@@ -494,7 +488,6 @@ public sealed class EditingMediaGalleryLogic {
                         new QueueMediaItem(mediaGallery, mediaType, mediaInfo, updateThumbnailStream, null)
                     );
                 }
-
             }
             return new SAMediaGetResult(targetStream, "image/png");
         }

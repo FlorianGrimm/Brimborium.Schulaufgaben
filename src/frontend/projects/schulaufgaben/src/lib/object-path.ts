@@ -82,7 +82,7 @@ export type ToBoundObjectPath<T> = T extends any ? BoundObjectPathValue<T> : nev
 
 
 export function bindProperty<T extends any, K extends keyof TV, TV extends Exclude<T, undefined | null> = Exclude<T, undefined | null>>(
-    item: undefined,
+    item: undefined|null,
     property: K
 ): undefined;
 export function bindProperty<T extends any, K extends keyof TV, TV extends Exclude<T, undefined | null> = Exclude<T, undefined | null>>(
@@ -90,7 +90,7 @@ export function bindProperty<T extends any, K extends keyof TV, TV extends Exclu
     property: K
 ): BoundObjectPath<TV[K]>;
 export function bindProperty<T extends any, K extends keyof TV, TV extends Exclude<T, undefined | null> = Exclude<T, undefined | null>>(
-    item: BoundObjectPath<T> | undefined,
+    item: BoundObjectPath<T> | null | undefined,
     property: K
 ): BoundObjectPath<TV[K]> | undefined {
     if (item === undefined || item === null) { return undefined; }
@@ -237,15 +237,15 @@ export function applyBoundPath<T = any, V = any>(
             if (parentObjectPath.type === "root") {
                 return current;
             } else if (parentObjectPath.type === "property") {
-                const parent = listParent[level];
+                const parent = listParent[level+1];
                 const nextParent = { ...parent, [parentObjectPath.property]: current };
                 current = nextParent;
             } else if (parentObjectPath.type === "index") {
-                const parent = listParent[level];
+                const parent = listParent[level+1];
                 const nextParent = (parent as any[]).map((v, i) => (i === parentObjectPath.index) ? current : v);
                 current = nextParent;
             } else if (parentObjectPath.type === "id") {
-                const parent = listParent[level];
+                const parent = listParent[level+1];
                 const nextParent = (parent as any[]).map((v) => (v.id === parentObjectPath.id) ? current : v);
                 current = nextParent;
             } else {

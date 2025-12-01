@@ -12,6 +12,7 @@ export * from './lib/common-page-size/common-page-size.component';
 export * from './lib/common-state-manager.service';
 export * from './lib/common-state-manager/common-state-manager.component';
 export * from './lib/createSubjectObservable';
+export * from './lib/document-actions';
 export * from './lib/model/index';
 export * from './lib/object-path';
 export * from './lib/schulaufgaben';

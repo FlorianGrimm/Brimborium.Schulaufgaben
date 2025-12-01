@@ -27,7 +27,7 @@ export class CommonDocumentManagerService {
   public readonly listHistoryRedo$ = new BehaviorSubject<HistoryItem[]>([]);
   public readonly itemHistoryRedo$ = new BehaviorSubject<HistoryItem|null>(null);
 
-  public setDocumentState(document: SADocument | null) {
+  public setDocumentState(document: SADocument | null, action:string='new/load') {
     if (null === document) {
       this.listHistoryUndo$.next([]);
       this.document$.next(null);      
@@ -58,6 +58,7 @@ export class CommonDocumentManagerService {
     this.itemHistoryUndo$.next(item);
     this.document$.next(item.document);
 
+    debugger;
     if (this.isDirty$.getValue()) {
       // nothing to do
     } else {

@@ -6,7 +6,7 @@
     [style.width.px]="convertionDocumentToPage.playgroundSize.width"
     [style.height.px]="convertionDocumentToPage.playgroundSize.height"
      class="common-page-size-inner">
-        {{convertionDocumentToPage$ | async | json}}
+        <ng-content></ng-content>
     </div>
     }
 </div>

@@ -1,3 +1,11 @@
+<ng-template #contentPortalContent>
+  @if(viewState$ | async; as viewState){
+    <button matButton (click)="save()" [disabled]="!viewState.isDirty"
+    title="Speichern" aria-label="Speichern" data-testid="save-button">
+        <mat-icon fontIcon="save"></mat-icon>        
+    </button>
+  }
+</ng-template>
 @if(viewState$ | async; as viewState){
   <app-editor-ruler
     [listHorizontal]="viewState.RulerHorizontal"

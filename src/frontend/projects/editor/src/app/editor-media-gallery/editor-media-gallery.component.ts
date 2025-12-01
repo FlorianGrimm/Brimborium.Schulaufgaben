@@ -88,6 +88,11 @@ export class EditorMediaGalleryComponent extends BaseComponent implements OnInit
     return parts.length === 0 ? mediaInfo.Path : parts[parts.length - 1];
   }
 
+  getMediaTitle(mediaInfo: SAMediaInfo) {
+    const parts = (mediaInfo.Path ?? '').split('/',2);
+    return (parts.length === 0) ? mediaInfo.Path : parts[parts.length - 1];
+  }
+
   isImage(mediaInfo: SAMediaInfo): boolean {
     return mediaInfo.MediaType === 'Image';
     // const ext = path.toLowerCase().split('.').pop();

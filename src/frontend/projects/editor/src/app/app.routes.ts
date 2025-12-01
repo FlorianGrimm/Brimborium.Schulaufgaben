@@ -8,6 +8,6 @@ export const routes: Routes = [
     { path: '', redirectTo: 'editor', pathMatch: 'full' },
     { path: 'editor', pathMatch: 'full' , component: EditorHomeComponent },
     { path: 'editor/new', pathMatch: 'full' , component: EditorNewComponent},
-    { path: 'editor/edit/:workId', component: EditorEditComponent},
+    { path: 'editor/edit/:documentId', component: EditorEditComponent},
     { path: 'editor/media-gallery', pathMatch: 'full', component: EditorMediaGalleryComponent}
 ];
