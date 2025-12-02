@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>SchulaufgabenEditor</UserSecretsId>
     <RootNamespace>Brimborium.Schulaufgaben</RootNamespace>
+    <OpenApiDocumentsDirectory>.</OpenApiDocumentsDirectory>
   </PropertyGroup>
 
   <ItemGroup>

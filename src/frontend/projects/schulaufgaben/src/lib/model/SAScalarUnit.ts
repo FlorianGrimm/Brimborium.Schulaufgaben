@@ -4,12 +4,11 @@
  * SchulaufgabenEditorWeb | v1
  * OpenAPI spec version: 1.0.0
  */
-import type { SAScalarUnitValue } from './SAScalarUnitValue';
 import type { SAUnit } from './SAUnit';
 import type { SAScalarUnitName } from './SAScalarUnitName';
 
 export interface SAScalarUnit {
-  Value: SAScalarUnitValue;
+  Value: number;
   Unit: SAUnit;
   Name?: SAScalarUnitName;
 }

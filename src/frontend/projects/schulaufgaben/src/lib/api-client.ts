@@ -95,65 +95,76 @@ export const getAPIDocumentIdResponse = zod.object({
   "ListItem": zod.array(zod.unknown()).optional(),
   "Position": zod.union([zod.null(),zod.object({
   "Left": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Top": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Right": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Bottom": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
   "Normal": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -183,36 +194,45 @@ export const getAPIDocumentIdResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -237,33 +257,44 @@ export const getAPIDocumentIdResponse = zod.object({
 })]).optional(),
   "Flipped": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -293,36 +324,45 @@ export const getAPIDocumentIdResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -347,33 +387,44 @@ export const getAPIDocumentIdResponse = zod.object({
 })]).optional(),
   "Selected": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -403,36 +454,45 @@ export const getAPIDocumentIdResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -463,65 +523,76 @@ export const getAPIDocumentIdResponse = zod.object({
   "ListItem": zod.array(zod.unknown()).optional(),
   "Position": zod.union([zod.null(),zod.object({
   "Left": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Top": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Right": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Bottom": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
   "Normal": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -551,36 +622,45 @@ export const getAPIDocumentIdResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -605,33 +685,44 @@ export const getAPIDocumentIdResponse = zod.object({
 })]).optional(),
   "Flipped": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -661,36 +752,45 @@ export const getAPIDocumentIdResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -715,33 +815,44 @@ export const getAPIDocumentIdResponse = zod.object({
 })]).optional(),
   "Selected": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -771,36 +882,45 @@ export const getAPIDocumentIdResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -825,22 +945,33 @@ export const getAPIDocumentIdResponse = zod.object({
 })]).optional()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
+  "ListExpression": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})).nullish(),
   "DefinedHorizontal": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
   "DefinedVertical": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
@@ -849,12 +980,12 @@ export const getAPIDocumentIdResponse = zod.object({
   "Name": zod.string().nullish()
 })).nullish(),
   "RulerHorizontal": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
   "RulerVertical": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish()
@@ -883,65 +1014,76 @@ export const postAPIDocumentIdBody = zod.object({
   "ListItem": zod.array(zod.unknown()).optional(),
   "Position": zod.union([zod.null(),zod.object({
   "Left": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Top": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Right": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Bottom": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
   "Normal": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -971,36 +1113,45 @@ export const postAPIDocumentIdBody = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1025,33 +1176,44 @@ export const postAPIDocumentIdBody = zod.object({
 })]).optional(),
   "Flipped": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1081,36 +1243,45 @@ export const postAPIDocumentIdBody = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1135,33 +1306,44 @@ export const postAPIDocumentIdBody = zod.object({
 })]).optional(),
   "Selected": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1191,36 +1373,45 @@ export const postAPIDocumentIdBody = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1251,65 +1442,76 @@ export const postAPIDocumentIdBody = zod.object({
   "ListItem": zod.array(zod.unknown()).optional(),
   "Position": zod.union([zod.null(),zod.object({
   "Left": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Top": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Right": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Bottom": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
   "Normal": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1339,36 +1541,45 @@ export const postAPIDocumentIdBody = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1393,33 +1604,44 @@ export const postAPIDocumentIdBody = zod.object({
 })]).optional(),
   "Flipped": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1449,36 +1671,45 @@ export const postAPIDocumentIdBody = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1503,33 +1734,44 @@ export const postAPIDocumentIdBody = zod.object({
 })]).optional(),
   "Selected": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1559,36 +1801,45 @@ export const postAPIDocumentIdBody = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1613,22 +1864,33 @@ export const postAPIDocumentIdBody = zod.object({
 })]).optional()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
+  "ListExpression": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})).nullish(),
   "DefinedHorizontal": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
   "DefinedVertical": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
@@ -1637,12 +1899,12 @@ export const postAPIDocumentIdBody = zod.object({
   "Name": zod.string().nullish()
 })).nullish(),
   "RulerHorizontal": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
   "RulerVertical": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish()
@@ -1666,65 +1928,76 @@ export const postAPIDocumentIdResponse = zod.object({
   "ListItem": zod.array(zod.unknown()).optional(),
   "Position": zod.union([zod.null(),zod.object({
   "Left": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Top": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Right": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Bottom": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
   "Normal": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1754,36 +2027,45 @@ export const postAPIDocumentIdResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1808,33 +2090,44 @@ export const postAPIDocumentIdResponse = zod.object({
 })]).optional(),
   "Flipped": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1864,36 +2157,45 @@ export const postAPIDocumentIdResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1918,33 +2220,44 @@ export const postAPIDocumentIdResponse = zod.object({
 })]).optional(),
   "Selected": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -1974,36 +2287,45 @@ export const postAPIDocumentIdResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2034,65 +2356,76 @@ export const postAPIDocumentIdResponse = zod.object({
   "ListItem": zod.array(zod.unknown()).optional(),
   "Position": zod.union([zod.null(),zod.object({
   "Left": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Top": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Right": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Bottom": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
   "Normal": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2122,36 +2455,45 @@ export const postAPIDocumentIdResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2176,33 +2518,44 @@ export const postAPIDocumentIdResponse = zod.object({
 })]).optional(),
   "Flipped": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2232,36 +2585,45 @@ export const postAPIDocumentIdResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2286,33 +2648,44 @@ export const postAPIDocumentIdResponse = zod.object({
 })]).optional(),
   "Selected": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2342,36 +2715,45 @@ export const postAPIDocumentIdResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2396,22 +2778,33 @@ export const postAPIDocumentIdResponse = zod.object({
 })]).optional()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
+  "ListExpression": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})).nullish(),
   "DefinedHorizontal": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
   "DefinedVertical": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
@@ -2420,12 +2813,12 @@ export const postAPIDocumentIdResponse = zod.object({
   "Name": zod.string().nullish()
 })).nullish(),
   "RulerHorizontal": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
   "RulerVertical": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish()
@@ -2455,65 +2848,76 @@ export const putAPIDocumentBody = zod.object({
   "ListItem": zod.array(zod.unknown()).optional(),
   "Position": zod.union([zod.null(),zod.object({
   "Left": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Top": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Right": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Bottom": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
   "Normal": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2543,36 +2947,45 @@ export const putAPIDocumentBody = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2597,33 +3010,44 @@ export const putAPIDocumentBody = zod.object({
 })]).optional(),
   "Flipped": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2653,36 +3077,45 @@ export const putAPIDocumentBody = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2707,33 +3140,44 @@ export const putAPIDocumentBody = zod.object({
 })]).optional(),
   "Selected": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2763,36 +3207,45 @@ export const putAPIDocumentBody = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2823,65 +3276,76 @@ export const putAPIDocumentBody = zod.object({
   "ListItem": zod.array(zod.unknown()).optional(),
   "Position": zod.union([zod.null(),zod.object({
   "Left": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Top": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Right": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Bottom": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
   "Normal": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2911,36 +3375,45 @@ export const putAPIDocumentBody = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -2965,33 +3438,44 @@ export const putAPIDocumentBody = zod.object({
 })]).optional(),
   "Flipped": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3021,36 +3505,45 @@ export const putAPIDocumentBody = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3075,33 +3568,44 @@ export const putAPIDocumentBody = zod.object({
 })]).optional(),
   "Selected": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3131,36 +3635,45 @@ export const putAPIDocumentBody = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3185,22 +3698,33 @@ export const putAPIDocumentBody = zod.object({
 })]).optional()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
+  "ListExpression": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})).nullish(),
   "DefinedHorizontal": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
   "DefinedVertical": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
@@ -3209,12 +3733,12 @@ export const putAPIDocumentBody = zod.object({
   "Name": zod.string().nullish()
 })).nullish(),
   "RulerHorizontal": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
   "RulerVertical": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish()
@@ -3238,65 +3762,76 @@ export const putAPIDocumentResponse = zod.object({
   "ListItem": zod.array(zod.unknown()).optional(),
   "Position": zod.union([zod.null(),zod.object({
   "Left": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Top": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Right": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Bottom": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
   "Normal": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3326,36 +3861,45 @@ export const putAPIDocumentResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3380,33 +3924,44 @@ export const putAPIDocumentResponse = zod.object({
 })]).optional(),
   "Flipped": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3436,36 +3991,45 @@ export const putAPIDocumentResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3490,33 +4054,44 @@ export const putAPIDocumentResponse = zod.object({
 })]).optional(),
   "Selected": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3546,36 +4121,45 @@ export const putAPIDocumentResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3606,65 +4190,76 @@ export const putAPIDocumentResponse = zod.object({
   "ListItem": zod.array(zod.unknown()).optional(),
   "Position": zod.union([zod.null(),zod.object({
   "Left": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Top": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Right": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Bottom": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
   "Normal": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3694,36 +4289,45 @@ export const putAPIDocumentResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3748,33 +4352,44 @@ export const putAPIDocumentResponse = zod.object({
 })]).optional(),
   "Flipped": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3804,36 +4419,45 @@ export const putAPIDocumentResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3858,33 +4482,44 @@ export const putAPIDocumentResponse = zod.object({
 })]).optional(),
   "Selected": zod.union([zod.null(),zod.object({
   "MatchingValue": zod.string().nullish(),
+  "MatchingExpression": zod.union([zod.null(),zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})]).optional(),
   "Background": zod.union([zod.null(),zod.object({
   "Value": zod.string().nullish(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Border": zod.union([zod.null(),zod.object({
   "BorderWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRightWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderLeftWidth": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3914,36 +4549,45 @@ export const putAPIDocumentResponse = zod.object({
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderTopRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomRightRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "BorderBottomLeftRadius": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional()
 })]).optional(),
+  "ListTransform": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "TransformFunction": zod.string().nullish(),
+  "ListArgument": zod.array(zod.object({
+  "Value": zod.number(),
+  "Unit": zod.number(),
+  "Name": zod.string().nullish()
+})).nullish()
+})).optional(),
   "Text": zod.union([zod.null(),zod.object({
   "Value": zod.string().optional(),
   "FontFamily": zod.string().nullish(),
   "FontSize": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
@@ -3968,22 +4612,33 @@ export const putAPIDocumentResponse = zod.object({
 })]).optional()
 })]).optional(),
   "Width": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
   "Height": zod.union([zod.null(),zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })]).optional(),
+  "ListExpression": zod.array(zod.object({
+  "Id": zod.uuid().optional(),
+  "Name": zod.string().optional(),
+  "Root": zod.union([zod.null(),zod.object({
+  "FunctionName": zod.string().nullish(),
+  "ReferenceType": zod.string().nullish(),
+  "ReferenceId": zod.uuid().nullish(),
+  "ValueText": zod.string().nullish(),
+  "ListArgument": zod.array(zod.unknown()).nullish()
+})]).optional()
+})).nullish(),
   "DefinedHorizontal": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
   "DefinedVertical": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
@@ -3992,12 +4647,12 @@ export const putAPIDocumentResponse = zod.object({
   "Name": zod.string().nullish()
 })).nullish(),
   "RulerHorizontal": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish(),
   "RulerVertical": zod.array(zod.object({
-  "Value": zod.union([zod.number(),zod.string()]),
+  "Value": zod.number(),
   "Unit": zod.number(),
   "Name": zod.string().nullish()
 })).nullish()

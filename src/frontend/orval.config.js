@@ -13,7 +13,7 @@ export default defineConfig({
       mock: false,
     },
     input: {
-      target: '../../artifacts/obj/SchulaufgabenEditorWeb/SchulaufgabenEditorWeb.json',
+      target: '../backend/SchulaufgabenEditorWeb/SchulaufgabenEditorWeb.json',
     },
   },
 });

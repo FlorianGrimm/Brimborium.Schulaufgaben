@@ -130,16 +130,16 @@ public sealed class EditingMediaGalleryLogic {
             };
 
             // Handle file created or changed - queue to _MediaQueue
-            watcher.Created += (sender, e) => OnFileCreatedOrChanged(mediaGallery, e.FullPath);
-            watcher.Changed += (sender, e) => OnFileCreatedOrChanged(mediaGallery, e.FullPath);
+            watcher.Created += (sender, e) => this.OnFileCreatedOrChanged(mediaGallery, e.FullPath);
+            watcher.Changed += (sender, e) => this.OnFileCreatedOrChanged(mediaGallery, e.FullPath);
 
             // Handle file deleted - directly remove from database
-            watcher.Deleted += (sender, e) => OnFileDeleted(mediaGallery, e.FullPath);
+            watcher.Deleted += (sender, e) => this.OnFileDeleted(mediaGallery, e.FullPath);
 
             // Handle file renamed
             watcher.Renamed += (sender, e) => {
-                OnFileDeleted(mediaGallery, e.OldFullPath);
-                OnFileCreatedOrChanged(mediaGallery, e.FullPath);
+                this.OnFileDeleted(mediaGallery, e.OldFullPath);
+                this.OnFileCreatedOrChanged(mediaGallery, e.FullPath);
             };
 
             watcher.EnableRaisingEvents = true;
@@ -336,7 +336,7 @@ public sealed class EditingMediaGalleryLogic {
                 this._CheckIfFileExists ??= this.checkIfFileExists);
             return result;
         }
-        return await SearchFallbackAsync(searchRequest, requestAborted);
+        return await this.SearchFallbackAsync(searchRequest, requestAborted);
     }
 
     private Func<string, string, bool>? _CheckIfFileExists;

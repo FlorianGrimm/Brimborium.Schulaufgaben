@@ -6,5 +6,9 @@ public enum SAUnit {
     [JsonStringEnumMemberName("Percent")]
     Percent,
     [JsonStringEnumMemberName("Pixel")]
-    Pixel 
+    Pixel,
+    [JsonStringEnumMemberName("Degree")]
+    Degree,
+    [JsonStringEnumMemberName("Scalar")]
+    Scalar
 }

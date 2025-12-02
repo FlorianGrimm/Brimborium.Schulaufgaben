@@ -637,6 +637,16 @@
               "string"
             ]
           },
+          "MatchingExpression": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAExpression"
+              }
+            ]
+          },
           "Background": {
             "oneOf": [
               {
@@ -656,6 +666,12 @@
                 "$ref": "#/components/schemas/SABorder"
               }
             ]
+          },
+          "ListTransform": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SATransform"
+            }
           },
           "Text": {
             "oneOf": [
@@ -761,6 +777,15 @@
               }
             ]
           },
+          "ListExpression": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/SAExpression"
+            }
+          },
           "DefinedHorizontal": {
             "type": [
               "null",
@@ -829,6 +854,67 @@
           }
         }
       },
+      "SAExpression": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "Name": {
+            "type": "string"
+          },
+          "Root": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SAExpressionNode"
+              }
+            ]
+          }
+        }
+      },
+      "SAExpressionNode": {
+        "type": "object",
+        "properties": {
+          "FunctionName": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "ReferenceType": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "ReferenceId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "ValueText": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "ListArgument": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/SAExpressionNode"
+            }
+          }
+        }
+      },
       "SAImage": {
         "type": "object",
         "properties": {
@@ -872,9 +958,7 @@
             "type": "string"
           },
           "Size": {
-            "type": [
-              "integer"
-            ],
+            "type": "integer",
             "format": "int64"
           },
           "LastWriteTimeUtc": {
@@ -965,10 +1049,7 @@
         "type": "object",
         "properties": {
           "Value": {
-            "type": [
-              "number",
-              "string"
-            ],
+            "type": "number",
             "format": "double"
           },
           "Unit": {
@@ -1037,6 +1118,30 @@
               "null",
               "string"
             ]
+          }
+        }
+      },
+      "SATransform": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "TransformFunction": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "ListArgument": {
+            "type": [
+              "null",
+              "array"
+            ],
+            "items": {
+              "$ref": "#/components/schemas/SAScalarUnit"
+            }
           }
         }
       },

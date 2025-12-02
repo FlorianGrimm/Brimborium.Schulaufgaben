@@ -44,6 +44,7 @@ public class Program {
 
         builder.Services.ConfigureHttpJsonOptions((options) => {
             options.SerializerOptions.PropertyNamingPolicy = null;
+            options.SerializerOptions.NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.Strict;
         });
 
         // Add services to the container.

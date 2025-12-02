@@ -9,6 +9,7 @@ import type { SADocumentDecoration } from './SADocumentDecoration';
 import type { SADocumentInteraction } from './SADocumentInteraction';
 import type { SADocumentWidth } from './SADocumentWidth';
 import type { SADocumentHeight } from './SADocumentHeight';
+import type { SADocumentListExpression } from './SADocumentListExpression';
 import type { SADocumentDefinedHorizontal } from './SADocumentDefinedHorizontal';
 import type { SADocumentDefinedVertical } from './SADocumentDefinedVertical';
 import type { SADocumentDefinedColor } from './SADocumentDefinedColor';
@@ -25,6 +26,7 @@ export interface SADocument {
   Interaction?: SADocumentInteraction;
   Width?: SADocumentWidth;
   Height?: SADocumentHeight;
+  ListExpression?: SADocumentListExpression;
   DefinedHorizontal?: SADocumentDefinedHorizontal;
   DefinedVertical?: SADocumentDefinedVertical;
   DefinedColor?: SADocumentDefinedColor;

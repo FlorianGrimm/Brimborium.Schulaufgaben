@@ -5,8 +5,10 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { SAContentMatchingValue } from './SAContentMatchingValue';
+import type { SAContentMatchingExpression } from './SAContentMatchingExpression';
 import type { SAContentBackground } from './SAContentBackground';
 import type { SAContentBorder } from './SAContentBorder';
+import type { SATransform } from './SATransform';
 import type { SAContentText } from './SAContentText';
 import type { SAContentImage } from './SAContentImage';
 import type { SAContentAudio } from './SAContentAudio';
@@ -14,8 +16,10 @@ import type { SAContentVideo } from './SAContentVideo';
 
 export interface SAContent {
   MatchingValue?: SAContentMatchingValue;
+  MatchingExpression?: SAContentMatchingExpression;
   Background?: SAContentBackground;
   Border?: SAContentBorder;
+  ListTransform?: SATransform[];
   Text?: SAContentText;
   Image?: SAContentImage;
   Audio?: SAContentAudio;
