@@ -1,0 +1,124 @@
+<div class="expression-editor">
+    <div class="header">
+        <span class="title">Expression</span>
+        @if ((expression$ | async)?.Root) {
+            <button mat-icon-button (click)="clearRoot()" aria-label="Clear expression">
+                <mat-icon>delete</mat-icon>
+            </button>
+        } @else {
+            <button mat-icon-button (click)="setRoot()" aria-label="Add root expression">
+                <mat-icon>add</mat-icon>
+            </button>
+        }
+    </div>
+
+    @if (expression$ | async; as expression) {
+        @if (expression.Root) {
+            <ng-container *ngTemplateOutlet="nodeTemplate; context: { $implicit: expression.Root, path: [] }">
+            </ng-container>
+        } @else {
+            <div class="empty-state">
+                <mat-icon>functions</mat-icon>
+                <span>No expression. Click + to add one.</span>
+            </div>
+        }
+    }
+</div>
+
+<!-- Recursive node template -->
+<ng-template #nodeTemplate let-node let-path="path">
+    <div class="expression-node" [class.leaf-node]="isValueNode(node)">
+        <div class="node-header">
+            <mat-form-field class="function-select" appearance="outline">
+                <mat-label>Function</mat-label>
+                <mat-select [value]="node.FunctionName"
+                            (selectionChange)="onFunctionChange(path, $event.value)">
+                    @for (category of expressionCategories; track category.value) {
+                        <mat-optgroup [label]="category.label">
+                            @for (func of getFunctionsByCategory(category.value); track func.value) {
+                                <mat-option [value]="func.value">{{ func.label }}</mat-option>
+                            }
+                        </mat-optgroup>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+            <!-- Value input for value nodes -->
+            @if (node.FunctionName === 'string' || node.FunctionName === 'number' || node.FunctionName === 'boolean') {
+                @if (node.FunctionName === 'boolean') {
+                    <mat-form-field class="value-field" appearance="outline">
+                        <mat-label>Value</mat-label>
+                        <mat-select [value]="node.ValueText"
+                                    (selectionChange)="onValueChange(path, $event.value)">
+                            <mat-option value="true">True</mat-option>
+                            <mat-option value="false">False</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                } @else {
+                    <mat-form-field class="value-field" appearance="outline">
+                        <mat-label>Value</mat-label>
+                        <input matInput
+                               [type]="node.FunctionName === 'number' ? 'number' : 'text'"
+                               [value]="node.ValueText ?? ''"
+                               (input)="onValueChange(path, $any($event.target).value)" />
+                    </mat-form-field>
+                }
+            }
+
+            <!-- Reference inputs -->
+            @if (node.FunctionName === 'reference') {
+                <mat-form-field class="ref-type-field" appearance="outline">
+                    <mat-label>Type</mat-label>
+                    <mat-select [value]="node.ReferenceType ?? 'variable'"
+                                (selectionChange)="onReferenceChange(path, $event.value, node.ReferenceId ?? '')">
+                        <mat-option value="variable">Variable</mat-option>
+                        <mat-option value="field">Field</mat-option>
+                        <mat-option value="parameter">Parameter</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="ref-id-field" appearance="outline">
+                    <mat-label>ID</mat-label>
+                    <input matInput
+                           [value]="node.ReferenceId ?? ''"
+                           (input)="onReferenceChange(path, node.ReferenceType ?? 'variable', $any($event.target).value)" />
+                </mat-form-field>
+            }
+
+            <!-- Variable args controls -->
+            @if (canAddArgument(node)) {
+                <button mat-icon-button (click)="addArgument(path)" aria-label="Add argument" class="add-arg-btn">
+                    <mat-icon>add_circle</mat-icon>
+                </button>
+            }
+        </div>
+
+        <!-- Arguments list -->
+        @if (node.ListArgument && node.ListArgument.length > 0) {
+            <div cdkDropList
+                 class="arguments-list"
+                 (cdkDropListDropped)="onArgumentDrop(path, $event)">
+                @for (arg of node.ListArgument; track $index; let i = $index) {
+                    <div cdkDrag class="argument-item">
+                        <div class="argument-header">
+                            <mat-icon cdkDragHandle class="drag-handle">drag_indicator</mat-icon>
+                            <span class="argument-label">Arg {{ i + 1 }}</span>
+                            @if (canRemoveArgument(node)) {
+                                <button mat-icon-button
+                                        (click)="removeArgument(path, i)"
+                                        aria-label="Remove argument"
+                                        class="remove-arg-btn">
+                                    <mat-icon>remove_circle</mat-icon>
+                                </button>
+                            }
+                        </div>
+                        <div class="argument-content">
+                            <ng-container *ngTemplateOutlet="nodeTemplate; context: { $implicit: arg, path: path.concat(i) }">
+                            </ng-container>
+                        </div>
+                        <div *cdkDragPlaceholder class="drag-placeholder"></div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</ng-template>

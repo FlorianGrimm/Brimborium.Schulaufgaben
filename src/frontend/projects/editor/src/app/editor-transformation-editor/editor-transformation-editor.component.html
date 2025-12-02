@@ -1,7 +1,48 @@
-<p>
-    ol a list of SATransform
-      li a compobox with the transform function
-         a list of SAScalarUnit
-            li a input for the value
-            li a combobox for the unit
-</p>
+<div class="transformation-editor">
+    <div class="header">
+        <span class="title">Transforms</span>
+        <button mat-icon-button (click)="addTransform()" aria-label="Add transform">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+
+    <div cdkDropList class="transform-list" (cdkDropListDropped)="onDrop($event)">
+        @for (transform of listTransform; track transform.Id; let i = $index) {
+            <div cdkDrag class="transform-item">
+                <mat-icon cdkDragHandle class="drag-handle">drag_indicator</mat-icon>
+
+                <mat-form-field class="transform-function-field" appearance="outline">
+                    <mat-label>Function</mat-label>
+                    <mat-select [value]="transform.TransformFunction"
+                                (selectionChange)="onTransformFunctionChange(i, $event.value)">
+                        @for (func of transformFunctions; track func.value) {
+                            <mat-option [value]="func.value">{{ func.label }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="arguments-container">
+                    @for (arg of transform.ListArgument; track $index; let argIdx = $index) {
+                        <mat-form-field class="argument-field" appearance="outline">
+                            <mat-label>{{ getArgumentLabel(transform.TransformFunction, argIdx) }}</mat-label>
+                            <input matInput type="number" [value]="arg.Value"
+                                   (input)="onArgumentValueChange(i, argIdx, $any($event.target).valueAsNumber)" />
+                            <span matTextSuffix>{{ getUnitSuffix(arg.Unit) }}</span>
+                        </mat-form-field>
+                    }
+                </div>
+
+                <button mat-icon-button (click)="removeTransform(i)" aria-label="Remove transform" class="remove-btn">
+                    <mat-icon>delete</mat-icon>
+                </button>
+
+                <div *cdkDragPlaceholder class="drag-placeholder"></div>
+            </div>
+        } @empty {
+            <div class="empty-state">
+                <mat-icon>transform</mat-icon>
+                <span>No transforms. Click + to add one.</span>
+            </div>
+        }
+    </div>
+</div>
